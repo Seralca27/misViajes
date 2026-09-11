@@ -32,7 +32,7 @@
 
   /* HERO */
   .hero {
-    min-height: 100vh;
+    min-height: 70vh;
     background: #1a2e22;
     display: flex;
     flex-direction: column;
@@ -45,39 +45,13 @@
   .hero-photos {
     position: absolute;
     inset: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 3px;
-    opacity: 0.45;
   }
 
-  .hero-photos .photo-slot {
-    background: #2d4a38;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .hero-photos .photo-slot img {
+  .hero-photos img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  .hero-photos .photo-slot.placeholder::after {
-    content: attr(data-label);
-    color: rgba(255,255,255,0.25);
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    font-family: 'Inter', sans-serif;
-    text-align: center;
-    padding: 8px;
-  }
-
-  .hero-photos .photo-slot:first-child {
-    grid-column: span 2;
+    opacity: 0.55;
   }
 
   .hero-content {
@@ -419,12 +393,7 @@
 <!-- HERO -->
 <div class="hero">
   <div class="hero-photos">
-    <!-- Sustituye src="" por tus URLs de Cloudinary -->
-    <div class="photo-slot placeholder" data-label="foto principal · Torres Petronas o vista ciudad"></div>
-    <div class="photo-slot placeholder" data-label="foto 2"></div>
-    <div class="photo-slot placeholder" data-label="foto 3"></div>
-    <div class="photo-slot placeholder" data-label="foto 4"></div>
-    <div class="photo-slot placeholder" data-label="foto 5"></div>
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123566/9ef93dca-318c-4caf-acf6-c5c99a05bac2.jpg" alt="Infinity pool · Ceylonz Suites">
   </div>
   <div class="hero-content">
     <div class="hero-tag">Noviembre 2025 · 3 días</div>
@@ -478,32 +447,25 @@
   <h2>Lo que vimos</h2>
 
   <div class="gallery">
-    <!-- Para añadir fotos: cambia la clase "placeholder" por nada y añade <img src="TU_URL" alt="descripción"> dentro -->
-    <div class="gallery-item wide placeholder">
-      <div class="ph-icon">🏙️</div>
-      <div class="ph-text">Torres Petronas · foto principal</div>
+    <div class="gallery-item wide">
+      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123567/72195d19-760f-438a-be95-1f6b6d80e174.jpg" alt="Torres Petronas">
     </div>
-    <div class="gallery-item placeholder">
-      <div class="ph-icon">🕌</div>
-      <div class="ph-text">Cuevas de Batu</div>
+    <div class="gallery-item tall">
+      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123570/IMG_2288.jpg" alt="Templo Sri Maha">
     </div>
-    <div class="gallery-item tall placeholder">
-      <div class="ph-icon">🌃</div>
-      <div class="ph-text">Jalan Alor · mercado nocturno</div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123567/0e135fc3-3924-4184-8d16-acbfc491c13d.jpg" alt="Batu Caves">
     </div>
-    <div class="gallery-item placeholder">
-      <div class="ph-icon">🏊</div>
-      <div class="ph-text">Ceylonz Suites · piscina</div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123568/IMG_2089.jpg" alt="Jalan Alor">
     </div>
-    <div class="gallery-item placeholder">
-      <div class="ph-icon">🛒</div>
-      <div class="ph-text">Mercado central</div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123569/IMG_2101.jpg" alt="Vistas hotel">
+    </div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123958/Captura_de_pantalla_2026-09-11_125123.jpg" alt="Mercado chino">
     </div>
   </div>
-
-  <p style="font-size:13px; color: var(--muted); margin-top: 8px;">
-    Para añadir fotos: sube las imágenes a Cloudinary y sustituye cada bloque <code>placeholder</code> por una etiqueta <code>&lt;img src="TU_URL"&gt;</code>.
-  </p>
 </section>
 
 <!-- MOMENTOS -->
