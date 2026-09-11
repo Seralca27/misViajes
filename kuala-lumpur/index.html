@@ -12,28 +12,30 @@
   :root {
     --ink: #1a1a1a;
     --muted: #6b6b6b;
-    --faint: #f0ede8;
     --accent: #2d6a4f;
-    --accent-light: #e8f4ef;
+    --accent-light: #dff0e8;
     --warm: #c9a96e;
-    --bg: #faf9f7;
-    --white: #ffffff;
     --radius: 12px;
+
+    /* Fondos alternantes — mismo tono, dos variantes */
+    --bg-a: #eef4f0;   /* verde muy suave — secciones impares */
+    --bg-b: #f7f4ef;   /* crema cálida — secciones pares */
+    --bg-dark: #1a2e22;
   }
 
   body {
     font-family: 'Inter', sans-serif;
     font-weight: 300;
-    background: var(--bg);
     color: var(--ink);
     line-height: 1.7;
     font-size: 16px;
+    background: var(--bg-a);
   }
 
-  /* HERO */
+  /* ── HERO ── */
   .hero {
     min-height: 70vh;
-    background: #1a2e22;
+    background: var(--bg-dark);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -42,349 +44,312 @@
     overflow: hidden;
   }
 
-  .hero-photos {
-    position: absolute;
-    inset: 0;
-  }
+  .hero-photos { position: absolute; inset: 0; }
 
   .hero-photos img {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
     opacity: 0.55;
   }
 
-  .hero-content {
-    position: relative;
-    z-index: 2;
-  }
+  .hero-content { position: relative; z-index: 2; }
 
   .hero-tag {
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    color: var(--warm);
-    text-transform: uppercase;
-    margin-bottom: 16px;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.12em; color: var(--warm);
+    text-transform: uppercase; margin-bottom: 16px;
   }
 
   .hero h1 {
     font-family: 'Instrument Serif', serif;
     font-size: clamp(52px, 8vw, 96px);
-    line-height: 0.95;
-    color: #fff;
-    margin-bottom: 24px;
-    font-weight: 400;
+    line-height: 0.95; color: #fff;
+    margin-bottom: 24px; font-weight: 400;
   }
 
-  .hero h1 em {
-    font-style: italic;
-    color: var(--warm);
-  }
+  .hero h1 em { font-style: italic; color: var(--warm); }
 
   .hero-meta {
-    display: flex;
-    gap: 32px;
-    color: rgba(255,255,255,0.55);
-    font-size: 14px;
+    display: flex; gap: 32px;
+    color: rgba(255,255,255,0.55); font-size: 14px;
   }
 
-  .hero-meta span { display: flex; align-items: center; gap: 6px; }
-
-  /* NAV */
+  /* ── NAV ── */
   nav {
-    position: sticky;
-    top: 0;
-    background: var(--white);
-    border-bottom: 1px solid #e8e4de;
+    position: sticky; top: 0;
+    background: #fff;
+    border-bottom: 1px solid #dde8e2;
     padding: 0 48px;
-    display: flex;
-    gap: 0;
-    z-index: 100;
+    display: flex; gap: 0; z-index: 100;
   }
 
   nav a {
-    display: block;
-    padding: 16px 20px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--muted);
-    text-decoration: none;
+    display: block; padding: 16px 20px;
+    font-size: 13px; font-weight: 500;
+    color: var(--muted); text-decoration: none;
     border-bottom: 2px solid transparent;
     transition: color 0.2s, border-color 0.2s;
   }
 
   nav a:hover { color: var(--ink); border-color: var(--accent); }
 
-  /* SECTIONS */
+  /* ── SECCIONES ALTERNANTES ── */
   section {
-    max-width: 860px;
-    margin: 0 auto;
     padding: 80px 32px;
   }
 
-  section + section {
-    border-top: 1px solid #e8e4de;
+  section:nth-of-type(odd)  { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+
+  .inner {
+    max-width: 860px;
+    margin: 0 auto;
   }
 
   .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    color: var(--warm);
-    text-transform: uppercase;
-    margin-bottom: 12px;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; color: var(--warm);
+    text-transform: uppercase; margin-bottom: 12px;
   }
 
   h2 {
     font-family: 'Instrument Serif', serif;
     font-size: clamp(28px, 4vw, 40px);
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 24px;
+    font-weight: 400; line-height: 1.2; margin-bottom: 24px;
   }
 
   p { color: #3d3d3d; margin-bottom: 16px; max-width: 640px; }
 
-  /* RESUMEN CARDS */
+  /* ── STATS ── */
   .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 1px;
-    background: #e8e4de;
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin: 40px 0;
+    gap: 1px; background: #c8ddd4;
+    border-radius: var(--radius); overflow: hidden; margin: 40px 0;
   }
 
-  .stat {
-    background: var(--white);
-    padding: 24px;
-    text-align: center;
-  }
+  .stat { background: #fff; padding: 24px; text-align: center; }
 
   .stat-value {
     font-family: 'Instrument Serif', serif;
-    font-size: 36px;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 4px;
+    font-size: 36px; color: var(--accent);
+    line-height: 1; margin-bottom: 4px;
   }
 
   .stat-label { font-size: 12px; color: var(--muted); }
 
-  /* GALERÍA */
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 220px;
-    gap: 6px;
-    border-radius: var(--radius);
-    overflow: hidden;
+  /* ── GALERÍA LIGHTBOX ── */
+  .photo-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 12px;
     margin: 40px 0;
+    cursor: grab;
   }
 
-  .gallery-item {
-    background: var(--faint);
+  .photo-strip:active { cursor: grabbing; }
+  .photo-strip::-webkit-scrollbar { height: 4px; }
+  .photo-strip::-webkit-scrollbar-track { background: transparent; }
+  .photo-strip::-webkit-scrollbar-thumb { background: #c8ddd4; border-radius: 2px; }
+
+  .photo-thumb {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    width: 280px;
+    height: 340px;
+    border-radius: 10px;
     overflow: hidden;
     position: relative;
+    cursor: zoom-in;
   }
 
-  .gallery-item.wide { grid-column: span 2; }
-  .gallery-item.tall { grid-row: span 2; }
+  .photo-thumb:first-child { width: 380px; }
 
-  .gallery-item img {
+  .photo-thumb img {
     width: 100%; height: 100%; object-fit: cover;
     transition: transform 0.4s ease;
+    display: block;
   }
 
-  .gallery-item:hover img { transform: scale(1.04); }
+  .photo-thumb:hover img { transform: scale(1.05); }
 
-  .gallery-item.placeholder {
-    display: flex;
+  .photo-thumb .thumb-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 32px 14px 14px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.55));
+    color: #fff; font-size: 12px;
+    opacity: 0; transition: opacity 0.25s;
+  }
+
+  .photo-thumb:hover .thumb-label { opacity: 1; }
+
+  .photo-hint {
+    font-size: 12px; color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+    margin-top: 4px;
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(10,20,14,0.95);
+    align-items: center; justify-content: center;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: 2px dashed #d0cbc3;
-    cursor: pointer;
   }
 
-  .gallery-item.placeholder .ph-icon {
-    font-size: 28px;
-    opacity: 0.4;
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 90vw; max-height: 82vh;
+    object-fit: contain;
+    border-radius: 6px;
   }
 
-  .gallery-item.placeholder .ph-text {
-    font-size: 11px;
-    color: var(--muted);
-    text-align: center;
-    padding: 0 16px;
+  .lightbox-caption {
+    color: rgba(255,255,255,0.65);
+    font-size: 13px; margin-top: 16px;
   }
 
-  /* MOMENTOS */
-  .moments { display: flex; flex-direction: column; gap: 0; margin: 32px 0; }
+  .lightbox-nav {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.12);
+    border: none; color: #fff;
+    width: 48px; height: 48px;
+    border-radius: 50%; font-size: 20px;
+    cursor: pointer; display: flex;
+    align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+
+  .lightbox-close {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 28px; cursor: pointer; line-height: 1;
+  }
+
+  .lightbox-dots {
+    display: flex; gap: 6px; margin-top: 14px;
+  }
+
+  .lb-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    transition: background 0.2s;
+    cursor: pointer; border: none;
+  }
+
+  .lb-dot.active { background: rgba(255,255,255,0.9); }
+
+  /* ── MOMENTOS ── */
+  .moments { display: flex; flex-direction: column; margin: 32px 0; }
 
   .moment {
     display: grid;
     grid-template-columns: 48px 1fr;
-    gap: 16px;
-    padding: 24px 0;
-    border-bottom: 1px solid #eee;
+    gap: 16px; padding: 24px 0;
+    border-bottom: 1px solid #d4e4da;
     align-items: start;
   }
 
   .moment:last-child { border-bottom: none; }
 
   .moment-emoji {
-    width: 48px;
-    height: 48px;
+    width: 48px; height: 48px;
     background: var(--accent-light);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
+    display: flex; align-items: center;
+    justify-content: center; font-size: 20px; flex-shrink: 0;
   }
 
-  .moment-title {
-    font-weight: 500;
-    font-size: 15px;
-    margin-bottom: 4px;
-    color: var(--ink);
-  }
-
+  .moment-title { font-weight: 500; font-size: 15px; margin-bottom: 4px; }
   .moment-desc { font-size: 14px; color: var(--muted); margin: 0; }
 
-  /* VALORACIÓN */
+  /* ── VALORACIÓN ── */
   .ratings { display: flex; flex-direction: column; gap: 16px; margin: 32px 0; }
 
-  .rating-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+  .rating-row { display: flex; align-items: center; gap: 16px; }
 
   .rating-label { font-size: 14px; min-width: 120px; color: var(--muted); }
 
   .rating-bar {
-    flex: 1;
-    height: 6px;
-    background: var(--faint);
-    border-radius: 3px;
-    overflow: hidden;
+    flex: 1; height: 6px;
+    background: #d4e4da;
+    border-radius: 3px; overflow: hidden;
   }
 
-  .rating-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 3px;
-  }
+  .rating-fill { height: 100%; background: var(--accent); border-radius: 3px; }
 
   .rating-score {
     font-family: 'Instrument Serif', serif;
-    font-size: 18px;
-    color: var(--ink);
-    min-width: 32px;
-    text-align: right;
+    font-size: 18px; min-width: 32px; text-align: right;
   }
 
-  /* LO MEJOR / PEOR */
-  .verdict {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin: 32px 0;
-  }
+  /* ── VERDICT ── */
+  .verdict { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0; }
 
-  .verdict-box {
-    padding: 24px;
-    border-radius: var(--radius);
-  }
-
+  .verdict-box { padding: 24px; border-radius: var(--radius); }
   .verdict-box.good { background: var(--accent-light); }
-  .verdict-box.bad { background: #fdf0f0; }
+  .verdict-box.bad  { background: #fce8e8; }
 
-  .verdict-title {
-    font-weight: 500;
-    font-size: 13px;
-    margin-bottom: 12px;
-    color: var(--muted);
-  }
-
+  .verdict-title { font-weight: 500; font-size: 13px; margin-bottom: 12px; }
   .verdict-box.good .verdict-title { color: var(--accent); }
-  .verdict-box.bad .verdict-title { color: #c0392b; }
+  .verdict-box.bad  .verdict-title { color: #b03030; }
 
-  .verdict-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  .verdict-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 
   .verdict-list li {
-    font-size: 14px;
-    color: #3d3d3d;
-    padding-left: 16px;
-    position: relative;
-    margin: 0;
+    font-size: 14px; color: #3d3d3d;
+    padding-left: 16px; position: relative; margin: 0;
   }
 
-  .verdict-list li::before {
-    content: '·';
-    position: absolute;
-    left: 4px;
-    color: var(--muted);
-  }
+  .verdict-list li::before { content: '·'; position: absolute; left: 4px; color: var(--muted); }
 
-  /* NOTA FINAL */
+  /* ── QUOTE ── */
   .quote-block {
     border-left: 3px solid var(--warm);
-    padding: 20px 28px;
-    margin: 32px 0;
-    background: var(--faint);
+    padding: 20px 28px; margin: 32px 0;
+    background: rgba(201,169,110,0.1);
     border-radius: 0 var(--radius) var(--radius) 0;
   }
 
   .quote-block p {
     font-family: 'Instrument Serif', serif;
-    font-size: 20px;
-    font-style: italic;
-    color: var(--ink);
-    line-height: 1.5;
-    max-width: none;
-    margin: 0;
+    font-size: 20px; font-style: italic;
+    line-height: 1.5; max-width: none; margin: 0;
   }
 
-  /* FOOTER */
+  /* ── FOOTER ── */
   footer {
-    text-align: center;
-    padding: 48px 32px;
-    font-size: 12px;
-    color: var(--muted);
-    border-top: 1px solid #e8e4de;
+    text-align: center; padding: 48px 32px;
+    font-size: 12px; color: var(--muted);
+    background: var(--bg-a);
+    border-top: 1px solid #c8ddd4;
   }
 
-  footer a {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 500;
-  }
+  footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
 
-  /* RESPONSIVE */
+  /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
     .hero { padding: 40px 24px; }
     nav { padding: 0 16px; overflow-x: auto; }
-    section { padding: 56px 24px; }
-    .gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 160px; }
+    section { padding: 56px 20px; }
+    .photo-thumb { width: 220px; height: 270px; }
+    .photo-thumb:first-child { width: 280px; }
     .verdict { grid-template-columns: 1fr; }
-    .hero-photos { grid-template-columns: 1fr 1fr; }
-    .hero-photos .photo-slot:first-child { grid-column: span 2; }
+    .lightbox-nav { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .gallery-item img { transition: none; }
+    .photo-thumb img, .thumb-label { transition: none; }
   }
 </style>
 </head>
@@ -416,97 +381,110 @@
 
 <!-- RESUMEN -->
 <section id="resumen">
-  <div class="section-label">El viaje</div>
-  <h2>La escala que se convirtió en destino</h2>
-  <p>Tres días en Kuala Lumpur antes de adentrarnos en Vietnam. Lo que iba a ser un simple tránsito terminó siendo un mini viaje en sí mismo: torres imposibles, mercados nocturnos, cuevas sagradas y una piscina con vistas que valió hasta el último euro del hotel.</p>
-  <p>Primer viaje largo juntos. El mejor modo de empezarlo: perdiéndose por una ciudad que no teníamos del todo planeada.</p>
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>La escala que se convirtió en destino</h2>
+    <p>Tres días en Kuala Lumpur antes de adentrarnos en Vietnam. Lo que iba a ser un simple tránsito terminó siendo un mini viaje en sí mismo: torres imposibles, mercados nocturnos, cuevas sagradas y una piscina con vistas que valió hasta el último euro del hotel.</p>
+    <p>Primer viaje largo juntos. El mejor modo de empezarlo: perdiéndose por una ciudad que no teníamos del todo planeada.</p>
 
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-value">3</div>
-      <div class="stat-label">días</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">2</div>
-      <div class="stat-label">viajeros</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">KUL</div>
-      <div class="stat-label">aeropuerto</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">0€</div>
-      <div class="stat-label">visado (gratis 😅)</div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">3</div>
+        <div class="stat-label">días</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">2</div>
+        <div class="stat-label">viajeros</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">KUL</div>
+        <div class="stat-label">aeropuerto</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">0€</div>
+        <div class="stat-label">visado (gratis 😅)</div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- FOTOS -->
 <section id="fotos">
-  <div class="section-label">Galería</div>
-  <h2>Lo que vimos</h2>
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Lo que vimos</h2>
 
-  <div class="gallery">
-    <div class="gallery-item wide">
-      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123567/72195d19-760f-438a-be95-1f6b6d80e174.jpg" alt="Torres Petronas">
+    <div class="photo-strip" id="strip">
+      <div class="photo-thumb" onclick="openLightbox(0)">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123567/72195d19-760f-438a-be95-1f6b6d80e174.jpg" alt="Torres Petronas">
+        <div class="thumb-label">Torres Petronas</div>
+      </div>
+      <div class="photo-thumb" onclick="openLightbox(1)">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123570/IMG_2288.jpg" alt="Templo Sri Maha">
+        <div class="thumb-label">Templo Sri Maha</div>
+      </div>
+      <div class="photo-thumb" onclick="openLightbox(2)">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123567/0e135fc3-3924-4184-8d16-acbfc491c13d.jpg" alt="Batu Caves">
+        <div class="thumb-label">Cuevas de Batu</div>
+      </div>
+      <div class="photo-thumb" onclick="openLightbox(3)">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123568/IMG_2089.jpg" alt="Jalan Alor">
+        <div class="thumb-label">Jalan Alor · mercado nocturno</div>
+      </div>
+      <div class="photo-thumb" onclick="openLightbox(4)">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123569/IMG_2101.jpg" alt="Vistas hotel">
+        <div class="thumb-label">Vistas desde el hotel</div>
+      </div>
+      <div class="photo-thumb" onclick="openLightbox(5)">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123958/Captura_de_pantalla_2026-09-11_125123.jpg" alt="Mercado chino">
+        <div class="thumb-label">Mercado chino</div>
+      </div>
     </div>
-    <div class="gallery-item tall">
-      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123570/IMG_2288.jpg" alt="Templo Sri Maha">
-    </div>
-    <div class="gallery-item">
-      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123567/0e135fc3-3924-4184-8d16-acbfc491c13d.jpg" alt="Batu Caves">
-    </div>
-    <div class="gallery-item">
-      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123568/IMG_2089.jpg" alt="Jalan Alor">
-    </div>
-    <div class="gallery-item">
-      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123569/IMG_2101.jpg" alt="Vistas hotel">
-    </div>
-    <div class="gallery-item">
-      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789123958/Captura_de_pantalla_2026-09-11_125123.jpg" alt="Mercado chino">
-    </div>
+    <div class="photo-hint">← arrastra para ver más · haz clic para ampliar</div>
   </div>
 </section>
 
 <!-- MOMENTOS -->
 <section id="momentos">
-  <div class="section-label">Memoria</div>
-  <h2>Los momentos que quedan</h2>
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
 
-  <div class="moments">
-    <div class="moment">
-      <div class="moment-emoji">🏙️</div>
-      <div>
-        <div class="moment-title">Las Torres Petronas de noche</div>
-        <p class="moment-desc">Uno de esos skylines que no se olvidan. De día impresionan, de noche con la iluminación son otra cosa.</p>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🏙️</div>
+        <div>
+          <div class="moment-title">Las Torres Petronas de noche</div>
+          <p class="moment-desc">Uno de esos skylines que no se olvidan. De día impresionan, de noche con la iluminación son otra cosa.</p>
+        </div>
       </div>
-    </div>
-    <div class="moment">
-      <div class="moment-emoji">🦟</div>
-      <div>
-        <div class="moment-title">Jalan Alor · el caos delicioso</div>
-        <p class="moment-desc">El mercado nocturno más caótico y rico del viaje. Pinchos, satays, zumos de frutas raras y más gente de la que cabe en la calle.</p>
+      <div class="moment">
+        <div class="moment-emoji">🦟</div>
+        <div>
+          <div class="moment-title">Jalan Alor · el caos delicioso</div>
+          <p class="moment-desc">El mercado nocturno más caótico y rico del viaje. Pinchos, satays, zumos de frutas raras y más gente de la que cabe en la calle.</p>
+        </div>
       </div>
-    </div>
-    <div class="moment">
-      <div class="moment-emoji">🐒</div>
-      <div>
-        <div class="moment-title">Cuevas de Batu · los monos mandan</div>
-        <p class="moment-desc">272 escalones, calor, humedad y macacos sin ningún respeto por el espacio personal. Merece la pena igualmente.</p>
+      <div class="moment">
+        <div class="moment-emoji">🐒</div>
+        <div>
+          <div class="moment-title">Cuevas de Batu · los monos mandan</div>
+          <p class="moment-desc">272 escalones, calor, humedad y macacos sin ningún respeto por el espacio personal. Merece la pena igualmente.</p>
+        </div>
       </div>
-    </div>
-    <div class="moment">
-      <div class="moment-emoji">🏊</div>
-      <div>
-        <div class="moment-title">El hotel que no esperábamos</div>
-        <p class="moment-desc">Ceylonz Suites: piscina con vistas a la ciudad y las Torres al fondo. Un hotel que por sí solo justifica parar en KL.</p>
+      <div class="moment">
+        <div class="moment-emoji">🏊</div>
+        <div>
+          <div class="moment-title">El hotel que no esperábamos</div>
+          <p class="moment-desc">Ceylonz Suites: piscina con vistas a la ciudad y las Torres al fondo. Un hotel que por sí solo justifica parar en KL.</p>
+        </div>
       </div>
-    </div>
-    <div class="moment">
-      <div class="moment-emoji">🤦</div>
-      <div>
-        <div class="moment-title">El visado que no hacía falta pagar</div>
-        <p class="moment-desc">Lo pagamos. Era gratis. Aprendizaje para la próxima: revisar siempre la política de visados antes de comprar nada.</p>
+      <div class="moment">
+        <div class="moment-emoji">🤦</div>
+        <div>
+          <div class="moment-title">El visado que no hacía falta pagar</div>
+          <p class="moment-desc">Lo pagamos. Era gratis. Aprendizaje para la próxima: revisar siempre la política de visados antes de comprar nada.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -514,66 +492,145 @@
 
 <!-- VALORACIÓN -->
 <section id="valoracion">
-  <div class="section-label">Balance</div>
-  <h2>¿Cómo fue?</h2>
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
 
-  <div class="ratings">
-    <div class="rating-row">
-      <span class="rating-label">Comida</span>
-      <div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div>
-      <span class="rating-score">9</span>
+    <div class="ratings">
+      <div class="rating-row">
+        <span class="rating-label">Comida</span>
+        <div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div>
+        <span class="rating-score">9</span>
+      </div>
+      <div class="rating-row">
+        <span class="rating-label">Alojamiento</span>
+        <div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div>
+        <span class="rating-score">9.5</span>
+      </div>
+      <div class="rating-row">
+        <span class="rating-label">Ambiente</span>
+        <div class="rating-bar"><div class="rating-fill" style="width:80%"></div></div>
+        <span class="rating-score">8</span>
+      </div>
+      <div class="rating-row">
+        <span class="rating-label">Precio/calidad</span>
+        <div class="rating-bar"><div class="rating-fill" style="width:75%"></div></div>
+        <span class="rating-score">7.5</span>
+      </div>
+      <div class="rating-row">
+        <span class="rating-label">Volvería</span>
+        <div class="rating-bar"><div class="rating-fill" style="width:70%"></div></div>
+        <span class="rating-score">7</span>
+      </div>
     </div>
-    <div class="rating-row">
-      <span class="rating-label">Alojamiento</span>
-      <div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div>
-      <span class="rating-score">9.5</span>
-    </div>
-    <div class="rating-row">
-      <span class="rating-label">Ambiente</span>
-      <div class="rating-bar"><div class="rating-fill" style="width:80%"></div></div>
-      <span class="rating-score">8</span>
-    </div>
-    <div class="rating-row">
-      <span class="rating-label">Precio/calidad</span>
-      <div class="rating-bar"><div class="rating-fill" style="width:75%"></div></div>
-      <span class="rating-score">7.5</span>
-    </div>
-    <div class="rating-row">
-      <span class="rating-label">Volvería</span>
-      <div class="rating-bar"><div class="rating-fill" style="width:70%"></div></div>
-      <span class="rating-score">7</span>
-    </div>
-  </div>
 
-  <div class="verdict">
-    <div class="verdict-box good">
-      <div class="verdict-title">Lo mejor</div>
-      <ul class="verdict-list">
-        <li>El hotel, sin duda</li>
-        <li>Jalan Alor de noche</li>
-        <li>Mezcla cultural única</li>
-        <li>Las Torres Petronas</li>
-        <li>Primer viaje largo juntos ❤️</li>
-      </ul>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>El hotel, sin duda</li>
+          <li>Jalan Alor de noche</li>
+          <li>Mezcla cultural única</li>
+          <li>Las Torres Petronas</li>
+          <li>Primer viaje largo juntos ❤️</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>Pagar el visado sin mirar (era gratis)</li>
+          <li>El calor y la humedad constante</li>
+          <li>Poco tiempo para la ciudad</li>
+        </ul>
+      </div>
     </div>
-    <div class="verdict-box bad">
-      <div class="verdict-title">Lo que no repetiría</div>
-      <ul class="verdict-list">
-        <li>Pagar el visado sin mirar (era gratis)</li>
-        <li>El calor y la humedad constante</li>
-        <li>Poco tiempo para la ciudad</li>
-      </ul>
-    </div>
-  </div>
 
-  <div class="quote-block">
-    <p>"Una escala que en realidad fue un destino. KL te engancha sin pedirte permiso."</p>
+    <div class="quote-block">
+      <p>"Una escala que en realidad fue un destino. KL te engancha sin pedirte permiso."</p>
+    </div>
   </div>
 </section>
 
 <footer>
   <p>Malasia · Noviembre 2025 &nbsp;·&nbsp; <a href="../vietnam/">Siguiente: Vietnam →</a></p>
 </footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); shiftLightbox(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lightbox-caption" id="lb-caption"></div>
+  <div class="lightbox-dots" id="lb-dots"></div>
+  <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); shiftLightbox(1)">›</button>
+</div>
+
+<script>
+  const photos = [
+    { src: 'https://res.cloudinary.com/il7cecht/image/upload/v1789123567/72195d19-760f-438a-be95-1f6b6d80e174.jpg', caption: 'Torres Petronas' },
+    { src: 'https://res.cloudinary.com/il7cecht/image/upload/v1789123570/IMG_2288.jpg', caption: 'Templo Sri Maha' },
+    { src: 'https://res.cloudinary.com/il7cecht/image/upload/v1789123567/0e135fc3-3924-4184-8d16-acbfc491c13d.jpg', caption: 'Cuevas de Batu' },
+    { src: 'https://res.cloudinary.com/il7cecht/image/upload/v1789123568/IMG_2089.jpg', caption: 'Jalan Alor · mercado nocturno' },
+    { src: 'https://res.cloudinary.com/il7cecht/image/upload/v1789123569/IMG_2101.jpg', caption: 'Vistas desde el hotel' },
+    { src: 'https://res.cloudinary.com/il7cecht/image/upload/v1789123958/Captura_de_pantalla_2026-09-11_125123.jpg', caption: 'Mercado chino' },
+  ];
+
+  let current = 0;
+
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCaption = document.getElementById('lb-caption');
+  const lbDots = document.getElementById('lb-dots');
+
+  // Build dots
+  photos.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'lb-dot' + (i === 0 ? ' active' : '');
+    d.onclick = (e) => { e.stopPropagation(); openLightbox(i); };
+    lbDots.appendChild(d);
+  });
+
+  function openLightbox(i) {
+    current = i;
+    lbImg.src = photos[i].src;
+    lbCaption.textContent = photos[i].caption;
+    document.querySelectorAll('.lb-dot').forEach((d, j) => d.classList.toggle('active', j === i));
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeLightboxOutside(e) {
+    if (e.target === lb) closeLightbox();
+  }
+
+  function shiftLightbox(dir) {
+    openLightbox((current + dir + photos.length) % photos.length);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'ArrowRight') shiftLightbox(1);
+    if (e.key === 'ArrowLeft')  shiftLightbox(-1);
+    if (e.key === 'Escape')     closeLightbox();
+  });
+
+  // Drag to scroll strip
+  const strip = document.getElementById('strip');
+  let isDown = false, startX, scrollLeft;
+  strip.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - strip.offsetLeft; scrollLeft = strip.scrollLeft; });
+  strip.addEventListener('mouseleave', () => isDown = false);
+  strip.addEventListener('mouseup', () => isDown = false);
+  strip.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    strip.scrollLeft = scrollLeft - (e.pageX - strip.offsetLeft - startX);
+  });
+</script>
 
 </body>
 </html>
