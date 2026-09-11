@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mis viajes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a1a;
+    --muted: #888;
+    --faint: #f0ede8;
+    --bg: #f7f6f3;
+    --white: #fff;
+    --radius: 14px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 32px 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+  .profile-info h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .profile-info p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 32px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .hstat-value {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    color: var(--ink);
+    display: block;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .hstat-label {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* FILTERS */
+  .filters {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px 32px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1.5px solid #ddd;
+    background: var(--white);
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+
+  .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+  .filter-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  /* GRID */
+  .grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  /* TRIP CARD */
+  .card {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: var(--faint);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+
+  .card.featured {
+    grid-column: span 2;
+    aspect-ratio: auto;
+    grid-row: span 1;
+  }
+
+  .card-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .card:hover .card-photo { transform: scale(1.04); }
+
+  /* placeholder when no photo */
+  .card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 300px;
+  }
+
+  .card-placeholder .ph-emoji { font-size: 40px; opacity: 0.35; }
+  .card-placeholder .ph-label { font-size: 11px; color: var(--muted); }
+
+  /* overlay */
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 30%,
+      rgba(0,0,0,0.12) 55%,
+      rgba(0,0,0,0.72) 100%
+    );
+  }
+
+  .card-body {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 24px 22px 22px;
+  }
+
+  .card-region {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 5px;
+  }
+
+  .card-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .card.featured .card-title { font-size: 32px; }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .card-date {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .card-tag {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(4px);
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+
+  /* hover reveal */
+  .card-hover {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.22s;
+  }
+
+  .card:hover .card-hover { opacity: 1; }
+
+  .card-hover-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0.03em;
+  }
+
+  .card-hover-frase {
+    font-family: 'Instrument Serif', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    padding: 0 32px;
+    line-height: 1.4;
+  }
+
+  /* UPCOMING / PLACEHOLDER CARD */
+  .card-upcoming {
+    border: 2px dashed #d0ccc4;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: default;
+    min-height: 300px;
+  }
+
+  .card-upcoming .up-icon { font-size: 28px; opacity: 0.3; }
+  .card-upcoming .up-text { font-size: 13px; color: var(--muted); }
+
+  /* HIDDEN for filter */
+  .card-wrap.hidden { display: none; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 32px;
+    font-size: 12px;
+    color: #bbb;
+    border-top: 1px solid #e8e4de;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    header { flex-direction: column; align-items: flex-start; padding: 32px 20px 24px; }
+    .header-stats { gap: 20px; }
+    .filters { padding: 0 20px 24px; }
+    .grid { grid-template-columns: repeat(2, 1fr); padding: 0 20px 60px; gap: 5px; }
+    .card.featured { grid-column: span 2; }
+    .card-title { font-size: 18px; }
+    .card.featured .card-title { font-size: 22px; }
+  }
+
+  @media (max-width: 420px) {
+    .grid { grid-template-columns: 1fr; }
+    .card.featured { grid-column: span 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-photo, .card-hover { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="profile">
+    <div class="avatar">🧳</div>
+    <div class="profile-info">
+      <h1>Mis viajes</h1>
+      <p>Memorias, fotos y todo lo que<br>vale la pena recordar.</p>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div>
+      <span class="hstat-value" id="count-viajes">2</span>
+      <span class="hstat-label">viajes</span>
+    </div>
+    <div>
+      <span class="hstat-value">4</span>
+      <span class="hstat-label">países</span>
+    </div>
+    <div>
+      <span class="hstat-value">13</span>
+      <span class="hstat-label">días fuera</span>
+    </div>
+  </div>
+</header>
+
+<!-- FILTERS -->
+<div class="filters">
+  <button class="filter-btn active" onclick="filter('todos', this)">Todos</button>
+  <button class="filter-btn" onclick="filter('asia', this)">Asia</button>
+  <button class="filter-btn" onclick="filter('europa', this)">Europa</button>
+  <button class="filter-btn" onclick="filter('2025', this)">2025</button>
+  <button class="filter-btn" onclick="filter('2024', this)">2024</button>
+</div>
+
+<!-- GRID -->
+<div class="grid" id="grid">
+
+  <!-- VIETNAM — tarjeta grande destacada -->
+  <div class="card-wrap" data-tags="asia 2025">
+    <a class="card featured" href="./vietnam/">
+      <div class="card-placeholder" style="background: #1f1208;">
+        <!-- Cuando tengas foto: <img class="card-photo" src="TU_URL_CLOUDINARY" alt="Vietnam"> -->
+        <div class="ph-emoji">🌀</div>
+        <div class="ph-label" style="color:rgba(255,255,255,0.3)">Añade tu foto de portada</div>
+      </div>
+      <div class="card-overlay"></div>
+      <div class="card-body">
+        <div class="card-region">Sudeste Asiático</div>
+        <div class="card-title">Vietnam</div>
+        <div class="card-meta">
+          <span class="card-date">Nov 2025 · 10 días</span>
+          <span class="card-tag">🌀 Con tifón</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <div class="card-hover-text">Ver viaje →</div>
+        <div class="card-hover-frase">"De sur a norte, con el plan cambiando sobre la marcha."</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- MALASIA -->
+  <div class="card-wrap" data-tags="asia 2025">
+    <a class="card" href="./kuala-lumpur/">
+      <div class="card-placeholder" style="background: #1a2e22;">
+        <!-- Cuando tengas foto: <img class="card-photo" src="TU_URL_CLOUDINARY" alt="Kuala Lumpur"> -->
+        <div class="ph-emoji">🏙️</div>
+        <div class="ph-label" style="color:rgba(255,255,255,0.3)">Añade tu foto de portada</div>
+      </div>
+      <div class="card-overlay"></div>
+      <div class="card-body">
+        <div class="card-region">Sudeste Asiático</div>
+        <div class="card-title">Malasia</div>
+        <div class="card-meta">
+          <span class="card-date">Nov 2025 · 3 días</span>
+          <span class="card-tag">🏊 Hotel top</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <div class="card-hover-text">Ver viaje →</div>
+        <div class="card-hover-frase">"La escala que se convirtió en destino."</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- PRÓXIMO VIAJE — placeholder -->
+  <div class="card-wrap" data-tags="todos">
+    <div class="card card-upcoming">
+      <div class="up-icon">✈️</div>
+      <div class="up-text">Próximo viaje</div>
+    </div>
+  </div>
+
+  <!-- 
+    === CÓMO AÑADIR UN NUEVO VIAJE ===
+    Copia este bloque y pégalo aquí arriba, antes del bloque "Próximo viaje":
+
+    <div class="card-wrap" data-tags="CONTINENTE AÑO">
+      <a class="card" href="./CARPETA-DEL-VIAJE/">
+        <img class="card-photo" src="TU_URL_FOTO" alt="DESTINO">
+        <div class="card-overlay"></div>
+        <div class="card-body">
+          <div class="card-region">REGIÓN</div>
+          <div class="card-title">DESTINO</div>
+          <div class="card-meta">
+            <span class="card-date">MES AÑO · X días</span>
+            <span class="card-tag">EMOJI + ETIQUETA</span>
+          </div>
+        </div>
+        <div class="card-hover">
+          <div class="card-hover-text">Ver viaje →</div>
+          <div class="card-hover-frase">"Tu frase del viaje aquí."</div>
+        </div>
+      </a>
+    </div>
+
+    Para hacerlo tarjeta grande (2 columnas), añade class="card featured" en lugar de class="card"
+  -->
+
+</div>
+
+<footer>
+  Memorias propias · sin algoritmos · sin likes
+</footer>
+
+<script>
+  function filter(tag, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.card-wrap').forEach(card => {
+      if (tag === 'todos') {
+        card.classList.remove('hidden');
+      } else {
+        const tags = card.dataset.tags || '';
+        card.classList.toggle('hidden', !tags.includes(tag));
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
