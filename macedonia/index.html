@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Macedonia del Norte · Invierno 2024</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b; --accent: #8b1a1a;
+    --accent-light: #f8ecec; --warm: #c9a96e;
+    --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+  .hero { min-height: 70vh; background: #1a0d0d; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.6; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,4.5vw,58px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e0dbd4; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+  .lema { font-family: 'Instrument Serif', serif; font-size: clamp(22px,3vw,32px); font-style: italic; color: var(--accent); text-align: center; padding: 28px 32px; background: var(--accent-light); border-radius: var(--radius); margin: 20px 0; line-height: 1.3; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #c8b8b8; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+  .masonry { columns: 3; column-gap: 8px; margin: 20px 0; }
+  .thumb { position: relative; cursor: zoom-in; background: #d8c8c8; overflow: hidden; break-inside: avoid; margin-bottom: 8px; border-radius: 8px; display: block; }
+  .thumb img { width:100%; height:auto; display:block; transition: transform 0.35s ease; }
+  .thumb:hover img { transform: scale(1.03); }
+  .thumb .cap { position: absolute; bottom:0; left:0; right:0; padding: 28px 12px 10px; background: linear-gradient(transparent, rgba(0,0,0,0.5)); color: #fff; font-size: 11px; opacity: 0; transition: opacity 0.2s; }
+  .thumb:hover .cap { opacity: 1; }
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e0d8d0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e0d0d0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(10,4,4,0.95); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:6px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:300px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d0c8c0; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .masonry { columns: 2; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789410688/07022e8c-1dbf-4007-bd4c-bf2896ce4d53.jpg" alt="Skopje">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Macedonia <em>del Norte</em></h1>
+    <div class="tag">Invierno 2024 · Viaje de amigos</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🎄 Cero mercados navideños</span>
+      <span>🗿 Estatuas gigantes</span>
+      <span>🍺 Cerveza y jersey navideño</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../londres/">← Londres</a>
+</nav>
+
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>El viaje anual de los amigos de Feijoo</h2>
+    <p>Un año más, el grupo eligió destino para el viaje de invierno. Esta vez tocó Macedonia del Norte — Skopje, estatuas descomunales, bares llenos de humo como si el tiempo no hubiera pasado, y cero mercados navideños. Pero lo importante no era eso.</p>
+    <p>Lo importante era estar todos juntos, con el jersey navideño puesto, con una cerveza en la mano, y con alguien haciendo de gogo dancer en el momento menos esperado.</p>
+    <div class="lema">"Mace Mace Macedonia... del Norte"</div>
+    <div class="stats">
+      <div class="stat"><div class="stat-value">10+</div><div class="stat-label">personas</div></div>
+      <div class="stat"><div class="stat-value">0</div><div class="stat-label">mercados navideños</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">estatuas en Skopje</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">club del colacao</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Lo que captamos</h2>
+    <p>Haz clic en cualquier foto para verla en grande.</p>
+    <div class="masonry">
+      <div class="thumb" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411031/e9d730bd-ba99-404e-b3c3-4736b8b64cfc.jpg" alt="Skopje"><div class="cap">Skopje</div></div>
+      <div class="thumb" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411688/1c11e6ff-79bb-40a1-9285-ca41ede35f9d.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411688/9c9345de-7401-4642-93b0-3477581abeb1.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411688/3ae87afe-aa4b-4de1-ad27-2dc987baa730.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411689/27dc65f5-ccea-4419-98ca-573a74f72315.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411689/33e7eb3b-e453-40ca-a007-cd34492517e6.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411688/4a411580-9490-402e-92c3-1520f5206e9e.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411690/52d960fb-0b55-4758-83ed-975f745e281e.jpg" alt="Skopje"><div class="cap">Skopje</div></div>
+      <div class="thumb" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789410688/0ac8bb4c-e4a2-44dc-a670-b9d19a2bc0c7.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411692/82a11531-8f5b-4272-b024-adf59d02fde8.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411696/7290ccf4-21d9-4b1f-a416-9283cdbf624e.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411697/ae02a8c8-bab5-49c9-bc7c-761a4741ee31.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411699/IMG_4004_1.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411703/IMG_4166.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411702/IMG_4101.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411703/IMG_4118.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411702/IMG_4033.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411704/IMG_4195.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411700/IMG_4004.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411705/IMG_4258.jpg" alt="Macedonia"><div class="cap">Macedonia</div></div>
+      <div class="thumb" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789411705/IMG_4390.jpg" alt="El grupo"><div class="cap">El grupo</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment"><div class="moment-emoji">🎄</div><div><div class="moment-title">Cero mercados navideños</div><p class="moment-desc">El plan era visitar los mercados navideños. Macedonia del Norte tiene otros planes. Sin mercados, pero con mucho carácter propio.</p></div></div>
+      <div class="moment"><div class="moment-emoji">🗿</div><div><div class="moment-title">Estatuas gigantes en Skopje</div><p class="moment-desc">Skopje tiene una obsesión con las estatuas colosales. Guerreros, caballos, figuras históricas por todas partes. Una ciudad que no pasa desapercibida.</p></div></div>
+      <div class="moment"><div class="moment-emoji">🕺</div><div><div class="moment-title">Julia, gogo dancer</div><p class="moment-desc">Hay momentos que no necesitan más explicación. Julia encontró su vocación esa noche.</p></div></div>
+      <div class="moment"><div class="moment-emoji">🎮</div><div><div class="moment-title">El juego del impostor</div><p class="moment-desc">Among Us versión viaje de amigos. Desconfianza generalizada, acusaciones injustas y mucha risa.</p></div></div>
+      <div class="moment"><div class="moment-emoji">🧋</div><div><div class="moment-title">Nació el club del colacao (o de la tisana)</div><p class="moment-desc">Para los que no podían más con la cerveza, o simplemente querían algo caliente. El club más selecto del viaje.</p></div></div>
+      <div class="moment"><div class="moment-emoji">🚬</div><div><div class="moment-title">Fumando en los bares como en España en los 2000</div><p class="moment-desc">Nostalgia involuntaria. Entras a un bar y de repente tienes 18 años otra vez.</p></div></div>
+      <div class="moment"><div class="moment-emoji">💚</div><div><div class="moment-title">Primer (y ojalá no último) viaje de Chigo</div><p class="moment-desc">El novio de la Pelosi se estrenó en el viaje anual. Bautismo de fuego superado con nota.</p></div></div>
+      <div class="moment"><div class="moment-emoji">😂</div><div><div class="moment-title">Ana de excursión con los padres</div><p class="moment-desc">La hermana de Vero, más joven que todos nosotros, de visita familiar en Macedonia al mismo tiempo. El mundo es un pañuelo.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">El grupo</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">Cerveza y bares</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+      <div class="rating-row"><span class="rating-label">La ciudad</span><div class="rating-bar"><div class="rating-fill" style="width:72%"></div></div><span class="rating-score">7.2</span></div>
+      <div class="rating-row"><span class="rating-label">Mercados navideños</span><div class="rating-bar"><div class="rating-fill" style="width:0%"></div></div><span class="rating-score">0</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:60%"></div></div><span class="rating-score">6</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>El grupo completo reunido</li>
+          <li>Precios increíblemente baratos</li>
+          <li>Las estatuas de Skopje</li>
+          <li>El jersey navideño colectivo</li>
+          <li>El club del colacao</li>
+          <li>Julia gogo dancer</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>El humo en los bares</li>
+          <li>Cero mercados navideños</li>
+          <li>Que Chigo no repita el próximo año</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"El destino importa menos de lo que parece cuando la gente es la correcta."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Macedonia del Norte · Invierno 2024 &nbsp;·&nbsp; <a href="../londres/">← Londres</a></p>
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+  const photos = [
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411031/e9d730bd-ba99-404e-b3c3-4736b8b64cfc.jpg', c:'Skopje'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411688/1c11e6ff-79bb-40a1-9285-ca41ede35f9d.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411688/9c9345de-7401-4642-93b0-3477581abeb1.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411688/3ae87afe-aa4b-4de1-ad27-2dc987baa730.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411689/27dc65f5-ccea-4419-98ca-573a74f72315.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411689/33e7eb3b-e453-40ca-a007-cd34492517e6.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411688/4a411580-9490-402e-92c3-1520f5206e9e.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411690/52d960fb-0b55-4758-83ed-975f745e281e.jpg', c:'Skopje'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789410688/0ac8bb4c-e4a2-44dc-a670-b9d19a2bc0c7.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411692/82a11531-8f5b-4272-b024-adf59d02fde8.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411696/7290ccf4-21d9-4b1f-a416-9283cdbf624e.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411697/ae02a8c8-bab5-49c9-bc7c-761a4741ee31.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411699/IMG_4004_1.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411703/IMG_4166.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411702/IMG_4101.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411703/IMG_4118.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411702/IMG_4033.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411704/IMG_4195.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411700/IMG_4004.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411705/IMG_4258.jpg', c:'Macedonia'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789411705/IMG_4390.jpg', c:'El grupo'},
+  ];
+
+  let cur = 0;
+  const lbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCap = document.getElementById('lb-cap');
+  const lbDots = document.getElementById('lb-dots');
+
+  photos.forEach((_,i) => {
+    const d = document.createElement('button');
+    d.className = 'lb-dot'+(i===0?' on':'');
+    d.onclick = e => { e.stopPropagation(); lb(i); };
+    lbDots.appendChild(d);
+  });
+
+  function lb(i) {
+    if(i >= photos.length) return;
+    cur = i; lbImg.src = photos[i].s; lbCap.textContent = photos[i].c;
+    document.querySelectorAll('.lb-dot').forEach((d,j) => d.classList.toggle('on', j===i));
+    lbox.classList.add('open'); document.body.style.overflow = 'hidden';
+  }
+  function closeLb() { lbox.classList.remove('open'); document.body.style.overflow=''; }
+  function closeLbOutside(e) { if(e.target===lbox) closeLb(); }
+  function shiftLb(d) { lb((cur+d+photos.length)%photos.length); }
+  document.addEventListener('keydown', e => {
+    if(!lbox.classList.contains('open')) return;
+    if(e.key==='ArrowRight') shiftLb(1);
+    if(e.key==='ArrowLeft') shiftLb(-1);
+    if(e.key==='Escape') closeLb();
+  });
+</script>
+</body>
+</html>
