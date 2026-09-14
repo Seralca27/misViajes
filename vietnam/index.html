@@ -12,458 +12,302 @@
   :root {
     --ink: #1a1a1a;
     --muted: #6b6b6b;
-    --faint: #f2ede6;
     --accent: #b5451b;
     --accent-light: #fdf0eb;
     --warm: #e8a550;
-    --bg: #faf9f7;
-    --white: #ffffff;
+    --bg-a: #eef2f7;
+    --bg-b: #f7f4ef;
     --radius: 12px;
   }
 
   body {
     font-family: 'Inter', sans-serif;
     font-weight: 300;
-    background: var(--bg);
     color: var(--ink);
     line-height: 1.7;
     font-size: 16px;
+    background: var(--bg-a);
   }
 
-  /* HERO */
+  /* ── HERO ── */
   .hero {
-    min-height: 100vh;
+    min-height: 70vh;
     background: #1f1208;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 60px 48px;
     position: relative;
     overflow: hidden;
   }
 
-  .hero-photos {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 3px;
-    opacity: 0.45;
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.55; }
+
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 60%);
   }
 
-  .hero-photos .photo-slot {
-    background: #3a2010;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+  .hero-top {
+    position: absolute; top: 40px; right: 48px; text-align: right;
   }
 
-  .hero-photos .photo-slot img {
-    width: 100%; height: 100%; object-fit: cover;
-  }
-
-  .hero-photos .photo-slot.placeholder::after {
-    content: attr(data-label);
-    color: rgba(255,255,255,0.2);
-    font-size: 11px;
-    font-family: 'Inter', sans-serif;
-    text-align: center;
-    padding: 8px;
-  }
-
-  .hero-photos .photo-slot:first-child { grid-row: span 2; }
-
-  .hero-content { position: relative; z-index: 2; }
-
-  .hero-tag {
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    color: var(--warm);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .hero h1 {
+  .hero-top h1 {
     font-family: 'Instrument Serif', serif;
-    font-size: clamp(52px, 8vw, 96px);
-    line-height: 0.95;
-    color: #fff;
-    margin-bottom: 24px;
-    font-weight: 400;
+    font-size: clamp(36px,5vw,64px);
+    font-weight: 400; color: #fff; line-height: 1.1;
   }
 
-  .hero h1 em { font-style: italic; color: var(--warm); }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+
+  .hero-top .tag {
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.12em; color: var(--warm);
+    text-transform: uppercase; margin-top: 8px;
+  }
+
+  .hero-bottom {
+    position: absolute; bottom: 40px; right: 48px; text-align: right;
+  }
 
   .hero-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    color: rgba(255,255,255,0.55);
-    font-size: 14px;
+    display: flex; flex-wrap: wrap; gap: 20px;
+    justify-content: flex-end;
+    color: rgba(255,255,255,0.6); font-size: 13px;
   }
 
-  /* RUTA VISUAL */
+  /* ── ROUTE BAR ── */
   .route-bar {
     background: var(--ink);
-    padding: 20px 48px;
-    display: flex;
-    align-items: center;
-    gap: 0;
-    overflow-x: auto;
-    scrollbar-width: none;
+    padding: 16px 48px;
+    display: flex; align-items: center;
+    overflow-x: auto; scrollbar-width: none;
   }
-
   .route-bar::-webkit-scrollbar { display: none; }
 
-  .route-city {
-    color: rgba(255,255,255,0.6);
-    font-size: 13px;
-    white-space: nowrap;
-    padding: 0 4px;
-  }
-
+  .route-city { color: rgba(255,255,255,0.45); font-size: 13px; white-space: nowrap; padding: 0 4px; }
   .route-city.visited { color: var(--warm); font-weight: 500; }
-  .route-sep { color: rgba(255,255,255,0.25); padding: 0 8px; font-size: 12px; }
+  .route-sep { color: rgba(255,255,255,0.2); padding: 0 8px; font-size: 12px; }
 
-  /* NAV */
+  /* ── NAV ── */
   nav {
-    position: sticky;
-    top: 0;
-    background: var(--white);
-    border-bottom: 1px solid #e8e4de;
+    position: sticky; top: 0;
+    background: #fff;
+    border-bottom: 1px solid #e0dbd4;
     padding: 0 48px;
-    display: flex;
-    gap: 0;
-    z-index: 100;
-    overflow-x: auto;
+    display: flex; gap: 0; z-index: 100;
+    overflow-x: auto; scrollbar-width: none;
   }
-
   nav::-webkit-scrollbar { display: none; }
 
   nav a {
-    display: block;
-    padding: 16px 18px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--muted);
-    text-decoration: none;
+    display: block; padding: 14px 16px;
+    font-size: 13px; font-weight: 500;
+    color: var(--muted); text-decoration: none;
     border-bottom: 2px solid transparent;
     white-space: nowrap;
     transition: color 0.2s, border-color 0.2s;
   }
-
   nav a:hover { color: var(--ink); border-color: var(--accent); }
 
-  /* SECTIONS */
-  section {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 80px 32px;
-  }
+  /* ── SECTIONS ── */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd)  { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
 
-  section + section { border-top: 1px solid #e8e4de; }
+  .inner { max-width: 900px; margin: 0 auto; }
 
   .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    color: var(--warm);
-    text-transform: uppercase;
-    margin-bottom: 12px;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; color: var(--warm);
+    text-transform: uppercase; margin-bottom: 10px;
   }
 
   h2 {
     font-family: 'Instrument Serif', serif;
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 24px;
+    font-size: clamp(26px,4vw,38px);
+    font-weight: 400; line-height: 1.2; margin-bottom: 16px;
   }
 
-  p { color: #3d3d3d; margin-bottom: 16px; max-width: 640px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
 
-  /* STATS */
+  /* ── STATS ── */
   .stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1px;
-    background: #e8e4de;
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin: 40px 0;
+    grid-template-columns: repeat(auto-fit, minmax(110px,1fr));
+    gap: 1px; background: #d8c8be;
+    border-radius: var(--radius); overflow: hidden; margin: 20px 0;
   }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
 
-  .stat { background: var(--white); padding: 24px; text-align: center; }
+  /* ── TIMELINE ── */
+  .timeline { position: relative; margin: 24px 0; }
+  .timeline::before { content:''; position:absolute; left:23px; top:0; bottom:0; width:1px; background:#ddd; }
 
-  .stat-value {
-    font-family: 'Instrument Serif', serif;
-    font-size: 36px;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .stat-label { font-size: 12px; color: var(--muted); }
-
-  /* TIMELINE */
-  .timeline { position: relative; margin: 40px 0; }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 23px;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: #e8e4de;
-  }
-
-  .timeline-item {
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 20px;
-    margin-bottom: 32px;
-    position: relative;
-  }
+  .timeline-item { display:grid; grid-template-columns:48px 1fr; gap:16px; margin-bottom:24px; position:relative; }
 
   .tl-dot {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--white);
-    border: 2px solid #e8e4de;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-    z-index: 1;
+    width:48px; height:48px; border-radius:50%;
+    background:#fff; border:2px solid #ddd;
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px; flex-shrink:0; z-index:1;
+  }
+  .tl-dot.hi { background: var(--accent-light); border-color: var(--accent); }
+
+  .tl-content { padding-top:6px; }
+  .tl-date { font-size:11px; font-weight:500; letter-spacing:0.08em; color:var(--muted); text-transform:uppercase; margin-bottom:3px; }
+  .tl-title { font-weight:500; font-size:15px; margin-bottom:4px; }
+  .tl-desc { font-size:14px; color:var(--muted); margin:0; max-width:560px; }
+
+  /* ── CITY GALLERY BLOCKS ── */
+  .city-block { margin: 32px 0; }
+
+  .city-header {
+    display: flex; align-items: baseline; gap: 12px;
+    margin-bottom: 12px; padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
   }
 
-  .tl-dot.highlight {
-    background: var(--accent-light);
-    border-color: var(--accent);
-  }
-
-  .tl-content { padding-top: 8px; }
-
-  .tl-date {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .tl-title {
-    font-weight: 500;
-    font-size: 16px;
-    margin-bottom: 6px;
-    color: var(--ink);
-  }
-
-  .tl-desc { font-size: 14px; color: var(--muted); margin: 0; max-width: 560px; }
-
-  /* GALERÍA */
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 220px;
-    gap: 6px;
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin: 40px 0;
-  }
-
-  .gallery-item {
-    background: var(--faint);
-    overflow: hidden;
-    position: relative;
-  }
-
-  .gallery-item.wide { grid-column: span 2; }
-  .gallery-item.tall { grid-row: span 2; }
-
-  .gallery-item img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.4s ease;
-  }
-
-  .gallery-item:hover img { transform: scale(1.04); }
-
-  .gallery-item.placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: 2px dashed #d0cbc3;
-    cursor: pointer;
-  }
-
-  .gallery-item.placeholder .ph-icon { font-size: 28px; opacity: 0.4; }
-
-  .gallery-item.placeholder .ph-text {
-    font-size: 11px;
-    color: var(--muted);
-    text-align: center;
-    padding: 0 16px;
-  }
-
-  .gallery-caption {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.6));
-    color: #fff;
-    font-size: 12px;
-    padding: 24px 14px 12px;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  .gallery-item:hover .gallery-caption { opacity: 1; }
-
-  /* MOMENTOS */
-  .moments { display: flex; flex-direction: column; gap: 0; margin: 32px 0; }
-
-  .moment {
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 16px;
-    padding: 24px 0;
-    border-bottom: 1px solid #eee;
-    align-items: start;
-  }
-
-  .moment:last-child { border-bottom: none; }
-
-  .moment-emoji {
-    width: 48px;
-    height: 48px;
-    background: var(--accent-light);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-
-  .moment-title {
-    font-weight: 500;
-    font-size: 15px;
-    margin-bottom: 4px;
-    color: var(--ink);
-  }
-
-  .moment-desc { font-size: 14px; color: var(--muted); margin: 0; }
-
-  /* VALORACIÓN */
-  .ratings { display: flex; flex-direction: column; gap: 16px; margin: 32px 0; }
-
-  .rating-row { display: flex; align-items: center; gap: 16px; }
-
-  .rating-label { font-size: 14px; min-width: 140px; color: var(--muted); }
-
-  .rating-bar {
-    flex: 1;
-    height: 6px;
-    background: var(--faint);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .rating-fill { height: 100%; background: var(--accent); border-radius: 3px; }
-
-  .rating-score {
+  .city-name {
     font-family: 'Instrument Serif', serif;
-    font-size: 18px;
-    color: var(--ink);
-    min-width: 32px;
-    text-align: right;
+    font-size: 22px; font-weight: 400; color: var(--ink);
   }
 
-  /* LO MEJOR / PEOR */
-  .verdict {
+  .city-count { font-size: 12px; color: var(--muted); }
+
+  /* Layout A: strip horizontal (muchas fotos) */
+  .layout-strip {
+    display: flex; gap: 6px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    padding-bottom: 8px; cursor: grab;
+  }
+  .layout-strip:active { cursor: grabbing; }
+  .layout-strip::-webkit-scrollbar { height: 3px; }
+  .layout-strip::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+
+  .layout-strip .thumb {
+    flex: 0 0 auto; scroll-snap-align: start;
+    width: 240px; height: 300px;
+    border-radius: 8px; overflow: hidden; position: relative; cursor: zoom-in;
+  }
+  .layout-strip .thumb:first-child { width: 320px; }
+
+  /* Layout B: cuadrícula editorial (4-6 fotos) */
+  .layout-editorial {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: 200px;
+    gap: 6px;
+    border-radius: 10px; overflow: hidden;
+  }
+  .layout-editorial .thumb:nth-child(1) { grid-column: span 2; }
+  .layout-editorial .thumb:nth-child(4) { grid-column: span 2; }
+
+  /* Layout C: dúo (2-3 fotos) */
+  .layout-duo {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin: 32px 0;
+    grid-auto-rows: 260px;
+    gap: 6px;
+    border-radius: 10px; overflow: hidden;
+  }
+  .layout-duo .thumb:only-child { grid-column: span 2; }
+
+  /* Layout D: panorámica (1 foto) */
+  .layout-single .thumb {
+    width: 100%; height: 320px;
+    border-radius: 10px; overflow: hidden;
   }
 
-  .verdict-box { padding: 24px; border-radius: var(--radius); }
-  .verdict-box.good { background: #edf6ed; }
-  .verdict-box.bad { background: #fdf0f0; }
-
-  .verdict-title {
-    font-weight: 500;
-    font-size: 13px;
-    margin-bottom: 12px;
+  /* Thumb común */
+  .thumb { position: relative; cursor: zoom-in; background: #e8e0d8; }
+  .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.35s ease; }
+  .thumb:hover img { transform: scale(1.05); }
+  .thumb .cap {
+    position: absolute; bottom:0; left:0; right:0;
+    padding: 28px 12px 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.5));
+    color: #fff; font-size: 11px;
+    opacity: 0; transition: opacity 0.2s;
   }
+  .thumb:hover .cap { opacity: 1; }
 
-  .verdict-box.good .verdict-title { color: #2d6a4f; }
-  .verdict-box.bad .verdict-title { color: #c0392b; }
-
-  .verdict-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-
-  .verdict-list li {
-    font-size: 14px;
-    color: #3d3d3d;
-    padding-left: 16px;
-    position: relative;
-    margin: 0;
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(10,6,2,0.95);
+    align-items: center; justify-content: center; flex-direction: column;
   }
-
-  .verdict-list li::before { content: '·'; position: absolute; left: 4px; color: var(--muted); }
-
-  /* QUOTE */
-  .quote-block {
-    border-left: 3px solid var(--warm);
-    padding: 20px 28px;
-    margin: 32px 0;
-    background: var(--faint);
-    border-radius: 0 var(--radius) var(--radius) 0;
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color: rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav {
+    position:absolute; top:50%; transform:translateY(-50%);
+    background: rgba(255,255,255,0.12); border:none; color:#fff;
+    width:48px; height:48px; border-radius:50%; font-size:22px;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition: background 0.2s;
   }
-
-  .quote-block p {
-    font-family: 'Instrument Serif', serif;
-    font-size: 20px;
-    font-style: italic;
-    color: var(--ink);
-    line-height: 1.5;
-    max-width: none;
-    margin: 0;
+  .lb-nav:hover { background: rgba(255,255,255,0.25); }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close {
+    position:absolute; top:20px; right:24px;
+    background:none; border:none; color:rgba(255,255,255,0.6);
+    font-size:28px; cursor:pointer;
   }
+  .lb-dots { display:flex; gap:6px; margin-top:12px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; transition:background 0.2s; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
 
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 48px 32px;
-    font-size: 12px;
-    color: var(--muted);
-    border-top: 1px solid #e8e4de;
-  }
+  /* ── MOMENTOS ── */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e0d8d0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
 
-  footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  /* ── VALORACIÓN ── */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e0d8d0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
 
-  /* RESPONSIVE */
-  @media (max-width: 600px) {
-    .hero { padding: 40px 24px; }
-    .route-bar { padding: 16px 24px; }
-    nav { padding: 0 16px; }
-    section { padding: 56px 24px; }
-    .gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 160px; }
-    .verdict { grid-template-columns: 1fr; }
-    .hero-photos { grid-template-columns: 1fr 1fr; }
-  }
+  /* ── VERDICT ── */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#e8f4ed; }
+  .verdict-box.bad  { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad  .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
 
-  @media (prefers-reduced-motion: reduce) {
-    .gallery-item img { transition: none; }
-    .gallery-caption { opacity: 1; }
+  /* ── QUOTE ── */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(232,165,80,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* ── FOOTER ── */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d8d0c8; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width:640px) {
+    .hero-photos { grid-template-columns:1fr 1fr; }
+    .hero-photos .ps:first-child { grid-row:span 1; grid-column:span 2; }
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .layout-editorial { grid-template-columns:1fr 1fr; grid-auto-rows:160px; }
+    .layout-editorial .thumb:nth-child(1),
+    .layout-editorial .thumb:nth-child(4) { grid-column:span 2; }
+    .layout-duo { grid-auto-rows:200px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
   }
 </style>
 </head>
@@ -472,19 +316,18 @@
 <!-- HERO -->
 <div class="hero">
   <div class="hero-photos">
-    <div class="photo-slot placeholder" data-label="foto principal · Ho Chi Minh o Ha Long"></div>
-    <div class="photo-slot placeholder" data-label="foto 2"></div>
-    <div class="photo-slot placeholder" data-label="foto 3"></div>
-    <div class="photo-slot placeholder" data-label="foto 4"></div>
-    <div class="photo-slot placeholder" data-label="foto 5"></div>
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382991/PHOTO-2025-11-09-03-44-24.jpg" alt="Bahía de Ha Long">
   </div>
-  <div class="hero-content">
-    <div class="hero-tag">Noviembre 2025 · 10 días</div>
-    <h1>Vietnam<br><em>de sur a norte</em></h1>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Vietnam <em>de sur a norte</em></h1>
+    <div class="tag">Noviembre 2025 · 10 días</div>
+  </div>
+  <div class="hero-bottom">
     <div class="hero-meta">
       <span>🌀 Con tifón incluido</span>
       <span>🛵 En moto por Tam Coc</span>
-      <span>🍢 Pinchos morunos insalubres pero gloriosos</span>
+      <span>🍢 Pinchos gloriosos</span>
     </div>
   </div>
 </div>
@@ -493,17 +336,19 @@
 <div class="route-bar">
   <span class="route-city visited">Ho Chi Minh</span>
   <span class="route-sep">→</span>
+  <span class="route-city visited">Hoi An</span>
+  <span class="route-sep">→</span>
+  <span class="route-city visited">Da Nang</span>
+  <span class="route-sep">→</span>
   <span class="route-city visited">Hué</span>
   <span class="route-sep">→</span>
-  <span class="route-city" style="color:rgba(255,255,255,0.3); text-decoration: line-through;">Da Nang</span>
-  <span class="route-sep">⚡</span>
   <span class="route-city visited">Hanói</span>
+  <span class="route-sep">→</span>
+  <span class="route-city visited">Ha Long</span>
   <span class="route-sep">→</span>
   <span class="route-city visited">Ninh Bình</span>
   <span class="route-sep">→</span>
   <span class="route-city visited">Tam Coc</span>
-  <span class="route-sep">→</span>
-  <span class="route-city visited">Hanói</span>
 </div>
 
 <!-- NAV -->
@@ -518,198 +363,274 @@
 
 <!-- RESUMEN -->
 <section id="resumen">
-  <div class="section-label">El viaje</div>
-  <h2>El plan era uno. Vietnam tenía otros.</h2>
-  <p>Diez días de sur a norte, de Ho Chi Minh a Hanói, atravesando el país en bus nocturno y con un tifón que nos rediseñó la ruta sobre la marcha. Da Nang y Hoi An se quedaron bajo el agua — nosotros cogimos un vuelo improvisado a Hanói y desde ahí bajamos hasta Ninh Bình en bus para luego volver.</p>
-  <p>Un viaje que fue exactamente lo que tenía que ser: impredecible, caótico, agotador en los mejores momentos y completamente irrepetible.</p>
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>El plan era uno. Vietnam tenía otros.</h2>
+    <p>Diez días de sur a norte, de Ho Chi Minh a Hanói, atravesando el país en bus nocturno y con un tifón que nos rediseñó la ruta sobre la marcha. Da Nang y Hoi An se quedaron bajo el agua — cogimos un vuelo improvisado a Hanói y desde ahí bajamos hasta Ninh Bình en bus para luego volver.</p>
+    <p>Un viaje impredecible, caótico, agotador en los mejores momentos y completamente irrepetible.</p>
 
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-value">10</div>
-      <div class="stat-label">días</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">5</div>
-      <div class="stat-label">ciudades</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">1</div>
-      <div class="stat-label">tifón</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">∞</div>
-      <div class="stat-label">motos en HCM</div>
+    <div class="stats">
+      <div class="stat"><div class="stat-value">10</div><div class="stat-label">días</div></div>
+      <div class="stat"><div class="stat-value">7</div><div class="stat-label">ciudades</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">tifón</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">motos en HCM</div></div>
     </div>
   </div>
 </section>
 
 <!-- RUTA DETALLADA -->
 <section id="ruta">
-  <div class="section-label">Día a día</div>
-  <h2>Cómo fue cambiando el plan</h2>
+  <div class="inner">
+    <div class="section-label">Día a día</div>
+    <h2>Cómo fue cambiando el plan</h2>
 
-  <div class="timeline">
-    <div class="timeline-item">
-      <div class="tl-dot">✈️</div>
-      <div class="tl-content">
-        <div class="tl-date">Día 1 · llegada</div>
-        <div class="tl-title">Ho Chi Minh City — primer impacto</div>
-        <p class="tl-desc">Aterrizas y el caos de motos te recibe antes de salir del aeropuerto. La ciudad más ruidosa, más viva y más intensa del viaje. Días de mercados, callejones y cruzar la calle como si la vida fuera un videojuego.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="tl-dot">✈️</div>
+        <div class="tl-content">
+          <div class="tl-date">Días 1-3 · llegada</div>
+          <div class="tl-title">Ho Chi Minh City — primer impacto</div>
+          <p class="tl-desc">Aterrizas y el caos de motos te recibe antes de salir del aeropuerto. Mercado de Ben Thanh, barrio de Bùi Viện, el Palacio de la Reunificación. Y las motos — siempre las motos.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-dot">🛕</div>
-      <div class="tl-content">
-        <div class="tl-date">Días 2-3</div>
-        <div class="tl-title">Ho Chi Minh · explorando la ciudad</div>
-        <p class="tl-desc">El mercado de Ben Thanh, el barrio de Bùi Viện, el Palacio de la Reunificación. Y las motos — siempre las motos.</p>
+      <div class="timeline-item">
+        <div class="tl-dot hi">🌀</div>
+        <div class="tl-content">
+          <div class="tl-date">Cambio de plan</div>
+          <div class="tl-title">Tifón en Hoi An — vuelo cancelado, ruta nueva</div>
+          <p class="tl-desc">El vuelo HCM → Da Nang cancelado. Hoi An bajo el agua. Nueva ruta improvisada: directo a Hanói y desde ahí bajar en bus hasta Ninh Bình.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-dot highlight">🌀</div>
-      <div class="tl-content">
-        <div class="tl-date">Cambio de plan</div>
-        <div class="tl-title">Tifón en Hoi An — vuelo cancelado, ruta nueva</div>
-        <p class="tl-desc">El vuelo Ho Chi Minh → Da Nang era la siguiente parada. Hoi An estaba inundado por el tifón. Vuelo perdido. Nueva ruta improvisada: directo a Hanói desde HCM y desde ahí bajar al sur hasta Ninh Bình.</p>
+      <div class="timeline-item">
+        <div class="tl-dot">🏮</div>
+        <div class="tl-content">
+          <div class="tl-date">Parada inesperada</div>
+          <div class="tl-title">Hoi An — las linternas después del tifón</div>
+          <p class="tl-desc">Visitamos igualmente aunque con el rastro del agua. Las linternas por el río y el casco antiguo compensaron de sobra.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-dot">🏯</div>
-      <div class="tl-content">
-        <div class="tl-date">Parada sorpresa</div>
-        <div class="tl-title">Hué — la pájara</div>
-        <p class="tl-desc">Entre la ruta cambiada, el calor y el ritmo del viaje, aquí llegó el bajón físico. La ciudadela imperial, el río Perfume y tiempo para recuperar fuerzas.</p>
+      <div class="timeline-item">
+        <div class="tl-dot">🏯</div>
+        <div class="tl-content">
+          <div class="tl-date">Parada sorpresa</div>
+          <div class="tl-title">Hué — la pájara</div>
+          <p class="tl-desc">Entre el calor y el ritmo del viaje, aquí llegó el bajón físico. La ciudadela imperial y el río Perfume. Tiempo para recuperar fuerzas.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-dot highlight">🛵</div>
-      <div class="tl-content">
-        <div class="tl-date">El momento del viaje</div>
-        <div class="tl-title">Tam Coc en motillo</div>
-        <p class="tl-desc">Alquilar una moto y recorrer el valle de Ninh Bình entre arrozales y karsts. Uno de esos días que no se olvidan. El paisaje más bonito del viaje.</p>
+      <div class="timeline-item">
+        <div class="tl-dot">🏙️</div>
+        <div class="tl-content">
+          <div class="tl-date">Norte</div>
+          <div class="tl-title">Hanói + Bahía de Ha Long</div>
+          <p class="tl-desc">El lago Hoan Kiem, el barrio antiguo. Y la excursión a Ha Long: los karsts emergiendo del mar, la noche en barco.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-dot">🚌</div>
-      <div class="tl-content">
-        <div class="tl-date">La vuelta</div>
-        <div class="tl-title">Bus nocturno de vuelta a Hanói</div>
-        <p class="tl-desc">La ida en bus fue una experiencia. La vuelta también, pero de otro tipo: el asiento más incómodo del viaje. Litera de colchoneta fina y carretera de montaña toda la noche.</p>
+      <div class="timeline-item">
+        <div class="tl-dot hi">🛵</div>
+        <div class="tl-content">
+          <div class="tl-date">El momento del viaje</div>
+          <div class="tl-title">Tam Coc en motillo</div>
+          <p class="tl-desc">Alquilar una moto y recorrer el valle de Ninh Bình entre arrozales y karsts. El día más bonito del viaje.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-dot">🍢</div>
-      <div class="tl-content">
-        <div class="tl-date">La cena legendaria</div>
-        <div class="tl-title">Pinchos morunos en la terraza insalubre</div>
-        <p class="tl-desc">Un local de terraza abarrotado, grasa cayendo del ventilador directamente a la parrilla, y los mejores pinchos del viaje. Rico, barato y absolutamente cuestionable en términos sanitarios. Sin arrepentimientos.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-dot">🏙️</div>
-      <div class="tl-content">
-        <div class="tl-date">Últimos días</div>
-        <div class="tl-title">Hanói — el cierre</div>
-        <p class="tl-desc">El lago Hoan Kiem, el barrio antiguo de los 36 gremios, el café de huevo. Un ritmo más tranquilo para cerrar el viaje.</p>
+      <div class="timeline-item">
+        <div class="tl-dot">🚌</div>
+        <div class="tl-content">
+          <div class="tl-date">La vuelta</div>
+          <div class="tl-title">Bus nocturno a Hanói</div>
+          <p class="tl-desc">La ida fue aventura. La vuelta fue resistencia pura: litera mini, carretera sinuosa y ocho horas que se hicieron eternas.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOTOS -->
+<!-- FOTOS POR CIUDAD -->
 <section id="fotos">
-  <div class="section-label">Galería</div>
-  <h2>Lo que captamos</h2>
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Ciudad a ciudad</h2>
+    <p>Haz clic en cualquier foto para verla en grande.</p>
 
-  <div class="gallery">
-    <div class="gallery-item wide placeholder">
-      <div class="ph-icon">🛵</div>
-      <div class="ph-text">Tam Coc · en moto por el valle</div>
+    <!-- HO CHI MINH — 8 fotos → strip -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Ho Chi Minh</span>
+        <span class="city-count">8 fotos</span>
+      </div>
+      <div class="layout-strip" data-city="hcm">
+        <div class="thumb" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382983/PHOTO-2025-11-05-15-50-06.jpg" alt=""><div class="cap">Ho Chi Minh</div></div>
+        <div class="thumb" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382983/PHOTO-2025-11-05-15-39-58_2.jpg" alt=""><div class="cap">Ho Chi Minh</div></div>
+        <div class="thumb" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382983/PHOTO-2025-11-05-15-39-58.jpg" alt=""><div class="cap">Ho Chi Minh</div></div>
+        <div class="thumb" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382983/PHOTO-2025-11-05-15-49-53.jpg" alt=""><div class="cap">Ho Chi Minh</div></div>
+        <div class="thumb" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382983/PHOTO-2025-11-05-15-48-30.jpg" alt=""><div class="cap">Ho Chi Minh</div></div>
+        <div class="thumb" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382982/PHOTO-2025-11-05-15-39-58_5.jpg" alt=""><div class="cap">Ho Chi Minh</div></div>
+        <div class="thumb" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382982/PHOTO-2025-11-05-15-39-58_3.jpg" alt=""><div class="cap">Ho Chi Minh</div></div>
+        <div class="thumb" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382982/PHOTO-2025-11-05-15-39-58_4.jpg" alt=""><div class="cap">Ho Chi Minh</div></div>
+      </div>
     </div>
-    <div class="gallery-item tall placeholder">
-      <div class="ph-icon">🏍️</div>
-      <div class="ph-text">Ho Chi Minh · caos de motos</div>
+
+    <!-- HOI AN — 10 fotos → strip -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Hoi An</span>
+        <span class="city-count">10 fotos</span>
+      </div>
+      <div class="layout-strip">
+        <div class="thumb" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383000/PHOTO-2025-11-10-16-06-41.jpg" alt=""><div class="cap">Hoi An</div></div>
+        <div class="thumb" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382998/PHOTO-2025-11-10-16-02-44.jpg" alt=""><div class="cap">Hoi An</div></div>
+        <div class="thumb" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382999/PHOTO-2025-11-10-16-06-39.jpg" alt=""><div class="cap">Hoi An</div></div>
+        <div class="thumb" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382999/PHOTO-2025-11-10-16-03-26.jpg" alt=""><div class="cap">Hoi An</div></div>
+        <div class="thumb" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382998/PHOTO-2025-11-10-16-02-39.jpg" alt=""><div class="cap">Hoi An</div></div>
+        <div class="thumb" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382997/PHOTO-2025-11-10-15-58-55.jpg" alt=""><div class="cap">Hoi An</div></div>
+        <div class="thumb" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382996/PHOTO-2025-11-10-15-58-55_3.jpg" alt=""><div class="cap">Hoi An</div></div>
+        <div class="thumb" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382996/PHOTO-2025-11-10-15-58-55_2.jpg" alt=""><div class="cap">Hoi An</div></div>
+        <div class="thumb" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383002/PHOTO-2025-11-11-16-44-59.jpg" alt=""><div class="cap">Hoi An</div></div>
+        <div class="thumb" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383001/PHOTO-2025-11-11-16-44-59_2.jpg" alt=""><div class="cap">Hoi An</div></div>
+      </div>
     </div>
-    <div class="gallery-item placeholder">
-      <div class="ph-icon">🌊</div>
-      <div class="ph-text">Tifón · calles inundadas</div>
+
+    <!-- DA NANG — 1 foto → panorámica -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Da Nang</span>
+        <span class="city-count">1 foto</span>
+      </div>
+      <div class="layout-single">
+        <div class="thumb" onclick="lb(18)">
+          <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383001/PHOTO-2025-11-11-08-53-08.jpg" alt="Da Nang">
+          <div class="cap">Da Nang</div>
+        </div>
+      </div>
     </div>
-    <div class="gallery-item placeholder">
-      <div class="ph-icon">🏯</div>
-      <div class="ph-text">Hué · ciudadela imperial</div>
+
+    <!-- HUÉ — 2 fotos → dúo -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Hué</span>
+        <span class="city-count">2 fotos</span>
+      </div>
+      <div class="layout-duo">
+        <div class="thumb" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383004/PHOTO-2025-11-13-11-55-00_2.jpg" alt="Hué"><div class="cap">Hué</div></div>
+        <div class="thumb" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383005/PHOTO-2025-11-13-11-55-00.jpg" alt="Hué"><div class="cap">Hué</div></div>
+      </div>
     </div>
-    <div class="gallery-item placeholder">
-      <div class="ph-icon">🍢</div>
-      <div class="ph-text">La terraza de los pinchos</div>
+
+    <!-- HANÓI — 13 fotos → strip -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Hanói</span>
+        <span class="city-count">13 fotos</span>
+      </div>
+      <div class="layout-strip">
+        <div class="thumb" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382995/PHOTO-2025-11-09-14-09-37.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382994/PHOTO-2025-11-09-14-07-07.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382994/PHOTO-2025-11-09-13-26-08.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382993/PHOTO-2025-11-09-13-26-08_2.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382992/PHOTO-2025-11-09-13-23-52.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382989/PHOTO-2025-11-08-16-45-27.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382989/PHOTO-2025-11-08-16-44-18.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382987/PHOTO-2025-11-06-16-36-25.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382987/PHOTO-2025-11-06-16-36-25_2.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382986/PHOTO-2025-11-06-16-11-41.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382985/PHOTO-2025-11-06-16-11-40.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382985/PHOTO-2025-11-06-16-11-36.jpg" alt=""><div class="cap">Hanói</div></div>
+        <div class="thumb" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382984/PHOTO-2025-11-06-16-11-32.jpg" alt=""><div class="cap">Hanói</div></div>
+      </div>
     </div>
-    <div class="gallery-item placeholder">
-      <div class="ph-icon">🌄</div>
-      <div class="ph-text">Ninh Bình · karsts al amanecer</div>
+
+    <!-- HA LONG — 4 fotos → editorial -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Bahía de Ha Long</span>
+        <span class="city-count">4 fotos</span>
+      </div>
+      <div class="layout-editorial">
+        <div class="thumb" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382991/PHOTO-2025-11-09-03-44-24.jpg" alt=""><div class="cap">Ha Long · amanecer</div></div>
+        <div class="thumb" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382991/PHOTO-2025-11-08-20-13-54.jpg" alt=""><div class="cap">Ha Long · atardecer</div></div>
+        <div class="thumb" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382990/PHOTO-2025-11-08-19-49-26.jpg" alt=""><div class="cap">Ha Long · karsts</div></div>
+        <div class="thumb" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382988/PHOTO-2025-11-08-00-30-17_2.jpg" alt=""><div class="cap">Ha Long · noche</div></div>
+      </div>
     </div>
-    <div class="gallery-item wide placeholder">
-      <div class="ph-icon">🏙️</div>
-      <div class="ph-text">Hanói · lago Hoan Kiem</div>
+
+    <!-- NINH BINH — 6 fotos → editorial -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Ninh Bình</span>
+        <span class="city-count">6 fotos</span>
+      </div>
+      <div class="layout-editorial">
+        <div class="thumb" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383007/PHOTO-2025-11-14-10-52-47.jpg" alt=""><div class="cap">Ninh Bình</div></div>
+        <div class="thumb" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383007/PHOTO-2025-11-14-09-30-06.jpg" alt=""><div class="cap">Ninh Bình</div></div>
+        <div class="thumb" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383006/PHOTO-2025-11-14-09-11-19.jpg" alt=""><div class="cap">Ninh Bình</div></div>
+        <div class="thumb" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383005/PHOTO-2025-11-14-09-11-19_2.jpg" alt=""><div class="cap">Ninh Bình</div></div>
+        <div class="thumb" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383003/PHOTO-2025-11-13-11-50-07.jpg" alt=""><div class="cap">Ninh Bình</div></div>
+        <div class="thumb" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789383003/PHOTO-2025-11-13-11-50-07_2.jpg" alt=""><div class="cap">Ninh Bình</div></div>
+      </div>
     </div>
+
+    <!-- TAM COC — 2 fotos → dúo -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Tam Coc</span>
+        <span class="city-count">2 fotos</span>
+      </div>
+      <div class="layout-duo">
+        <div class="thumb" onclick="lb(44)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382982/PHOTO-2025-11-14-10-55-54.jpg" alt="Tam Coc"><div class="cap">Tam Coc · en moto</div></div>
+        <div class="thumb" onclick="lb(45)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789382982/PHOTO-2025-11-14-10-55-54.jpg" alt="Tam Coc"><div class="cap">Tam Coc · arrozales</div></div>
+      </div>
+    </div>
+
   </div>
-
-  <p style="font-size:13px; color: var(--muted); margin-top: 8px;">
-    Sube tus fotos a Cloudinary y sustituye cada bloque <code>placeholder</code> por <code>&lt;img src="TU_URL" alt="descripción"&gt;</code>.
-  </p>
 </section>
 
 <!-- MOMENTOS -->
 <section id="momentos">
-  <div class="section-label">Memoria</div>
-  <h2>Los momentos que quedan</h2>
-
-  <div class="moments">
-    <div class="moment">
-      <div class="moment-emoji">🌀</div>
-      <div>
-        <div class="moment-title">El tifón que rediseñó el viaje</div>
-        <p class="moment-desc">Hoi An bajo el agua, vuelo a Da Nang cancelado y nosotros mirando el mapa con una ruta nueva. Estrés en el momento, historia para siempre.</p>
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🌀</div>
+        <div>
+          <div class="moment-title">El tifón que rediseñó el viaje</div>
+          <p class="moment-desc">Hoi An bajo el agua, vuelo cancelado y nosotros mirando el mapa con una ruta nueva. Estrés en el momento, historia para siempre.</p>
+        </div>
       </div>
-    </div>
-    <div class="moment">
-      <div class="moment-emoji">🏍️</div>
-      <div>
-        <div class="moment-title">KOs de motos en Ho Chi Minh</div>
-        <p class="moment-desc">Cruzar una calle en HCM es un ejercicio de fe. Las motos no paran, van en todas direcciones y de algún modo funciona. Ver un accidente fue cuestión de horas.</p>
+      <div class="moment">
+        <div class="moment-emoji">🏍️</div>
+        <div>
+          <div class="moment-title">KOs de motos en Ho Chi Minh</div>
+          <p class="moment-desc">Cruzar una calle en HCM es un ejercicio de fe. Las motos no paran, van en todas direcciones y de algún modo funciona.</p>
+        </div>
       </div>
-    </div>
-    <div class="moment">
-      <div class="moment-emoji">😵</div>
-      <div>
-        <div class="moment-title">La pájara de Hué</div>
-        <p class="moment-desc">El cuerpo dijo basta. Calor, ritmo de viaje y el cambio de ruta pasaron factura. Hué fue también el descanso que necesitábamos.</p>
+      <div class="moment">
+        <div class="moment-emoji">😵</div>
+        <div>
+          <div class="moment-title">La pájara de Hué</div>
+          <p class="moment-desc">El cuerpo dijo basta. Calor, ritmo de viaje y el cambio de ruta pasaron factura.</p>
+        </div>
       </div>
-    </div>
-    <div class="moment">
-      <div class="moment-emoji">🛵</div>
-      <div>
-        <div class="moment-title">En motillo por Tam Coc</div>
-        <p class="moment-desc">Alquilar una moto y perderse entre los arrozales y los karsts de Ninh Bình. El paisaje más bonito del viaje y el día que más vale la pena recordar.</p>
+      <div class="moment">
+        <div class="moment-emoji">🛵</div>
+        <div>
+          <div class="moment-title">En motillo por Tam Coc</div>
+          <p class="moment-desc">Arrozales, karsts y una moto. El paisaje más bonito del viaje y el día que más vale la pena recordar.</p>
+        </div>
       </div>
-    </div>
-    <div class="moment">
-      <div class="moment-emoji">🍢</div>
-      <div>
-        <div class="moment-title">Los pinchos morunos insalubres</div>
-        <p class="moment-desc">Terraza petada, ventilador grasiento sobre la parrilla, precio de risa. Los mejores pinchos del viaje. La salud es un estado mental.</p>
+      <div class="moment">
+        <div class="moment-emoji">🍢</div>
+        <div>
+          <div class="moment-title">Los pinchos morunos insalubres</div>
+          <p class="moment-desc">Terraza petada, ventilador grasiento sobre la parrilla, precio de risa. Los mejores pinchos del viaje. La salud es un estado mental.</p>
+        </div>
       </div>
-    </div>
-    <div class="moment">
-      <div class="moment-emoji">🚌</div>
-      <div>
-        <div class="moment-title">Bus nocturno · la experiencia y el sufrimiento</div>
-        <p class="moment-desc">La ida fue aventura. La vuelta fue pura resistencia: litera mini, carretera sinuosa y ocho horas que se hicieron eternas. Pero lo volvería a hacer.</p>
+      <div class="moment">
+        <div class="moment-emoji">🚌</div>
+        <div>
+          <div class="moment-title">Bus nocturno · la experiencia y el sufrimiento</div>
+          <p class="moment-desc">La ida fue aventura. La vuelta fue resistencia: litera mini, carretera sinuosa y ocho horas eternas.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -717,72 +638,165 @@
 
 <!-- VALORACIÓN -->
 <section id="valoracion">
-  <div class="section-label">Balance</div>
-  <h2>¿Cómo fue?</h2>
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
 
-  <div class="ratings">
-    <div class="rating-row">
-      <span class="rating-label">Comida</span>
-      <div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div>
-      <span class="rating-score">9.2</span>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Comida</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">Paisajes</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">Aventura / imprevistos</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">Comodidad</span><div class="rating-bar"><div class="rating-fill" style="width:55%"></div></div><span class="rating-score">5.5</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:85%"></div></div><span class="rating-score">8.5</span></div>
     </div>
-    <div class="rating-row">
-      <span class="rating-label">Paisajes</span>
-      <div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div>
-      <span class="rating-score">9.5</span>
-    </div>
-    <div class="rating-row">
-      <span class="rating-label">Aventura / imprevistos</span>
-      <div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div>
-      <span class="rating-score">10</span>
-    </div>
-    <div class="rating-row">
-      <span class="rating-label">Comodidad</span>
-      <div class="rating-bar"><div class="rating-fill" style="width:55%"></div></div>
-      <span class="rating-score">5.5</span>
-    </div>
-    <div class="rating-row">
-      <span class="rating-label">Precio/calidad</span>
-      <div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div>
-      <span class="rating-score">9</span>
-    </div>
-    <div class="rating-row">
-      <span class="rating-label">Volvería</span>
-      <div class="rating-bar"><div class="rating-fill" style="width:85%"></div></div>
-      <span class="rating-score">8.5</span>
-    </div>
-  </div>
 
-  <div class="verdict">
-    <div class="verdict-box good">
-      <div class="verdict-title">Lo mejor</div>
-      <ul class="verdict-list">
-        <li>Tam Coc en moto — el momento del viaje</li>
-        <li>La comida, barata y buenísima</li>
-        <li>El tifón como historia que contar</li>
-        <li>El contraste norte/sur del país</li>
-        <li>Lo que cunde el dinero</li>
-      </ul>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Tam Coc en moto — el momento del viaje</li>
+          <li>La comida, barata y buenísima</li>
+          <li>El tifón como historia que contar</li>
+          <li>El contraste norte/sur del país</li>
+          <li>La bahía de Ha Long</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>El bus nocturno de vuelta</li>
+          <li>No haber visto Hoi An sin inundación</li>
+          <li>El calor en algunos tramos</li>
+          <li>Poco margen entre vuelos</li>
+        </ul>
+      </div>
     </div>
-    <div class="verdict-box bad">
-      <div class="verdict-title">Lo que no repetiría</div>
-      <ul class="verdict-list">
-        <li>El bus nocturno de vuelta (el de ida sí)</li>
-        <li>No haber visto Hoi An seco</li>
-        <li>El calor en algunos tramos</li>
-        <li>No haber reservado algo más de margen entre vuelos</li>
-      </ul>
-    </div>
-  </div>
 
-  <div class="quote-block">
-    <p>"Vietnam no te deja neutral. Te agota, te sorprende y te engancha. Y cuando vuelves a casa, ya estás pensando en volver."</p>
+    <div class="quote-block">
+      <p>"Vietnam no te deja neutral. Te agota, te sorprende y te engancha. Y cuando vuelves a casa, ya estás pensando en volver."</p>
+    </div>
   </div>
 </section>
 
 <footer>
   <p>Vietnam · Noviembre 2025 &nbsp;·&nbsp; <a href="../kuala-lumpur/">← Malasia</a></p>
 </footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+  // All photos in order
+  const photos = [
+    // HCM 0-7
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382983/PHOTO-2025-11-05-15-50-06.jpg',c:'Ho Chi Minh'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382983/PHOTO-2025-11-05-15-39-58_2.jpg',c:'Ho Chi Minh'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382983/PHOTO-2025-11-05-15-39-58.jpg',c:'Ho Chi Minh'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382983/PHOTO-2025-11-05-15-49-53.jpg',c:'Ho Chi Minh'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382983/PHOTO-2025-11-05-15-48-30.jpg',c:'Ho Chi Minh'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382982/PHOTO-2025-11-05-15-39-58_5.jpg',c:'Ho Chi Minh'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382982/PHOTO-2025-11-05-15-39-58_3.jpg',c:'Ho Chi Minh'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382982/PHOTO-2025-11-05-15-39-58_4.jpg',c:'Ho Chi Minh'},
+    // HOI AN 8-17
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383000/PHOTO-2025-11-10-16-06-41.jpg',c:'Hoi An'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382998/PHOTO-2025-11-10-16-02-44.jpg',c:'Hoi An'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382999/PHOTO-2025-11-10-16-06-39.jpg',c:'Hoi An'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382999/PHOTO-2025-11-10-16-03-26.jpg',c:'Hoi An'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382998/PHOTO-2025-11-10-16-02-39.jpg',c:'Hoi An'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382997/PHOTO-2025-11-10-15-58-55.jpg',c:'Hoi An'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382996/PHOTO-2025-11-10-15-58-55_3.jpg',c:'Hoi An'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382996/PHOTO-2025-11-10-15-58-55_2.jpg',c:'Hoi An'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383002/PHOTO-2025-11-11-16-44-59.jpg',c:'Hoi An'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383001/PHOTO-2025-11-11-16-44-59_2.jpg',c:'Hoi An'},
+    // DA NANG 18
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383001/PHOTO-2025-11-11-08-53-08.jpg',c:'Da Nang'},
+    // HUÉ 19-20
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383004/PHOTO-2025-11-13-11-55-00_2.jpg',c:'Hué'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383005/PHOTO-2025-11-13-11-55-00.jpg',c:'Hué'},
+    // HANÓI 21-33
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382995/PHOTO-2025-11-09-14-09-37.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382994/PHOTO-2025-11-09-14-07-07.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382994/PHOTO-2025-11-09-13-26-08.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382993/PHOTO-2025-11-09-13-26-08_2.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382992/PHOTO-2025-11-09-13-23-52.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382989/PHOTO-2025-11-08-16-45-27.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382989/PHOTO-2025-11-08-16-44-18.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382987/PHOTO-2025-11-06-16-36-25.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382987/PHOTO-2025-11-06-16-36-25_2.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382986/PHOTO-2025-11-06-16-11-41.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382985/PHOTO-2025-11-06-16-11-40.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382985/PHOTO-2025-11-06-16-11-36.jpg',c:'Hanói'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382984/PHOTO-2025-11-06-16-11-32.jpg',c:'Hanói'},
+    // HA LONG 34-37
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382991/PHOTO-2025-11-09-03-44-24.jpg',c:'Bahía de Ha Long'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382991/PHOTO-2025-11-08-20-13-54.jpg',c:'Bahía de Ha Long'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382990/PHOTO-2025-11-08-19-49-26.jpg',c:'Bahía de Ha Long'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382988/PHOTO-2025-11-08-00-30-17_2.jpg',c:'Bahía de Ha Long'},
+    // NINH BINH 38-43
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383007/PHOTO-2025-11-14-10-52-47.jpg',c:'Ninh Bình'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383007/PHOTO-2025-11-14-09-30-06.jpg',c:'Ninh Bình'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383006/PHOTO-2025-11-14-09-11-19.jpg',c:'Ninh Bình'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383005/PHOTO-2025-11-14-09-11-19_2.jpg',c:'Ninh Bình'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383003/PHOTO-2025-11-13-11-50-07.jpg',c:'Ninh Bình'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789383003/PHOTO-2025-11-13-11-50-07_2.jpg',c:'Ninh Bình'},
+    // TAM COC 44-45
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382982/PHOTO-2025-11-14-10-55-54.jpg',c:'Tam Coc · en moto'},
+    {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789382982/PHOTO-2025-11-14-10-55-54.jpg',c:'Tam Coc · arrozales'},
+  ];
+
+  let cur = 0;
+  const lbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCap = document.getElementById('lb-cap');
+  const lbDots = document.getElementById('lb-dots');
+
+  photos.forEach((_,i) => {
+    const d = document.createElement('button');
+    d.className = 'lb-dot' + (i===0?' on':'');
+    d.onclick = e => { e.stopPropagation(); lb(i); };
+    lbDots.appendChild(d);
+  });
+
+  function lb(i) {
+    cur = i;
+    lbImg.src = photos[i].s;
+    lbCap.textContent = photos[i].c;
+    document.querySelectorAll('.lb-dot').forEach((d,j) => d.classList.toggle('on', j===i));
+    lbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLb() { lbox.classList.remove('open'); document.body.style.overflow=''; }
+  function closeLbOutside(e) { if(e.target===lbox) closeLb(); }
+  function shiftLb(d) { lb((cur+d+photos.length)%photos.length); }
+
+  document.addEventListener('keydown', e => {
+    if(!lbox.classList.contains('open')) return;
+    if(e.key==='ArrowRight') shiftLb(1);
+    if(e.key==='ArrowLeft')  shiftLb(-1);
+    if(e.key==='Escape')     closeLb();
+  });
+
+  // Drag to scroll strips
+  document.querySelectorAll('.layout-strip').forEach(strip => {
+    let down=false, sx, sl;
+    strip.addEventListener('mousedown', e => { down=true; sx=e.pageX-strip.offsetLeft; sl=strip.scrollLeft; });
+    strip.addEventListener('mouseleave', ()=>down=false);
+    strip.addEventListener('mouseup', ()=>down=false);
+    strip.addEventListener('mousemove', e => {
+      if(!down) return; e.preventDefault();
+      strip.scrollLeft = sl-(e.pageX-strip.offsetLeft-sx);
+    });
+  });
+</script>
 
 </body>
 </html>
