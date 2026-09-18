@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estambul · Febrero 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #7b2d8b; --accent-light: #f5edf8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #120818; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.6; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,62px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e0dbd4; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* SARDINAS HIGHLIGHT */
+  .sardina-card {
+    background: var(--ink);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin: 20px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    color: #fff;
+  }
+  .sardina-icon { font-size: 44px; flex-shrink: 0; }
+  .sardina-info h3 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; margin-bottom: 6px; color: var(--warm); }
+  .sardina-info p { font-size: 14px; color: rgba(255,255,255,0.75); margin: 0; max-width: none; }
+
+  /* VIDEO */
+  .video-wrap { border-radius: 10px; overflow: hidden; margin: 16px 0; background: #000; }
+  .video-wrap video { width: 100%; max-height: 500px; display: block; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #c0b0cc; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* CARRUSEL */
+  .carousel { position: relative; margin: 12px 0; }
+  .carousel-track {
+    display: flex; gap: 8px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-behavior: smooth; padding-bottom: 10px;
+    cursor: grab; scrollbar-width: none;
+  }
+  .carousel-track:active { cursor: grabbing; }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track .thumb { flex: 0 0 auto; scroll-snap-align: start; width: 240px; height: 300px; border-radius: 10px; margin-bottom: 0; }
+  .carousel-track .thumb:first-child { width: 320px; }
+  .carousel-track .thumb img { width:100%; height:100%; object-fit:cover; }
+  .carousel-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .carousel-btn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid #d0c8d8; background: #fff; color: var(--ink); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s, background 0.2s; }
+  .carousel-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .carousel-counter { font-size: 12px; color: var(--muted); margin-left: 4px; }
+
+  /* THUMB */
+  .thumb { position: relative; cursor: zoom-in; background: #c8b8d8; overflow: hidden; border-radius: 10px; display: block; }
+  .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.35s ease; }
+  .thumb:hover img { transform: scale(1.03); }
+  .thumb .cap { position: absolute; bottom:0; left:0; right:0; padding: 28px 12px 10px; background: linear-gradient(transparent, rgba(0,0,0,0.5)); color: #fff; font-size: 11px; opacity: 0; transition: opacity 0.2s; }
+  .thumb:hover .cap { opacity: 1; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e0d8e8; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e0d8e8; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(8,2,12,0.95); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d0c8d8; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .carousel-track .thumb { width:200px; height:260px; }
+    .carousel-track .thumb:first-child { width:260px; }
+    .sardina-card { flex-direction:column; gap:12px; padding:20px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724889/IMG_6153.jpg" alt="Estambul">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Estambul<br><em>dos mundos, un Bósforo</em></h1>
+    <div class="tag">Febrero 2026 · Los Inforborrachos</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🕌 Mezquitas y mercados</span>
+      <span>🐟 Sardinas en el Galata</span>
+      <span>💜 Primer viaje de Laura con el grupo</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../florencia/">← Italia</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Los inforborrachos conquistan el Bósforo</h2>
+    <p>Otra cena de Navidad, otro vuelo loco elegido en caliente. Esta vez Estambul. Una ciudad que ya conozco bien y que me trae muy buenos recuerdos, aunque los precios turísticos han dado un salto considerable desde la última vez.</p>
+    <p>El buen rollo de casi 20 años de amistad se mantiene intacto. Laura se estrenó con el grupo y sobrevivió. Casa gigante con vistas al Bósforo, sorteo de sofá, impostor, free tour de 500 metros, kebabs, mezquitas, gatos y una macarena en el puente de Galata que nadie olvidará.</p>
+
+    <div class="sardina-card">
+      <div class="sardina-icon">🐟</div>
+      <div class="sardina-info">
+        <h3>Lo mejor del viaje: bocata de sardinas en el Galata</h3>
+        <p>Puente de Galata al atardecer, bocata de sardinas recién hecho, pescadores alrededor... y acabamos bailando la macarena. Así se hace Estambul.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">~20</div><div class="stat-label">años de amistad</div></div>
+      <div class="stat"><div class="stat-value">500m</div><div class="stat-label">del "free tour"</div></div>
+      <div class="stat"><div class="stat-value">2</div><div class="stat-label">continentes</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">macarena</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Lo que captamos</h2>
+    <p>Haz clic en cualquier foto para verla en grande.</p>
+
+    <div class="carousel">
+      <div class="carousel-track" id="c-estambul">
+        <div class="thumb" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724889/IMG_6168.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724888/IMG_6142.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724887/IMG_6137.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724887/IMG_6126.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724887/IMG_6123.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724886/IMG_6016.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724886/IMG_6009.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724885/IMG_6007.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724885/IMG_6001.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724884/IMG_5991.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724883/IMG_5985.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724883/IMG_5978.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724882/IMG_5966.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724881/IMG_5955.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724881/IMG_5948.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724881/IMG_5949.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724880/IMG_5941.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724879/IMG_5935.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724879/IMG_5925.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724878/IMG_5908.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724877/IMG_5898.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724878/IMG_5902.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724877/IMG_5853.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724875/IMG_5849.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724874/IMG_5845.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724874/IMG_5841.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724873/IMG_5834.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724872/IMG_5816.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724871/IMG_5809.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724871/IMG_5806.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724870/IMG_5803.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724870/IMG_5801.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724866/5b08d6f2-0c72-4e38-a64c-91e9f571a28a.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724869/fdbdd7a6-fbe3-49b1-81bc-f923dd595ba3.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724868/D815ADE4-CC8E-410E-AF14-EAA54584F8C1.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724868/f921697a-9117-4f41-9245-92e49e90a386.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724866/0737af07-9e66-4de5-93e0-8836423b5e88.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724867/d24a42e4-f681-44eb-ac37-1431468bf1b2.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724867/a55ff211-228d-46d1-bae3-6471d0cd1cad.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724867/a319b164-9735-4754-8137-6f91c6cb1a88.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724866/820f2121-bea8-486b-9b88-0b2414cc51e8.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724866/775cae64-4a1c-45bf-ac38-3095deca75b6.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724867/caa61fe7-2715-4995-a1c5-6ef95ce4cff4.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+        <div class="thumb" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789724866/3e1599bc-8d28-4e1b-a626-ecd77c94028e.jpg" alt="Estambul"><div class="cap">Estambul</div></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="scrollC('c-estambul',-1)">‹</button>
+        <button class="carousel-btn" onclick="scrollC('c-estambul',1)">›</button>
+        <span class="carousel-counter">← arrastra o usa las flechas · clic para ampliar</span>
+      </div>
+    </div>
+
+    <!-- VÍDEO SARDINAS -->
+    <div style="margin-top:32px;">
+      <p style="font-weight:500; font-size:15px; margin-bottom:8px;">🐟 La macarena en el puente de Galata</p>
+      <div class="video-wrap">
+        <video controls preload="none">
+          <source src="https://res.cloudinary.com/il7cecht/video/upload/v1789724866/37cc7da6-9140-467d-a4e3-8326836fa20b.mov" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🐟</div>
+        <div>
+          <div class="moment-title">Bocata de sardinas + macarena en el Galata</div>
+          <p class="moment-desc">Puente de Galata, atardecer, sardinas recién hechas y acabamos bailando la macarena con los pescadores. El momento del viaje sin discusión.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏠</div>
+        <div>
+          <div class="moment-title">La casa gigante con vistas al Bósforo — y el sorteo del sofá</div>
+          <p class="moment-desc">El alojamiento era épico. Pero no había camas para todos. Sorteo, tensión, resultado: "El pari esta noche duerme solo." Gemini le puso música.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🗿</div>
+        <div>
+          <div class="moment-title">El free tour que ni fue free ni fue tour</div>
+          <p class="moment-desc">500 metros recorridos, un guía con mucho humor y el Obelisco de Teodosio como protagonista. Más charla que turismo, pero con mucha gracia.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">⛵</div>
+        <div>
+          <div class="moment-title">Paseíto en barco por el Bósforo</div>
+          <p class="moment-desc">Europa occidental a un lado, Europa oriental al otro, Asia en el horizonte. Todo dividido por un canal. Estambul es única en ese sentido.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍺</div>
+        <div>
+          <div class="moment-title">Encontrando el bar en un país musulmán</div>
+          <p class="moment-desc">Ya no somos tan borrachos como hace años, pero las ganas siguen. Se encontró el bareto. Casi acabamos en Capadoccia de camino.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎮</div>
+        <div>
+          <div class="moment-title">Impostor en la casa del Bósforo</div>
+          <p class="moment-desc">El juego del grupo viajero. Desconfianza, acusaciones, risas. Funciona igual en todas las ciudades del mundo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">💜</div>
+        <div>
+          <div class="moment-title">Primer viaje de Laura con los inforborrachos</div>
+          <p class="moment-desc">Estreno oficial con el grupo. Dos viajes de estreno en poco tiempo — primero el familiar, ahora los amigos de la uni. Aprobado con nota.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🐱</div>
+        <div>
+          <div class="moment-title">Los gatos de Estambul</div>
+          <p class="moment-desc">Estambul tiene una relación especial con sus gatos callejeros. Están por todas partes, son parte del paisaje y nadie los molesta. Un detalle que define la ciudad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">El grupo</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">La ciudad</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">Comida</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad</span><div class="rating-bar"><div class="rating-fill" style="width:62%"></div></div><span class="rating-score">6.2</span></div>
+      <div class="rating-row"><span class="rating-label">El alojamiento</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:85%"></div></div><span class="rating-score">8.5</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Las sardinas y la macarena en el Galata</li>
+          <li>La casa con vistas al Bósforo</li>
+          <li>El paseo en barco entre continentes</li>
+          <li>Casi 20 años de buen rollo</li>
+          <li>Los kebabs y los mercados</li>
+          <li>Los gatos por todas partes</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>Los precios turísticos (han subido mucho)</li>
+          <li>El free tour de 500 metros</li>
+          <li>Dormir en el sofá (pari)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Estambul es la única ciudad del mundo donde puedes desayunar en Europa y cenar en Asia. Y bailar la macarena en el puente de en medio."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Estambul · Febrero 2026 &nbsp;·&nbsp; <a href="../florencia/">← Italia</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724889/IMG_6168.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724888/IMG_6142.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724887/IMG_6137.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724887/IMG_6126.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724887/IMG_6123.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724886/IMG_6016.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724886/IMG_6009.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724885/IMG_6007.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724885/IMG_6001.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724884/IMG_5991.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724883/IMG_5985.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724883/IMG_5978.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724882/IMG_5966.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724881/IMG_5955.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724881/IMG_5948.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724881/IMG_5949.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724880/IMG_5941.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724879/IMG_5935.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724879/IMG_5925.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724878/IMG_5908.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724877/IMG_5898.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724878/IMG_5902.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724877/IMG_5853.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724875/IMG_5849.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724874/IMG_5845.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724874/IMG_5841.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724873/IMG_5834.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724872/IMG_5816.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724871/IMG_5809.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724871/IMG_5806.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724870/IMG_5803.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724870/IMG_5801.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724866/5b08d6f2-0c72-4e38-a64c-91e9f571a28a.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724869/fdbdd7a6-fbe3-49b1-81bc-f923dd595ba3.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724868/D815ADE4-CC8E-410E-AF14-EAA54584F8C1.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724868/f921697a-9117-4f41-9245-92e49e90a386.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724866/0737af07-9e66-4de5-93e0-8836423b5e88.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724867/d24a42e4-f681-44eb-ac37-1431468bf1b2.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724867/a55ff211-228d-46d1-bae3-6471d0cd1cad.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724867/a319b164-9735-4754-8137-6f91c6cb1a88.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724866/820f2121-bea8-486b-9b88-0b2414cc51e8.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724866/775cae64-4a1c-45bf-ac38-3095deca75b6.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724867/caa61fe7-2715-4995-a1c5-6ef95ce4cff4.jpg',c:'Estambul'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789724866/3e1599bc-8d28-4e1b-a626-ecd77c94028e.jpg',c:'Estambul'},
+];
+
+let cur = 0;
+const lbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+const lbCap = document.getElementById('lb-cap');
+const lbDots = document.getElementById('lb-dots');
+
+photos.forEach((_,i) => {
+  const d = document.createElement('button');
+  d.className = 'lb-dot'+(i===0?' on':'');
+  d.onclick = e => { e.stopPropagation(); lb(i); };
+  lbDots.appendChild(d);
+});
+
+function lb(i) {
+  cur=i; lbImg.src=photos[i].s; lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open'); document.body.style.overflow='hidden';
+}
+function closeLb() { lbox.classList.remove('open'); document.body.style.overflow=''; }
+function closeLbOutside(e) { if(e.target===lbox) closeLb(); }
+function shiftLb(d) { lb((cur+d+photos.length)%photos.length); }
+function scrollC(id,dir) { document.getElementById(id).scrollBy({left:dir*260,behavior:'smooth'}); }
+
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open')) return;
+  if(e.key==='ArrowRight') shiftLb(1);
+  if(e.key==='ArrowLeft') shiftLb(-1);
+  if(e.key==='Escape') closeLb();
+});
+
+document.querySelectorAll('.carousel-track').forEach(track=>{
+  let down=false,sx,sl;
+  track.addEventListener('mousedown',e=>{down=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;});
+  track.addEventListener('mouseleave',()=>down=false);
+  track.addEventListener('mouseup',()=>down=false);
+  track.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx);});
+});
+</script>
+</body>
+</html>
