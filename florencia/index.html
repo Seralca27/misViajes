@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florencia · Ravenna · Bolonia · Abril 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #8b4513; --accent-light: #faf0e6;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #1a0f05; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.65; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(30px,4.5vw,56px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e0dbd4; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* ANIVERSARIO CARD */
+  .aniv-card {
+    background: var(--accent);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    color: #fff;
+  }
+  .aniv-icon { font-size: 48px; flex-shrink: 0; }
+  .aniv-info h3 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; margin-bottom: 4px; }
+  .aniv-info p { font-size: 14px; color: rgba(255,255,255,0.75); margin: 0; max-width: none; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #c8b8a8; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* CITY BLOCKS */
+  .city-block { margin: 32px 0; }
+  .city-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .city-name { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; }
+  .city-sub { font-size: 13px; color: var(--muted); font-style: italic; }
+  .city-count { font-size: 12px; color: var(--muted); margin-left: auto; }
+
+  /* MASONRY */
+  .masonry { columns: 3; column-gap: 8px; margin: 12px 0; }
+  .thumb { position: relative; cursor: zoom-in; background: #d8c8b8; overflow: hidden; break-inside: avoid; margin-bottom: 8px; border-radius: 8px; display: block; }
+  .thumb img { width:100%; height:auto; display:block; transition: transform 0.35s ease; }
+  .thumb:hover img { transform: scale(1.03); }
+  .thumb .cap { position: absolute; bottom:0; left:0; right:0; padding: 28px 12px 10px; background: linear-gradient(transparent, rgba(0,0,0,0.5)); color: #fff; font-size: 11px; opacity: 0; transition: opacity 0.2s; }
+  .thumb:hover .cap { opacity: 1; }
+
+  /* STRIP (para ciudades con pocas fotos) */
+  .layout-strip { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; cursor: grab; margin: 12px 0; }
+  .layout-strip:active { cursor: grabbing; }
+  .layout-strip::-webkit-scrollbar { height: 3px; }
+  .layout-strip::-webkit-scrollbar-thumb { background: #c8b8a8; border-radius: 2px; }
+  .layout-strip .thumb { flex: 0 0 auto; scroll-snap-align: start; width: 280px; height: 340px; border-radius: 8px; margin-bottom: 0; }
+  .layout-strip .thumb img { width:100%; height:100%; object-fit:cover; }
+  .layout-strip .thumb:first-child { width: 360px; }
+
+  /* DUO */
+  .layout-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+  .layout-duo .thumb { height: 280px; border-radius: 8px; margin-bottom: 0; }
+  .layout-duo .thumb img { width:100%; height:100%; object-fit:cover; }
+
+  /* VIDEO */
+  .video-wrap { border-radius: 10px; overflow: hidden; margin: 12px 0; background: #000; }
+  .video-wrap video { width: 100%; max-height: 480px; display: block; }
+  .video-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e0d8d0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e0d0c0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(10,5,2,0.95); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d0c8c0; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .masonry { columns: 2; }
+    .layout-duo { grid-template-columns:1fr; }
+    .aniv-card { flex-direction:column; gap:16px; padding:20px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719173/IMG_7147.jpg" alt="Florencia">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Florencia · Ravenna<br><em>& Bolonia</em></h1>
+    <div class="tag">Abril 2026 · Italia</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>❤️ II Aniversario</span>
+      <span>🗿 La colilla al David</span>
+      <span>🍕 Primo de guía en Ravenna</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../macedonia/">← Macedonia</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Familia, aniversario y un primo de guía turístico</h2>
+    <p>Un viaje con dos capas: primero Laura y yo solos en Florencia, celebrando el segundo aniversario entre chuletas florentinas y vino. Luego el salto al viaje familiar — hermanos, sobrinos, primos — con base en Bolonia y Ravenna como destino especial gracias a Álvaro, el primo que lleva una temporada viviendo allí y que ejerció de guía improvisado.</p>
+    <p>El plan original era Bolonia-Florencia-Ravenna en grupo. Como siempre, yo me uní por libre desde Florencia. Y así quedó mejor.</p>
+
+    <div class="aniv-card">
+      <div class="aniv-icon">🥂</div>
+      <div class="aniv-info">
+        <h3>II Aniversario en Florencia</h3>
+        <p>Primera vez de Laura en el viaje familiar. Lo estrenamos bien: chuletón florentino, vino, paninis y la ciudad más bonita de Italia para los dos solos.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">3</div><div class="stat-label">ciudades</div></div>
+      <div class="stat"><div class="stat-value">II</div><div class="stat-label">aniversario</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">primo de guía</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">gelatos y peronis</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Ciudad a ciudad</h2>
+    <p>Haz clic en cualquier foto para verla en grande.</p>
+
+    <!-- FLORENCIA — 31 fotos → mosaico -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Florencia</span>
+        <span class="city-sub">Aniversario + viaje familiar</span>
+        <span class="city-count">31 fotos</span>
+      </div>
+      <div class="masonry">
+        <div class="thumb" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719193/9736ebee-878f-4917-ab0f-a29d7ee60ed2.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719193/634f1abe-e35d-4db6-b699-9514c38d1c29.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719193/62ea4673-8399-4bb2-85ea-07bc90a5df7b.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719191/14f02e77-4494-4319-8682-1892ab53fee6.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719191/7c55a001-10de-4475-8a47-84ab8a611f87.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719189/0b925f21-d68f-472c-a1e3-2437183aae8e.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719188/IMG_7291.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719188/IMG_7280.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719188/IMG_7279.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719183/IMG_7276.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719175/IMG_7265.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719175/IMG_7268.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719174/IMG_7158.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719173/IMG_7151.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719174/IMG_7254.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719174/IMG_7248.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719174/IMG_7154.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719172/IMG_7121.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719173/IMG_7135.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719172/IMG_7112.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719171/IMG_7094.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719172/IMG_7107.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719170/IMG_7088.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719171/IMG_7092.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719171/fec52965-7974-4426-bff3-20365e6f9d81.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719170/c335b316-ab0c-4e33-9128-8cc4273c2657.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719170/42439614-3ef6-4c3e-a86f-8159bf502641.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719170/c30aed72-eb31-4970-b5fc-78f606401460.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719170/a42140b9-f781-47ae-8f81-838ca40a2498.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719170/aad5e9b2-3507-42d3-adb2-d4c129d785ae.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+        <div class="thumb" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719169/08600986-0c09-490b-b5b6-af177b87795a.jpg" alt="Florencia"><div class="cap">Florencia</div></div>
+      </div>
+    </div>
+
+    <!-- RAVENNA — fotos + vídeo -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Ravenna</span>
+        <span class="city-sub">Con el primo Álvaro de guía</span>
+        <span class="city-count">11 fotos + vídeo</span>
+      </div>
+      <div class="video-wrap">
+        <video controls preload="none" poster="https://res.cloudinary.com/il7cecht/image/upload/v1789719193/8196d4b7-7351-4735-bc5b-42a026b45a09.jpg">
+          <source src="https://res.cloudinary.com/il7cecht/video/upload/v1789719192/IMG_7373.mov" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-label">📹 Ravenna · vídeo</div>
+      <div class="masonry" style="margin-top:12px;">
+        <div class="thumb" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719193/8196d4b7-7351-4735-bc5b-42a026b45a09.jpg" alt="Ravenna"><div class="cap">Ravenna</div></div>
+        <div class="thumb" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719192/62b8451f-f81a-4a81-aadc-3c191881b73f.jpg" alt="Ravenna"><div class="cap">Ravenna</div></div>
+        <div class="thumb" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719193/87dce3cc-505f-4174-a1c0-38df19a635a8.jpg" alt="Ravenna"><div class="cap">Ravenna</div></div>
+        <div class="thumb" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719192/40a7a755-69d0-4f1e-bff7-75799234fad3.jpg" alt="Ravenna"><div class="cap">Ravenna</div></div>
+        <div class="thumb" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719189/0a5f285d-9e38-4f60-ab4e-d2205117ac57_1.jpg" alt="Ravenna"><div class="cap">Ravenna</div></div>
+        <div class="thumb" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719189/IMG_7401.jpg" alt="Ravenna"><div class="cap">Ravenna</div></div>
+        <div class="thumb" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719188/IMG_7377.jpg" alt="Ravenna"><div class="cap">Ravenna</div></div>
+        <div class="thumb" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719188/IMG_7375.jpg" alt="Ravenna"><div class="cap">Ravenna</div></div>
+        <div class="thumb" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719174/IMG_7249.jpg" alt="Ravenna"><div class="cap">Ravenna</div></div>
+        <div class="thumb" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719170/59943987-0efc-467c-a5b4-7e749275a124.jpg" alt="Ravenna"><div class="cap">Ravenna</div></div>
+        <div class="thumb" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719169/748119e6-6e9a-488f-918d-20c63fabd8d0.jpg" alt="Ravenna"><div class="cap">Ravenna</div></div>
+      </div>
+    </div>
+
+    <!-- BOLONIA — 3 fotos → dúo + 1 -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Bolonia</span>
+        <span class="city-sub">Paseo nocturno, fuente de Neptuno y los 7 secretos que no encontramos</span>
+        <span class="city-count">3 fotos</span>
+      </div>
+      <div class="layout-strip">
+        <div class="thumb" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719191/9f19b473-8231-43ee-867c-74bde38fb68f.jpg" alt="Bolonia"><div class="cap">Bolonia</div></div>
+        <div class="thumb" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719191/7ad60671-d890-4746-8216-d79c9400c351.jpg" alt="Bolonia"><div class="cap">Bolonia · plaza mayor</div></div>
+        <div class="thumb" onclick="lb(44)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789719190/3b32cc83-d0a4-4815-b0c0-be57a3945e40.jpg" alt="Bolonia"><div class="cap">Bolonia · Neptuno</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🥩</div>
+        <div>
+          <div class="moment-title">Chuletón florentino de aniversario</div>
+          <p class="moment-desc">La bistecca alla fiorentina como se merece: enorme, poco hecha, con vino toscano. El mejor modo de celebrar dos años.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🗿</div>
+        <div>
+          <div class="moment-title">La colilla al David de Miguel Ángel</div>
+          <p class="moment-desc">El museo Accademia, la cola, la expectativa... y lo primero que miras al ver el David. No hace falta decir más.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">📸</div>
+        <div>
+          <div class="moment-title">Fotos influencer con los sobrinos en Ponte Vecchio</div>
+          <p class="moment-desc">Los sobrinos tienen otro nivel con las fotos. Poses, ángulos, repeticiones. Aprendizaje mutuo en el puente más famoso de Florencia.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🧩</div>
+        <div>
+          <div class="moment-title">El tren a Ravenna jugando al impostor con Alberto el filósofo</div>
+          <p class="moment-desc">"La tiro lejos, dale una vuelta..." El sobrino filósofo convirtió el trayecto en un debate existencial disfrazado de Among Us.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏛️</div>
+        <div>
+          <div class="moment-title">Álvaro, el primo guía de Ravenna</div>
+          <p class="moment-desc">Tener a alguien que vive en la ciudad cambia el viaje. Mosaicos, rincones que no salen en las guías, restaurantes de verdad y una perspectiva local que no se improvisa.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🔵</div>
+        <div>
+          <div class="moment-title">Mosaicos por todos lados en Ravenna</div>
+          <p class="moment-desc">Ravenna es patrimonio UNESCO por sus mosaicos bizantinos. Lo sabes antes de ir. Lo entiendes cuando los ves en persona: son otra cosa.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🌙</div>
+        <div>
+          <div class="moment-title">Paseíto nocturno por Bolonia — sin encontrar los 7 secretos</div>
+          <p class="moment-desc">Plaza Mayor, fuente de Neptuno, los pórticos iluminados. Bolonia de noche tiene mucho encanto. Los 7 secretos de la ciudad... esos se quedaron sin descubrir.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">❤️</div>
+        <div>
+          <div class="moment-title">Primera vez de Laura en el viaje familiar</div>
+          <p class="moment-desc">Estreno oficial. Sobrinos, cuñados, primos, el caos familiar habitual. Y Laura aguantando el tipo con nota.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Florencia</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">Ravenna</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+      <div class="rating-row"><span class="rating-label">Bolonia</span><div class="rating-bar"><div class="rating-fill" style="width:78%"></div></div><span class="rating-score">7.8</span></div>
+      <div class="rating-row"><span class="rating-label">Comida</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">Plan familiar</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Aniversario en Florencia — nivel altísimo</li>
+          <li>Álvaro de guía en Ravenna</li>
+          <li>Los mosaicos bizantinos</li>
+          <li>El chuletón florentino</li>
+          <li>Los sobrinos y sus fotos de influencer</li>
+          <li>Alberto el filósofo en el tren</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>No encontrar los 7 secretos de Bolonia</li>
+          <li>Poco tiempo en Bolonia</li>
+          <li>Las colas del museo Accademia</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Italia tiene el poder de hacer que cada ciudad parezca la mejor ciudad del mundo mientras estás en ella."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Florencia · Ravenna · Bolonia · Abril 2026 &nbsp;·&nbsp; <a href="../macedonia/">← Macedonia</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  // FLORENCIA 0-30
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719193/9736ebee-878f-4917-ab0f-a29d7ee60ed2.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719193/634f1abe-e35d-4db6-b699-9514c38d1c29.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719193/62ea4673-8399-4bb2-85ea-07bc90a5df7b.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719191/14f02e77-4494-4319-8682-1892ab53fee6.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719191/7c55a001-10de-4475-8a47-84ab8a611f87.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719189/0b925f21-d68f-472c-a1e3-2437183aae8e.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719188/IMG_7291.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719188/IMG_7280.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719188/IMG_7279.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719183/IMG_7276.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719175/IMG_7265.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719175/IMG_7268.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719174/IMG_7158.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719173/IMG_7151.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719174/IMG_7254.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719174/IMG_7248.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719174/IMG_7154.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719172/IMG_7121.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719173/IMG_7135.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719172/IMG_7112.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719171/IMG_7094.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719172/IMG_7107.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719170/IMG_7088.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719171/IMG_7092.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719171/fec52965-7974-4426-bff3-20365e6f9d81.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719170/c335b316-ab0c-4e33-9128-8cc4273c2657.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719170/42439614-3ef6-4c3e-a86f-8159bf502641.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719170/c30aed72-eb31-4970-b5fc-78f606401460.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719170/a42140b9-f781-47ae-8f81-838ca40a2498.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719170/aad5e9b2-3507-42d3-adb2-d4c129d785ae.jpg',c:'Florencia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719169/08600986-0c09-490b-b5b6-af177b87795a.jpg',c:'Florencia'},
+  // RAVENNA 31-41
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719193/8196d4b7-7351-4735-bc5b-42a026b45a09.jpg',c:'Ravenna'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719192/62b8451f-f81a-4a81-aadc-3c191881b73f.jpg',c:'Ravenna'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719193/87dce3cc-505f-4174-a1c0-38df19a635a8.jpg',c:'Ravenna'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719192/40a7a755-69d0-4f1e-bff7-75799234fad3.jpg',c:'Ravenna'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719189/0a5f285d-9e38-4f60-ab4e-d2205117ac57_1.jpg',c:'Ravenna'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719189/IMG_7401.jpg',c:'Ravenna'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719188/IMG_7377.jpg',c:'Ravenna'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719188/IMG_7375.jpg',c:'Ravenna'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719174/IMG_7249.jpg',c:'Ravenna'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719170/59943987-0efc-467c-a5b4-7e749275a124.jpg',c:'Ravenna'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719169/748119e6-6e9a-488f-918d-20c63fabd8d0.jpg',c:'Ravenna'},
+  // BOLONIA 42-44
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719191/9f19b473-8231-43ee-867c-74bde38fb68f.jpg',c:'Bolonia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719191/7ad60671-d890-4746-8216-d79c9400c351.jpg',c:'Bolonia · Plaza Mayor'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789719190/3b32cc83-d0a4-4815-b0c0-be57a3945e40.jpg',c:'Bolonia · Fuente de Neptuno'},
+];
+
+let cur = 0;
+const lbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+const lbCap = document.getElementById('lb-cap');
+const lbDots = document.getElementById('lb-dots');
+
+photos.forEach((_,i) => {
+  const d = document.createElement('button');
+  d.className = 'lb-dot'+(i===0?' on':'');
+  d.onclick = e => { e.stopPropagation(); lb(i); };
+  lbDots.appendChild(d);
+});
+
+function lb(i) {
+  cur = i; lbImg.src = photos[i].s; lbCap.textContent = photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j) => d.classList.toggle('on', j===i));
+  lbox.classList.add('open'); document.body.style.overflow = 'hidden';
+}
+function closeLb() { lbox.classList.remove('open'); document.body.style.overflow=''; }
+function closeLbOutside(e) { if(e.target===lbox) closeLb(); }
+function shiftLb(d) { lb((cur+d+photos.length)%photos.length); }
+document.addEventListener('keydown', e => {
+  if(!lbox.classList.contains('open')) return;
+  if(e.key==='ArrowRight') shiftLb(1);
+  if(e.key==='ArrowLeft') shiftLb(-1);
+  if(e.key==='Escape') closeLb();
+});
+
+// Drag strips
+document.querySelectorAll('.layout-strip').forEach(strip => {
+  let down=false, sx, sl;
+  strip.addEventListener('mousedown', e => { down=true; sx=e.pageX-strip.offsetLeft; sl=strip.scrollLeft; });
+  strip.addEventListener('mouseleave', ()=>down=false);
+  strip.addEventListener('mouseup', ()=>down=false);
+  strip.addEventListener('mousemove', e => { if(!down) return; e.preventDefault(); strip.scrollLeft=sl-(e.pageX-strip.offsetLeft-sx); });
+});
+</script>
+</body>
+</html>
