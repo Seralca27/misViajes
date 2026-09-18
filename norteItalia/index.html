@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venecia · Italia · Diciembre 2024</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #2a5a3a; --accent-light: #e8f4ee;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #080f12; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.7; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(28px,4.5vw,54px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #dde8e2; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #b0c8b8; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* CITY BLOCKS */
+  .city-block { margin: 28px 0; }
+  .city-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .city-name { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; }
+  .city-sub { font-size: 13px; color: var(--muted); font-style: italic; }
+  .city-count { font-size: 12px; color: var(--muted); margin-left: auto; }
+  .city-notes { margin: 8px 0 10px; }
+  .city-notes p { font-size: 13px; color: var(--muted); margin: 0; }
+  .city-notes span { display: inline-block; margin-right: 14px; }
+  .city-notes span::before { content: '· '; }
+
+  /* CARRUSEL COMPACTO */
+  .carousel { position: relative; margin: 8px 0; }
+  .carousel-track {
+    display: flex; gap: 6px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-behavior: smooth; padding-bottom: 8px;
+    cursor: grab; scrollbar-width: none;
+  }
+  .carousel-track:active { cursor: grabbing; }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track .thumb { flex: 0 0 auto; scroll-snap-align: start; width: 180px; height: 220px; border-radius: 8px; margin-bottom: 0; }
+  .carousel-track .thumb:first-child { width: 240px; }
+  .carousel-track .thumb img { width:100%; height:100%; object-fit:cover; }
+  .carousel-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .carousel-btn { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #c8d8c8; background: #fff; color: var(--ink); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s; }
+  .carousel-btn:hover { border-color: var(--accent); }
+  .carousel-hint { font-size: 11px; color: var(--muted); margin-left: 4px; }
+
+  /* THUMB */
+  .thumb { position: relative; cursor: zoom-in; background: #c8d8c0; overflow: hidden; border-radius: 8px; display: block; }
+  .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.35s ease; }
+  .thumb:hover img { transform: scale(1.04); }
+  .thumb .cap { position: absolute; bottom:0; left:0; right:0; padding: 20px 10px 8px; background: linear-gradient(transparent, rgba(0,0,0,0.45)); color: #fff; font-size: 10px; opacity: 0; transition: opacity 0.2s; }
+  .thumb:hover .cap { opacity: 1; }
+
+  /* NOTA ESPECIAL */
+  .nota {
+    background: var(--ink);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin: 24px 0;
+  }
+  .nota p { color: rgba(255,255,255,0.8); max-width: none; margin-bottom: 8px; font-size: 14px; }
+  .nota p:last-child { margin: 0; }
+  .nota strong { color: #fff; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d8e8d8; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#d0e0d0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(4,8,6,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c0d0c8; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .carousel-track .thumb { width:150px; height:185px; }
+    .carousel-track .thumb:first-child { width:200px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769336/436eae24-f94d-471c-a9cb-c0367d375a4b.jpg" alt="Venecia">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Venecia · Milán<br><em>Como · Verona</em></h1>
+    <div class="tag">Diciembre 2024 · Italia</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🇮🇹 Primer viaje de Laura por Europa</span>
+      <span>🌊 Canales y lago Como</span>
+      <span>🍕 Romeo y Julieta en Verona</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../cracovia/">← Cracovia</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Un viaje que empezó de una manera y terminó de otra</h2>
+    <p>El plan original era Venecia y luego Eslovenia — un remember de mi Erasmus en Maribor, y el primer viaje de Laura con los amigos de invierno. Prometía mucho.</p>
+    <p>De camino a Eslovenia, falleció mi tío Rodri. Tuve que volverme a España. Laura se quedó con el grupo, que la cuidó como una más desde el primer momento. Tras un par de días, volví a Venecia y continuamos los dos solos: Venecia, Milán, lago Como y Verona.</p>
+    <p>Un viaje triste por lo que había pasado, y a la vez especial por cómo lo vivimos.</p>
+
+    <div class="nota">
+      <p><strong>Para el tío Rodri.</strong></p>
+      <p>Y gracias al grupo por cuidar de Laura cuando más falta hacía.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">4</div><div class="stat-label">ciudades</div></div>
+      <div class="stat"><div class="stat-value">2</div><div class="stat-label">solos por Italia</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">primer viaje juntos</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">gelatos</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Ciudad a ciudad</h2>
+    <p>Haz clic en cualquier foto para verla en grande.</p>
+
+    <!-- VENECIA / MURANO -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Venecia · Murano</span>
+        <span class="city-count">16 fotos</span>
+      </div>
+      <div class="city-notes"><p>
+        <span>Primera caca compartida en hotel</span>
+        <span>Cenita de mierda (sin mirar reseñas)</span>
+        <span>Fábrica de cristal en Murano</span>
+      </p></div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-venecia">
+          <div class="thumb" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769336/9dbd80e8-d7ab-48b7-9def-42ee9c7425eb.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769336/119dc944-8f2a-4dab-bff7-39c76b176a29.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769339/IMG_1993.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769414/IMG_2367.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769415/IMG_2375.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769416/IMG_2378.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769431/IMG_2458.jpg" alt="Murano"><div class="cap">Murano</div></div>
+          <div class="thumb" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769432/IMG_2464.jpg" alt="Murano"><div class="cap">Murano</div></div>
+          <div class="thumb" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769417/IMG_2382.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769418/IMG_2393.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769419/IMG_2397.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769422/IMG_2343.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769425/IMG_2424.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769426/IMG_2427.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769442/IMG_2413.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+          <div class="thumb" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769434/IMG_2430.jpg" alt="Venecia"><div class="cap">Venecia</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-venecia',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-venecia',1)">›</button>
+          <span class="carousel-hint">arrastra o usa las flechas · clic para ampliar</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MILÁN -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Milán</span>
+        <span class="city-count">11 fotos</span>
+      </div>
+      <div class="city-notes"><p>
+        <span>Pasta fresca</span>
+        <span>Paseítos en bici</span>
+        <span>Gelato obligatorio</span>
+      </p></div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-milan">
+          <div class="thumb" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769337/38463963-16f3-4937-bad3-bd0d4bfc492d.jpg" alt="Milán"><div class="cap">Milán</div></div>
+          <div class="thumb" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769354/IMG_2120.jpg" alt="Milán"><div class="cap">Milán</div></div>
+          <div class="thumb" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769358/IMG_2161.jpg" alt="Milán"><div class="cap">Milán</div></div>
+          <div class="thumb" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769358/IMG_2163.jpg" alt="Milán"><div class="cap">Milán</div></div>
+          <div class="thumb" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769360/IMG_2172.jpg" alt="Milán"><div class="cap">Milán</div></div>
+          <div class="thumb" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769360/IMG_2176.jpg" alt="Milán"><div class="cap">Milán</div></div>
+          <div class="thumb" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769362/IMG_2188.jpg" alt="Milán"><div class="cap">Milán</div></div>
+          <div class="thumb" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769362/IMG_2192.jpg" alt="Milán"><div class="cap">Milán</div></div>
+          <div class="thumb" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769371/IMG_2193.jpg" alt="Milán"><div class="cap">Milán</div></div>
+          <div class="thumb" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769364/IMG_2197.jpg" alt="Milán"><div class="cap">Milán</div></div>
+          <div class="thumb" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769366/IMG_2201.jpg" alt="Milán"><div class="cap">Milán</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-milan',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-milan',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAGO DE COMO -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Lago de Como</span>
+        <span class="city-count">14 fotos</span>
+      </div>
+      <div class="city-notes"><p>
+        <span>Solos en el lago</span>
+        <span>Cena romántica de bolsa de patatas</span>
+        <span>Con la maleta a cuestas</span>
+      </p></div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-como">
+          <div class="thumb" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769336/9178884e-45a1-4452-b298-7584150d2a9a.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769341/IMG_2008.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769342/IMG_2016.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769343/IMG_2022.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769343/IMG_1998.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769344/IMG_2032.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769346/IMG_2067.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769347/IMG_2077.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769348/IMG_2081.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769350/IMG_2090.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769351/IMG_2104.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769352/IMG_2054.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769353/IMG_2111.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+          <div class="thumb" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769353/IMG_2107.jpg" alt="Como"><div class="cap">Lago de Como</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-como',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-como',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERONA -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Verona</span>
+        <span class="city-count">18 fotos</span>
+      </div>
+      <div class="city-notes"><p>
+        <span>Romeo y Julieta</span>
+        <span>La sorpresa del viaje</span>
+        <span>Pizza y aperol</span>
+      </p></div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-verona">
+          <div class="thumb" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769336/156aafe8-de35-4506-9149-e18d0d6e38ef.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769338/ebec8cf0-d7cb-438f-bb94-69f2eed1fd6d.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769368/IMG_2226.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(44)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769368/IMG_2223.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(45)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769369/IMG_2235.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(46)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769370/IMG_2238.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(47)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769377/IMG_2247.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(48)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769379/IMG_2251.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(49)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769387/IMG_2258.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(50)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769388/IMG_2241.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(51)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769389/IMG_2274.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(52)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769389/IMG_2276.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(53)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769401/IMG_2280.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(54)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769403/IMG_2288.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(55)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769405/IMG_2285.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(56)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769405/IMG_2330.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(57)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769410/IMG_2336.jpg" alt="Verona"><div class="cap">Verona</div></div>
+          <div class="thumb" onclick="lb(58)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789769419/IMG_2293.jpg" alt="Verona"><div class="cap">Verona</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-verona',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-verona',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🖤</div>
+        <div>
+          <div class="moment-title">El grupo cuidando a Laura</div>
+          <p class="moment-desc">Cuando tuve que volverme a España, Laura se quedó sin conocerlos apenas. La trataron como una más desde el primer momento. Eso no se olvida.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🌊</div>
+        <div>
+          <div class="moment-title">Venecia en diciembre</div>
+          <p class="moment-desc">Venecia sin turistas masivos, con el frío y la niebla del invierno. Los canales, los puentes, el silencio. Una ciudad que cambia completamente fuera de temporada.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🔮</div>
+        <div>
+          <div class="moment-title">Fábrica de cristal en Murano</div>
+          <p class="moment-desc">Ver cómo soplan y moldean el cristal de Murano en directo es uno de esos espectáculos que no esperabas que fueran tan hipnóticos.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚲</div>
+        <div>
+          <div class="moment-title">Paseítos en bici por Milán</div>
+          <p class="moment-desc">Milán en bici tiene otro ritmo. Pasta fresca, gelato y los canales del Naviglio. Una ciudad que se disfruta mejor a dos ruedas.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🥔</div>
+        <div>
+          <div class="moment-title">La cena romántica de bolsa de patatas en Como</div>
+          <p class="moment-desc">Solos en el lago, con la maleta a cuestas, sin restaurante abierto. Una bolsa de patatas fritas se convirtió en la cena más romántica del viaje. Y de las más recordadas.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">💌</div>
+        <div>
+          <div class="moment-title">Verona · la sorpresa del viaje</div>
+          <p class="moment-desc">Verona estaba en el itinerario casi de relleno. Resultó ser la sorpresa del viaje: el casco antiguo, el anfiteatro romano, el balcón de Julieta. Pizza y aperol para cerrar.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Venecia</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">Milán</span><div class="rating-bar"><div class="rating-fill" style="width:82%"></div></div><span class="rating-score">8.2</span></div>
+      <div class="rating-row"><span class="rating-label">Lago de Como</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">Verona</span><div class="rating-bar"><div class="rating-fill" style="width:93%"></div></div><span class="rating-score">9.3</span></div>
+      <div class="rating-row"><span class="rating-label">Comida</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+      <div class="rating-row"><span class="rating-label">El grupo</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>El lago de Como — paisaje increíble</li>
+          <li>Verona como sorpresa del viaje</li>
+          <li>El grupo cuidando a Laura</li>
+          <li>La cena romántica de patatas en Como</li>
+          <li>Murano y la fábrica de cristal</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>La cena sin mirar las reseñas</li>
+          <li>Ir con maleta a Como</li>
+          <li>No haber podido llegar a Eslovenia</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Un viaje que empezó de una manera y terminó de otra. Y que, a pesar de todo, vale la pena recordar."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Venecia · Milán · Como · Verona · Diciembre 2024 &nbsp;·&nbsp; <a href="../cracovia/">← Cracovia</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  // VENECIA 0-15
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769336/9dbd80e8-d7ab-48b7-9def-42ee9c7425eb.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769336/119dc944-8f2a-4dab-bff7-39c76b176a29.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769339/IMG_1993.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769414/IMG_2367.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769415/IMG_2375.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769416/IMG_2378.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769431/IMG_2458.jpg',c:'Murano'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769432/IMG_2464.jpg',c:'Murano'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769417/IMG_2382.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769418/IMG_2393.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769419/IMG_2397.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769422/IMG_2343.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769425/IMG_2424.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769426/IMG_2427.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769442/IMG_2413.jpg',c:'Venecia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769434/IMG_2430.jpg',c:'Venecia'},
+  // MILÁN 16-26
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769337/38463963-16f3-4937-bad3-bd0d4bfc492d.jpg',c:'Milán'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769354/IMG_2120.jpg',c:'Milán'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769358/IMG_2161.jpg',c:'Milán'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769358/IMG_2163.jpg',c:'Milán'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769360/IMG_2172.jpg',c:'Milán'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769360/IMG_2176.jpg',c:'Milán'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769362/IMG_2188.jpg',c:'Milán'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769362/IMG_2192.jpg',c:'Milán'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769371/IMG_2193.jpg',c:'Milán'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769364/IMG_2197.jpg',c:'Milán'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769366/IMG_2201.jpg',c:'Milán'},
+  // COMO 27-40
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769336/9178884e-45a1-4452-b298-7584150d2a9a.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769341/IMG_2008.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769342/IMG_2016.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769343/IMG_2022.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769343/IMG_1998.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769344/IMG_2032.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769346/IMG_2067.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769347/IMG_2077.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769348/IMG_2081.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769350/IMG_2090.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769351/IMG_2104.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769352/IMG_2054.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769353/IMG_2111.jpg',c:'Lago de Como'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769353/IMG_2107.jpg',c:'Lago de Como'},
+  // VERONA 41-58
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769336/156aafe8-de35-4506-9149-e18d0d6e38ef.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769338/ebec8cf0-d7cb-438f-bb94-69f2eed1fd6d.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769368/IMG_2226.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769368/IMG_2223.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769369/IMG_2235.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769370/IMG_2238.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769377/IMG_2247.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769379/IMG_2251.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769387/IMG_2258.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769388/IMG_2241.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769389/IMG_2274.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769389/IMG_2276.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769401/IMG_2280.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769403/IMG_2288.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769405/IMG_2285.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769405/IMG_2330.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769410/IMG_2336.jpg',c:'Verona'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789769419/IMG_2293.jpg',c:'Verona'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+function scrollC(id,dir){document.getElementById(id).scrollBy({left:dir*200,behavior:'smooth'});}
+
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+
+document.querySelectorAll('.carousel-track').forEach(track=>{
+  let down=false,sx,sl;
+  track.addEventListener('mousedown',e=>{down=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;});
+  track.addEventListener('mouseleave',()=>down=false);
+  track.addEventListener('mouseup',()=>down=false);
+  track.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx);});
+});
+</script>
+</body>
+</html>
