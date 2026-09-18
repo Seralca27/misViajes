@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cracovia · Abril 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #1a4a7a; --accent-light: #e8f0f8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #080e18; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.75; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #dce4ed; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* DORSAL CARD */
+  .dorsal-card {
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: var(--accent-light);
+  }
+  .dorsal-num { font-family: 'Instrument Serif', serif; font-size: 52px; color: var(--accent); line-height: 1; flex-shrink: 0; }
+  .dorsal-info h3 { font-weight: 500; font-size: 15px; margin-bottom: 4px; color: var(--ink); }
+  .dorsal-info p { font-size: 13px; color: var(--muted); margin: 0; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #b0c0d0; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* REVISTA LAYOUT */
+  .magazine { max-width: 900px; margin: 0 auto; }
+
+  /* Foto grande a sangre */
+  .mag-full {
+    width: 100%;
+    height: 420px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 24px 0;
+    cursor: zoom-in;
+    position: relative;
+  }
+  .mag-full img { width:100%; height:100%; object-fit:cover; transition: transform 0.4s; }
+  .mag-full:hover img { transform: scale(1.02); }
+
+  /* Dos fotos lado a lado */
+  .mag-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .mag-pair .p-item {
+    height: 280px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: zoom-in;
+    position: relative;
+  }
+  .mag-pair .p-item img { width:100%; height:100%; object-fit:cover; transition: transform 0.4s; }
+  .mag-pair .p-item:hover img { transform: scale(1.03); }
+
+  /* Foto + texto lado a lado */
+  .mag-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: center;
+    margin: 24px 0;
+  }
+  .mag-split.reverse { direction: rtl; }
+  .mag-split.reverse > * { direction: ltr; }
+  .mag-split .s-photo {
+    height: 320px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: zoom-in;
+    position: relative;
+  }
+  .mag-split .s-photo img { width:100%; height:100%; object-fit:cover; transition: transform 0.4s; }
+  .mag-split .s-photo:hover img { transform: scale(1.03); }
+  .mag-split .s-text {}
+  .mag-split .s-text h3 { font-family:'Instrument Serif',serif; font-size:22px; font-weight:400; margin-bottom:10px; line-height:1.2; }
+  .mag-split .s-text p { font-size:14px; color:var(--muted); margin-bottom:8px; max-width:none; }
+
+  /* Tres fotos pequeñas */
+  .mag-trio {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .mag-trio .t-item {
+    height: 200px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: zoom-in;
+    position: relative;
+  }
+  .mag-trio .t-item img { width:100%; height:100%; object-fit:cover; transition: transform 0.4s; }
+  .mag-trio .t-item:hover img { transform: scale(1.04); }
+
+  /* Caption común */
+  .photo-cap {
+    position: absolute; bottom:0; left:0; right:0;
+    padding: 28px 12px 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.45));
+    color:#fff; font-size:11px; opacity:0; transition:opacity 0.2s;
+  }
+  .mag-full:hover .photo-cap,
+  .p-item:hover .photo-cap,
+  .s-photo:hover .photo-cap,
+  .t-item:hover .photo-cap { opacity:1; }
+
+  /* Texto entre fotos */
+  .mag-text { margin: 8px 0 20px; }
+  .mag-text p { font-size:14px; color:var(--muted); font-style:italic; border-left:3px solid var(--warm); padding-left:16px; max-width:600px; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d8e4f0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#d0dce8; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(4,8,16,0.95); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c8d4e0; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .mag-pair, .mag-split, .mag-trio { grid-template-columns:1fr; }
+    .mag-split .s-photo, .mag-pair .p-item { height:220px; }
+    .mag-trio .t-item { height:180px; }
+    .mag-full { height:280px; }
+    .dorsal-card { flex-direction:column; gap:12px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729740/95202d30-4ca4-45d4-bc6d-37e6a944042d_v2.jpg" alt="Cracovia">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Cracovia<br><em>& la maratón que no fue</em></h1>
+    <div class="tag">Abril 2026 · Polonia</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🥶 Bajo cero y nevando</span>
+      <span>🏃 Retirado en el km 25</span>
+      <span>🥟 Zapiekankis y vodka</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../estambul/">← Estambul</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Meses de entrenamiento, lesión, nieve y retirada en el 25</h2>
+    <p>El plan era la Maratón de Cracovia. Varios meses de entrenamiento duro, luego la lesión, y la llegada con cero expectativas y menos ganas. Aun así: recoges el dorsal, te pones en la línea de salida y vas.</p>
+    <p>Amaneció nevando. Bajo cero. En el kilómetro 17 una parada de emergencia. En el 25, retirada. Tranvía de vuelta, cuerpo tieso de frío y de esfuerzo. Segunda vez que me retiro con el mismo grupo de amigos. Pero el finde en Cracovia valió la pena igualmente.</p>
+
+    <div class="dorsal-card">
+      <div class="dorsal-num">#22880</div>
+      <div class="dorsal-info">
+        <h3>Maratón de Cracovia · Abril 2026</h3>
+        <p>Retirado en el km 25 · Bajo cero · Nevando · Sin excusas<br>Recordatorio para siempre: <strong>estirar el dedo gordo</strong></p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">25</div><div class="stat-label">km recorridos</div></div>
+      <div class="stat"><div class="stat-value">17</div><div class="stat-label">km · parada técnica</div></div>
+      <div class="stat"><div class="stat-value">-2°</div><div class="stat-label">temperatura</div></div>
+      <div class="stat"><div class="stat-value">2ª</div><div class="stat-label">retirada con el grupo</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Cracovia en imágenes</h2>
+    <p>Haz clic en cualquier foto para verla en grande.</p>
+
+    <div class="magazine">
+
+      <!-- Foto grande apertura -->
+      <div class="mag-full" onclick="lb(0)">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729223/IMG_5535.jpg" alt="">
+        <div class="photo-cap">Cracovia</div>
+      </div>
+
+      <!-- Split: foto + texto carrera -->
+      <div class="mag-split">
+        <div class="s-photo" onclick="lb(1)">
+          <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729208/IMG_5310.jpg" alt="">
+          <div class="photo-cap">Línea de salida</div>
+        </div>
+        <div class="s-text">
+          <h3>La salida bajo la nieve</h3>
+          <p>Amaneció nevando. Bajo cero. Miles de corredores en la línea de salida, todos preguntándose lo mismo. Fuiste igualmente.</p>
+          <p>Dorsal 22880. Lesión encima. Cero expectativas. Y sin embargo, ahí estabas.</p>
+        </div>
+      </div>
+
+      <!-- Par de fotos -->
+      <div class="mag-pair">
+        <div class="p-item" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729205/IMG_5270.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="p-item" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729204/5d3332e7-16ba-454a-b34e-79618ea3135b.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+      </div>
+
+      <!-- Texto -->
+      <div class="mag-text"><p>Km 17: parada técnica obligatoria. Km 25: retirada. Tranvía, calor, cuerpo tieso. Sienna aguantando el frío con una sonrisa. Segunda vez con el mismo grupo.</p></div>
+
+      <!-- Split inverso -->
+      <div class="mag-split reverse">
+        <div class="s-photo" onclick="lb(4)">
+          <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729204/cbfad886-81e3-429a-bd59-5b6ac279076d.jpg" alt="">
+          <div class="photo-cap">Barrio judío</div>
+        </div>
+        <div class="s-text">
+          <h3>Cracovia más allá de la carrera</h3>
+          <p>Free tour por el barrio judío, historias de la II Guerra Mundial. Una ciudad con mucha capa histórica que contar.</p>
+          <p>Zapiekankis, chupitos de vodka para entrar en calor y checkin a última hora para pillar los mejores asientos.</p>
+        </div>
+      </div>
+
+      <!-- Trío -->
+      <div class="mag-trio">
+        <div class="t-item" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729212/IMG_5372.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="t-item" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729204/a00202f4-f4d6-479b-a2db-e57959ce0b6d.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="t-item" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729207/IMG_5307.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+      </div>
+
+      <!-- Par -->
+      <div class="mag-pair">
+        <div class="p-item" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729204/e88fc566-0a3b-43ad-83d9-77862e1c4e18.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="p-item" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729210/IMG_5330.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+      </div>
+
+      <!-- Full -->
+      <div class="mag-full" onclick="lb(10)">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729213/IMG_5400.jpg" alt="">
+        <div class="photo-cap">Cracovia</div>
+      </div>
+
+      <!-- Trío -->
+      <div class="mag-trio">
+        <div class="t-item" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729206/IMG_5299.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="t-item" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729203/4dc1e093-cd78-461c-af09-42a2bffcf89d.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="t-item" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729210/IMG_5334.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+      </div>
+
+      <!-- Par -->
+      <div class="mag-pair">
+        <div class="p-item" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729211/IMG_5343.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="p-item" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729209/IMG_5323.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+      </div>
+
+      <!-- Split -->
+      <div class="mag-split">
+        <div class="s-photo" onclick="lb(16)">
+          <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729208/IMG_5318.jpg" alt="">
+          <div class="photo-cap">Zapiekankis</div>
+        </div>
+        <div class="s-text">
+          <h3>Comida rica y vodka para el frío</h3>
+          <p>Los zapiekankis — baguettes abiertas con queso fundido — son el snack callejero de Cracovia. Con el frío que hacía, eran lo más apetecible del mundo.</p>
+          <p>Y chupitos de vodka polaco. Para entrar en calor. Es obligatorio, prácticamente cultural.</p>
+        </div>
+      </div>
+
+      <!-- Trío -->
+      <div class="mag-trio">
+        <div class="t-item" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729214/IMG_5428.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="t-item" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729214/IMG_5409.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="t-item" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729215/IMG_5435.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+      </div>
+
+      <!-- Full -->
+      <div class="mag-full" onclick="lb(20)">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729216/IMG_5438.jpg" alt="">
+        <div class="photo-cap">Cracovia</div>
+      </div>
+
+      <!-- Par -->
+      <div class="mag-pair">
+        <div class="p-item" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729217/IMG_5454.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="p-item" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729220/IMG_5480.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+      </div>
+
+      <!-- Trío -->
+      <div class="mag-trio">
+        <div class="t-item" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729218/IMG_5466.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="t-item" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729218/IMG_5475.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="t-item" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729222/IMG_5494.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+      </div>
+
+      <!-- Split inverso cierre -->
+      <div class="mag-split reverse">
+        <div class="s-photo" onclick="lb(26)">
+          <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729221/IMG_5492.jpg" alt="">
+          <div class="photo-cap">Cracovia</div>
+        </div>
+        <div class="s-text">
+          <h3>Nos faltó Auschwitz y las minas de sal</h3>
+          <p>Dos visitas que se quedaron en el tintero: Auschwitz-Birkenau y las minas de sal de Wieliczka. Ambas a pocos kilómetros.</p>
+          <p>Excusa perfecta para volver. Cracovia lo merece con más tiempo y sin maratón de por medio.</p>
+        </div>
+      </div>
+
+      <!-- Par final -->
+      <div class="mag-pair">
+        <div class="p-item" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729219/IMG_5476.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+        <div class="p-item" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729220/IMG_5485.jpg" alt=""><div class="photo-cap">Cracovia</div></div>
+      </div>
+
+      <!-- Full cierre -->
+      <div class="mag-full" onclick="lb(29)">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789729223/IMG_5519.jpg" alt="">
+        <div class="photo-cap">Cracovia · hasta la próxima</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🌨️</div>
+        <div>
+          <div class="moment-title">Amaneció nevando y bajo cero</div>
+          <p class="moment-desc">El día de la maratón el clima no perdonó. Nieve, frío extremo y miles de corredores preguntándose si merecía la pena. La respuesta fue: sí, pero con consecuencias.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚽</div>
+        <div>
+          <div class="moment-title">Parada técnica en el km 17</div>
+          <p class="moment-desc">Parte del proceso. No siempre sale todo según el plan. El cuerpo manda.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚋</div>
+        <div>
+          <div class="moment-title">Retirada en el km 25 · tranvía de vuelta</div>
+          <p class="moment-desc">Segunda retirada con el mismo grupo. El tranvía, tieso de frío y de esfuerzo. No es el final que querías, pero es el que fue. Y la próxima será diferente.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🦶</div>
+        <div>
+          <div class="moment-title">Recordatorio permanente: estirar el dedo gordo</div>
+          <p class="moment-desc">Queda grabado para siempre. Cualquier carrera futura empieza con este paso. Sin excepción.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">💪</div>
+        <div>
+          <div class="moment-title">Sienna campeona aguantando el frío</div>
+          <p class="moment-desc">Mientras el corredor se retiraba calentito en el tranvía, Sienna aguantando en la calle con una sonrisa. Eso es aguante de verdad.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🕍</div>
+        <div>
+          <div class="moment-title">Free tour por el barrio judío</div>
+          <p class="moment-desc">Cracovia tiene una historia judía muy importante y muy dura. El barrio de Kazimierz, las historias de la II Guerra Mundial. Una visita que te deja pensando.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🥟</div>
+        <div>
+          <div class="moment-title">Zapiekankis y vodka polaco</div>
+          <p class="moment-desc">La combinación perfecta para un día de frío extremo. Comida callejera caliente y chupitos de vodka. Polonia sabe lo que hace.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">La carrera</span><div class="rating-bar"><div class="rating-fill" style="width:20%"></div></div><span class="rating-score">2</span></div>
+      <div class="rating-row"><span class="rating-label">La ciudad</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+      <div class="rating-row"><span class="rating-label">Comida</span><div class="rating-bar"><div class="rating-fill" style="width:85%"></div></div><span class="rating-score">8.5</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">El grupo</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Haber salido a la línea de salida</li>
+          <li>Cracovia — ciudad con mucha historia</li>
+          <li>Zapiekankis y vodka polaco</li>
+          <li>Precio/calidad excelente</li>
+          <li>Sienna campeona absoluta</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>Correr lesionado bajo cero</li>
+          <li>No estirar el dedo gordo</li>
+          <li>No ir a Auschwitz ni a las minas de sal</li>
+          <li>Retirarme (aunque a veces toca)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Llegar a la línea de salida cuando no quieres correr ya es una victoria. El resto es meteorología."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Cracovia · Abril 2026 &nbsp;·&nbsp; <a href="../estambul/">← Estambul</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729223/IMG_5535.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729208/IMG_5310.jpg',c:'Línea de salida'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729205/IMG_5270.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729204/5d3332e7-16ba-454a-b34e-79618ea3135b.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729204/cbfad886-81e3-429a-bd59-5b6ac279076d.jpg',c:'Barrio judío'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729212/IMG_5372.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729204/a00202f4-f4d6-479b-a2db-e57959ce0b6d.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729207/IMG_5307.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729204/e88fc566-0a3b-43ad-83d9-77862e1c4e18.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729210/IMG_5330.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729213/IMG_5400.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729206/IMG_5299.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729203/4dc1e093-cd78-461c-af09-42a2bffcf89d.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729210/IMG_5334.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729211/IMG_5343.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729209/IMG_5323.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729208/IMG_5318.jpg',c:'Zapiekankis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729214/IMG_5428.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729214/IMG_5409.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729215/IMG_5435.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729216/IMG_5438.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729217/IMG_5454.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729220/IMG_5480.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729218/IMG_5466.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729218/IMG_5475.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729222/IMG_5494.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729221/IMG_5492.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729219/IMG_5476.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729220/IMG_5485.jpg',c:'Cracovia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789729223/IMG_5519.jpg',c:'Cracovia · hasta la próxima'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+</script>
+</body>
+</html>
