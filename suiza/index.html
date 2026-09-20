@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suiza · Marzo 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #1a5c3a; --accent-light: #e6f4ec;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #081210; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #d8e8dc; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #a0c8b0; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* CITY BLOCKS */
+  .city-block { margin: 28px 0; }
+  .city-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .city-name { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; }
+  .city-sub { font-size: 13px; color: var(--muted); font-style: italic; }
+  .city-count { font-size: 12px; color: var(--muted); margin-left: auto; }
+  .city-notes { margin: 6px 0 10px; }
+  .city-notes p { font-size: 13px; color: var(--muted); margin: 0; }
+  .city-notes span { display: inline-block; margin-right: 14px; }
+  .city-notes span::before { content: '· '; }
+
+  /* CARRUSEL COMPACTO */
+  .carousel { position: relative; margin: 8px 0; }
+  .carousel-track { display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 8px; cursor: grab; scrollbar-width: none; }
+  .carousel-track:active { cursor: grabbing; }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track .thumb { flex: 0 0 auto; scroll-snap-align: start; width: 180px; height: 220px; border-radius: 8px; margin-bottom: 0; }
+  .carousel-track .thumb:first-child { width: 240px; }
+  .carousel-track .thumb img { width:100%; height:100%; object-fit:cover; }
+  .carousel-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .carousel-btn { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #b0d0b8; background: #fff; color: var(--ink); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s; }
+  .carousel-btn:hover { border-color: var(--accent); }
+  .carousel-hint { font-size: 11px; color: var(--muted); margin-left: 4px; }
+
+  /* THUMB */
+  .thumb { position: relative; cursor: zoom-in; background: #b8d0c0; overflow: hidden; border-radius: 8px; display: block; }
+  .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.35s ease; }
+  .thumb:hover img { transform: scale(1.04); }
+  .thumb .cap { position: absolute; bottom:0; left:0; right:0; padding: 20px 10px 8px; background: linear-gradient(transparent, rgba(0,0,0,0.45)); color: #fff; font-size: 10px; opacity: 0; transition: opacity 0.2s; }
+  .thumb:hover .cap { opacity: 1; }
+
+  /* VIDEO */
+  .video-wrap { border-radius: 10px; overflow: hidden; margin: 10px 0; background: #000; }
+  .video-wrap video { width: 100%; max-height: 380px; display: block; }
+  .video-label { font-size: 12px; color: var(--muted); margin-top: 4px; margin-bottom: 12px; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d0e8d8; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#c8e0d0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(2,8,4,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #b8d0c0; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .carousel-track .thumb { width:150px; height:185px; }
+    .carousel-track .thumb:first-child { width:200px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902416/IMG_4494.jpg" alt="Suiza">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Suiza<br><em>los inforborrachos vuelven</em></h1>
+    <div class="tag">Marzo 2025 · Los Inforborrachos</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🏔️ Thun · Interlaken · Gruyères · Berna</span>
+      <span>🧀 Fondue y cata de chocolate</span>
+      <span>💃 La manita relajá de Octavio</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../venecia/">← Italia</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>El reencuentro de los inforborrachos</h2>
+    <p>Cena de Navidad 2024, borrachos, y alguien propone ir a Suiza porque Sito vive allí. Dos meses después, todos en un vuelo. El primer viaje del grupo después de mucho tiempo.</p>
+    <p>Casa rural en Thun: juegos, baile de bienvenida a los que se incorporaban (la manita relajá, Octavio), programas random de la tele suiza, concurso de tortillas y giros en el lago. Y las excursiones: Interlaken, Gruyères con fondue en quesería de montaña, Berna con desfile de carnaval incluido, y la fábrica de chocolate Cailler.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">4</div><div class="stat-label">destinos</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">concurso tortillas</div></div>
+      <div class="stat"><div class="stat-value">15</div><div class="stat-label">km entrenando</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">chocolate Cailler</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Sección a sección</h2>
+    <p>Haz clic en cualquier foto para verla en grande.</p>
+
+    <!-- THUN · CASA RURAL -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Thun · Casa rural</span>
+        <span class="city-count">fotos generales</span>
+      </div>
+      <div class="city-notes"><p>
+        <span>Juegos y baile de bienvenida</span>
+        <span>La manita relajá de Octavio</span>
+        <span>Concurso de tortillas</span>
+        <span>Giros en el lago</span>
+      </p></div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-general">
+          <div class="thumb" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902426/6cc5571b-62e0-4c67-88b8-f29385a9700f.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902425/2f047272-4b7f-4d47-abd6-fd627c0194ed.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902424/2f2513a4-48e1-4624-8943-cdeb3cb94908.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902424/1f37119a-ca2c-4e6f-8b19-54f6ecb5cd26.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902423/IMG_4742.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902424/0b779f0c-a0a4-465f-ab3e-7ef7348b6d9c.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902423/IMG_4734.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902423/IMG_4725.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902420/IMG_4722.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902420/IMG_4693.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902419/IMG_4617.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902418/IMG_4599.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902417/e761a12c-baf1-4757-a878-1e1797f47a24.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902416/IMG_4563.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902416/IMG_4553.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902416/91410905-cc36-412f-825c-e488c4139bd1.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902416/c75e509c-0222-4546-91fc-90d631701935.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902417/a670af96-694a-4301-a4a4-0772a094d478.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902415/757ace9e-6ddd-43a6-b926-f71513094567.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902415/6d15d9a4-f53d-475c-8391-bf9446786b07.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902416/e5135faf-62b0-4f45-bdb1-61214d381a4f.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902416/3762687c-75f0-47a0-a143-912f752d3fdf.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902415/597543ba-35c8-49eb-9306-3dbc12410c59.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902415/261bcf3f-678f-4d07-a837-d0a5dca3001c.jpg" alt="Thun"><div class="cap">Thun</div></div>
+          <div class="thumb" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789903109/IMG_4867.jpg" alt="Thun"><div class="cap">Thun</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-general',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-general',1)">›</button>
+          <span class="carousel-hint">arrastra o usa las flechas · clic para ampliar</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTRENO POR EL LAGO -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Entreno · Lago de Thun</span>
+        <span class="city-sub">15 km preparando Cracovia</span>
+      </div>
+      <div class="city-notes"><p>
+        <span>Frío pero otro rollo</span>
+        <span>Naturaleza vs asfalto de Madrid</span>
+        <span>A la vuelta en Madrid → lesión</span>
+      </p></div>
+      <div class="video-wrap">
+        <video controls preload="none">
+          <source src="https://res.cloudinary.com/il7cecht/video/upload/v1789902425/IMG_4593.mov" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-label">📹 15km por el lago de Thun</div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-entreno">
+          <div class="thumb" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902418/IMG_4595.jpg" alt="Lago Thun"><div class="cap">Lago de Thun</div></div>
+          <div class="thumb" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902417/IMG_4578.jpg" alt="Lago Thun"><div class="cap">Lago de Thun</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-entreno',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-entreno',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUESERÍA DE GRUYÈRES -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Quesería de Gruyères</span>
+        <span class="city-sub">Fondue en la montaña · Mariajo embarazada sin saberlo</span>
+      </div>
+      <div class="video-wrap">
+        <video controls preload="none">
+          <source src="https://res.cloudinary.com/il7cecht/video/upload/v1789902426/5de0350b-e298-45e3-a11a-46afa1822282.mov" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-label">📹 Quesería · la fondue</div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-queseria">
+          <div class="thumb" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902418/IMG_4625.jpg" alt="Quesería"><div class="cap">Quesería Gruyères</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-queseria',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-queseria',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FÁBRICA CAILLER -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Fábrica Cailler</span>
+        <span class="city-sub">Cata de chocolate · qué rico</span>
+        <span class="city-count">4 fotos</span>
+      </div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-cailler">
+          <div class="thumb" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902932/IMG_4638.jpg" alt="Cailler"><div class="cap">Fábrica Cailler</div></div>
+          <div class="thumb" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902932/IMG_4632.jpg" alt="Cailler"><div class="cap">Fábrica Cailler</div></div>
+          <div class="thumb" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902419/IMG_4636.jpg" alt="Cailler"><div class="cap">Fábrica Cailler</div></div>
+          <div class="thumb" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789902419/IMG_4629.jpg" alt="Cailler"><div class="cap">Fábrica Cailler</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-cailler',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-cailler',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">💃</div>
+        <div>
+          <div class="moment-title">La manita relajá de Octavio</div>
+          <p class="moment-desc">El baile de bienvenida a las nuevas incorporaciones. Octavio con la manita relajá. Clásico del grupo que no falla.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🥚</div>
+        <div>
+          <div class="moment-title">Concurso de tortillas</div>
+          <p class="moment-desc">Casa rural, sartenes, huevos y mucho ego. El concurso de tortillas es de esas actividades que parecen una tontería y acaban siendo lo más divertido del finde.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏃</div>
+        <div>
+          <div class="moment-title">15km por el lago de Thun preparando Cracovia</div>
+          <p class="moment-desc">Frío, naturaleza, silencio y vistas al lago. Otro nivel comparado con el asfalto de Madrid. A la vuelta en España vino la lesión que arruinó la maratón.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🧀</div>
+        <div>
+          <div class="moment-title">Fondue en la quesería de montaña</div>
+          <p class="moment-desc">Gruyères, una quesería de montaña y fondue auténtica. Y Mariajo embarazada sin que nadie lo supiera aún — ni ella probablemente.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎭</div>
+        <div>
+          <div class="moment-title">Desfile de carnaval en Berna</div>
+          <p class="moment-desc">Berna en carnaval es otro mundo. El desfile, los disfraces, la música en las calles. Una coincidencia que convirtió la visita en algo especial.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍫</div>
+        <div>
+          <div class="moment-title">Cata de chocolate en la fábrica Cailler</div>
+          <p class="moment-desc">La fábrica de chocolate Cailler en Broc es una visita que termina con cata libre de todas las variedades. La mejor parte del viaje para muchos del grupo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🔁</div>
+        <div>
+          <div class="moment-title">Pari y yo repetíamos Interlaken sin saberlo</div>
+          <p class="moment-desc">Llegar a Interlaken y descubrir que los dos habíamos estado antes, sin haberlo mencionado nunca. El mundo es pequeño.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">📺</div>
+        <div>
+          <div class="moment-title">Programas random de la TV suiza</div>
+          <p class="moment-desc">Noche en la casa rural, tele suiza en alemán y el grupo intentando entender qué estaban viendo. Alta cultura televisiva.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">El grupo</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">Paisajes</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">La fondue en Gruyères</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">Fábrica Cailler</span><div class="rating-bar"><div class="rating-fill" style="width:93%"></div></div><span class="rating-score">9.3</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad</span><div class="rating-bar"><div class="rating-fill" style="width:50%"></div></div><span class="rating-score">5</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:85%"></div></div><span class="rating-score">8.5</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>El reencuentro del grupo después de tiempo</li>
+          <li>Los paisajes — Suiza es brutal</li>
+          <li>La fondue en la quesería de montaña</li>
+          <li>La cata de Cailler</li>
+          <li>El entreno por el lago de Thun</li>
+          <li>El carnaval de Berna por sorpresa</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>Suiza es cara. Muy cara.</li>
+          <li>Lesionarme a la vuelta</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Suiza es el país más caro del mundo. Y aun así, vale cada franco."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Suiza · Marzo 2025 &nbsp;·&nbsp; <a href="../venecia/">← Italia</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  // GENERAL 0-24
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902426/6cc5571b-62e0-4c67-88b8-f29385a9700f.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902425/2f047272-4b7f-4d47-abd6-fd627c0194ed.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902424/2f2513a4-48e1-4624-8943-cdeb3cb94908.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902424/1f37119a-ca2c-4e6f-8b19-54f6ecb5cd26.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902423/IMG_4742.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902424/0b779f0c-a0a4-465f-ab3e-7ef7348b6d9c.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902423/IMG_4734.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902423/IMG_4725.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902420/IMG_4722.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902420/IMG_4693.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902419/IMG_4617.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902418/IMG_4599.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902417/e761a12c-baf1-4757-a878-1e1797f47a24.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902416/IMG_4563.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902416/IMG_4553.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902416/91410905-cc36-412f-825c-e488c4139bd1.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902416/c75e509c-0222-4546-91fc-90d631701935.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902417/a670af96-694a-4301-a4a4-0772a094d478.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902415/757ace9e-6ddd-43a6-b926-f71513094567.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902415/6d15d9a4-f53d-475c-8391-bf9446786b07.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902416/e5135faf-62b0-4f45-bdb1-61214d381a4f.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902416/3762687c-75f0-47a0-a143-912f752d3fdf.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902415/597543ba-35c8-49eb-9306-3dbc12410c59.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902415/261bcf3f-678f-4d07-a837-d0a5dca3001c.jpg',c:'Thun'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789903109/IMG_4867.jpg',c:'Thun'},
+  // ENTRENO 25-26
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902418/IMG_4595.jpg',c:'Lago de Thun · entreno'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902417/IMG_4578.jpg',c:'Lago de Thun · entreno'},
+  // QUESERÍA 27
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902418/IMG_4625.jpg',c:'Quesería de Gruyères'},
+  // CAILLER 28-31
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902932/IMG_4638.jpg',c:'Fábrica Cailler'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902932/IMG_4632.jpg',c:'Fábrica Cailler'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902419/IMG_4636.jpg',c:'Fábrica Cailler'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789902419/IMG_4629.jpg',c:'Fábrica Cailler'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+function scrollC(id,dir){document.getElementById(id).scrollBy({left:dir*200,behavior:'smooth'});}
+
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+
+document.querySelectorAll('.carousel-track').forEach(track=>{
+  let down=false,sx,sl;
+  track.addEventListener('mousedown',e=>{down=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;});
+  track.addEventListener('mouseleave',()=>down=false);
+  track.addEventListener('mouseup',()=>down=false);
+  track.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx);});
+});
+</script>
+</body>
+</html>
