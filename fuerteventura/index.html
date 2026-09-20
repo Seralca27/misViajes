@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fuerteventura · Abril 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #c87c1a; --accent-light: #fdf4e6;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #150d02; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.75; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e8ddd0; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* ANIVERSARIO CARD */
+  .aniv-card {
+    background: linear-gradient(135deg, #c87c1a, #e8a84a);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    color: #fff;
+  }
+  .aniv-icon { font-size: 48px; flex-shrink: 0; }
+  .aniv-info h3 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; margin-bottom: 4px; }
+  .aniv-info p { font-size: 14px; color: rgba(255,255,255,0.85); margin: 0; max-width: none; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #d8b888; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* VÍDEO */
+  .video-destacado {
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 20px 0;
+    background: #000;
+    position: relative;
+  }
+  .video-destacado video { width:100%; max-height: 420px; display:block; }
+  .video-destacado .vid-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 32px 20px 16px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.65));
+    color: #fff;
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    font-style: italic;
+  }
+
+  /* CUADRÍCULA PEQUEÑA */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 100px;
+    gap: 5px;
+    margin: 20px 0;
+  }
+  .mosaic .m { border-radius: 6px; overflow: hidden; cursor: zoom-in; background: #d8c8a8; position: relative; }
+  .mosaic .m.w2 { grid-column: span 2; }
+  .mosaic .m.w3 { grid-column: span 3; }
+  .mosaic .m.h2 { grid-row: span 2; }
+  .mosaic .m.h3 { grid-row: span 3; }
+  .mosaic .m img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .mosaic .m:hover img { transform: scale(1.05); }
+  .mosaic .m .cap { position:absolute; bottom:0; left:0; right:0; padding:16px 8px 6px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
+  .mosaic .m:hover .cap { opacity:1; }
+
+  /* TRÍO ESPECIAL */
+  .trio-especial {
+    margin: 32px 0;
+  }
+  .trio-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .trio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .trio-grid .t {
+    height: 260px;
+    overflow: hidden;
+    cursor: zoom-in;
+    position: relative;
+    background: #d8c8a8;
+  }
+  .trio-grid .t img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.35s; }
+  .trio-grid .t:hover img { transform: scale(1.04); }
+  .trio-grid .t .cap { position:absolute; bottom:0; left:0; right:0; padding:24px 12px 10px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:11px; opacity:0; transition:opacity 0.2s; }
+  .trio-grid .t:hover .cap { opacity:1; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e8d8c8; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e8d8c8; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(10,6,2,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d8c8a8; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .mosaic { grid-template-columns: repeat(4,1fr); grid-auto-rows: 80px; }
+    .trio-grid { grid-template-columns:1fr; }
+    .trio-grid .t { height:220px; }
+    .aniv-card { flex-direction:column; gap:12px; padding:20px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929791/IMG_5919.jpg" alt="Fuerteventura">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Fuerteventura<br><em>mar, desierto y vértigo</em></h1>
+    <div class="tag">Abril 2025 · Primer aniversario</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>❤️ I Aniversario con Laura</span>
+      <span>🌋 Isla de Lobos · Cofete</span>
+      <span>💨 Un viento de no te menees</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../lisboa/">← Lisboa</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>El primer aniversario se celebra en una isla volcánica</h2>
+    <p>Fuerteventura para el primer aniversario: mar turquesa, dunas de arena, desierto con oasis, montaña y piscinas naturales. Una isla que lo tiene todo en pocos kilómetros.</p>
+    <p>Superando miedos y vértigos en Cofete, engañados con una pulserita hippie, casi volados por el viento en las dunas, excursión a la Isla de Lobos y el volcán. Y la banda sonora del viaje: "Yo soy la tierra de tus raíceeeessss".</p>
+
+    <div class="aniv-card">
+      <div class="aniv-icon">❤️</div>
+      <div class="aniv-info">
+        <h3>Primer aniversario con Laura</h3>
+        <p>Un año. Una isla volcánica, arena blanca, viento atlántico y piscinas naturales. Buena forma de celebrarlo.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">I</div><div class="stat-label">aniversario</div></div>
+      <div class="stat"><div class="stat-value">0</div><div class="stat-label">pulseras hippies compradas de verdad</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">viento</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">vértigo superado en Cofete</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>La isla en imágenes</h2>
+
+    <!-- VÍDEO -->
+    <div class="video-destacado">
+      <video controls preload="none">
+        <source src="https://res.cloudinary.com/il7cecht/video/upload/v1789929851/fe074143-0c06-4b33-a780-7311e420c08a.mp4" type="video/mp4">
+      </video>
+      <div class="vid-label">🎵 "Yo soy la tierra de tus raíceeeessss..."</div>
+    </div>
+
+    <!-- CUADRÍCULA GENERAL -->
+    <p style="font-size:13px; color:var(--muted); margin: 16px 0 4px;">Haz clic en cualquier foto para verla en grande.</p>
+    <div class="mosaic">
+      <div class="m w2 h2" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929844/IMG_6098.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m w2" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929843/IMG_6092.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m w2" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929850/e2410bff-052a-476b-b41b-1b631bb16617.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m w3" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929848/0e886458-f5bf-46b2-9728-a92fe296b84d.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m h2" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929845/IMG_6111.jpg" alt="Cofete"><div class="cap">Cofete</div></div>
+      <div class="m w2" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929849/2a8401d8-ecb9-4dcd-b5ca-3c637b3306d9_1.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m w2" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929795/IMG_6043.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m w2 h2" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929842/IMG_6085.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m w2" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929841/IMG_6075.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m w2" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929793/IMG_5987.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m h2" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929791/IMG_5927.jpg" alt="Isla de Lobos"><div class="cap">Isla de Lobos</div></div>
+      <div class="m w2" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929792/IMG_5955.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m w3" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929841/IMG_6066.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m w2" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929790/IMG_5836.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929790/IMG_5878.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+      <div class="m w2" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929791/IMG_5891.jpg" alt="Fuerteventura"><div class="cap">Fuerteventura</div></div>
+    </div>
+
+    <!-- TRÍO ESPECIAL -->
+    <div class="trio-especial">
+      <div class="trio-label">📍 Cofete · superando el vértigo</div>
+      <div class="trio-grid">
+        <div class="t" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929847/IMG_6271.jpg" alt="Cofete"><div class="cap">Cofete</div></div>
+        <div class="t" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929847/IMG_6270.jpg" alt="Cofete"><div class="cap">Cofete</div></div>
+        <div class="t" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789929846/IMG_6268_1.jpg" alt="Cofete"><div class="cap">Cofete</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">❤️</div>
+        <div>
+          <div class="moment-title">Primer aniversario</div>
+          <p class="moment-desc">Un año con Laura. Celebrado en una isla volcánica en medio del Atlántico. La mejor manera de empezar la cuenta.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">😱</div>
+        <div>
+          <div class="moment-title">Cofete — superando miedos y vértigos</div>
+          <p class="moment-desc">La playa de Cofete es uno de esos lugares que impresionan tanto desde arriba que da vértigo bajar. Se bajó. Se superó. Las fotos lo demuestran.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">💨</div>
+        <div>
+          <div class="moment-title">El viento que casi nos vola</div>
+          <p class="moment-desc">Fuerteventura y el viento son inseparables. Hubo momentos en las dunas donde mantenerse en pie era un logro en sí mismo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🧿</div>
+        <div>
+          <div class="moment-title">Engañados con una pulserita hippie</div>
+          <p class="moment-desc">El clásico. Te paran, te hacen una pulsera "de regalo" y de repente debes dinero. Lección aprendida, pulsera conservada.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🌋</div>
+        <div>
+          <div class="moment-title">Isla de Lobos y el volcán</div>
+          <p class="moment-desc">La excursión a la Isla de Lobos — a 15 minutos en ferry de Corralejo — y el volcán que la domina. Piscinas naturales, agua cristalina y casi nadie.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎵</div>
+        <div>
+          <div class="moment-title">"Yo soy la tierra de tus raíceeeessss"</div>
+          <p class="moment-desc">La canción del viaje. Quedó grabada para siempre junto a las dunas y el Atlántico de fondo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏊</div>
+        <div>
+          <div class="moment-title">Piscinas naturales</div>
+          <p class="moment-desc">Las piscinas de lava en la costa norte: agua templada, protegida del oleaje, con el Atlántico rompiendo al fondo. Uno de los mejores baños del viaje.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">La isla</span><div class="rating-bar"><div class="rating-fill" style="width:93%"></div></div><span class="rating-score">9.3</span></div>
+      <div class="rating-row"><span class="rating-label">Cofete</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">Isla de Lobos</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">El viento</span><div class="rating-bar"><div class="rating-fill" style="width:30%"></div></div><span class="rating-score">3</span></div>
+      <div class="rating-row"><span class="rating-label">La pulserita hippie</span><div class="rating-bar"><div class="rating-fill" style="width:10%"></div></div><span class="rating-score">1</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Cofete — paisaje de otro planeta</li>
+          <li>Isla de Lobos y el volcán</li>
+          <li>Las piscinas naturales</li>
+          <li>El desierto con oasis</li>
+          <li>Primer aniversario bien celebrado</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>La pulserita hippie (obvio)</li>
+          <li>El viento constante cansa</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Mar, desierto y volcán en la misma isla. Fuerteventura no necesita convencerte de nada — te lo muestra y ya."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Fuerteventura · Abril 2025 &nbsp;·&nbsp; <a href="../lisboa/">← Lisboa</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929844/IMG_6098.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929843/IMG_6092.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929850/e2410bff-052a-476b-b41b-1b631bb16617.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929848/0e886458-f5bf-46b2-9728-a92fe296b84d.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929845/IMG_6111.jpg',c:'Cofete'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929849/2a8401d8-ecb9-4dcd-b5ca-3c637b3306d9_1.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929795/IMG_6043.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929842/IMG_6085.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929841/IMG_6075.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929793/IMG_5987.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929791/IMG_5927.jpg',c:'Isla de Lobos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929792/IMG_5955.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929841/IMG_6066.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929790/IMG_5836.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929790/IMG_5878.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929791/IMG_5891.jpg',c:'Fuerteventura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929847/IMG_6271.jpg',c:'Cofete · superando el vértigo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929847/IMG_6270.jpg',c:'Cofete · superando el vértigo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789929846/IMG_6268_1.jpg',c:'Cofete · superando el vértigo'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+</script>
+</body>
+</html>
