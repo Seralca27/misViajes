@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lisboa · Sintra · Mayo 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #c8511b; --accent-light: #fdf0e8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #150a04; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e8ddd8; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #d8b8a0; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* VÍDEOS EN LÍNEA */
+  .video-strip {
+    display: flex;
+    gap: 8px;
+    margin: 20px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .video-strip::-webkit-scrollbar { display: none; }
+  .video-strip .vid {
+    flex: 0 0 auto;
+    width: 260px;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #000;
+  }
+  .video-strip .vid video { width:100%; height:100%; object-fit:cover; display:block; }
+  .video-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+
+  /* CUADRÍCULA PEQUEÑA CON ALTURAS VARIABLES */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 100px;
+    gap: 5px;
+    margin: 20px 0;
+  }
+
+  .mosaic .m {
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: zoom-in;
+    background: #d8c8b8;
+    position: relative;
+  }
+
+  /* Tamaños variados */
+  .mosaic .m.w2 { grid-column: span 2; }
+  .mosaic .m.w3 { grid-column: span 3; }
+  .mosaic .m.h2 { grid-row: span 2; }
+  .mosaic .m.h3 { grid-row: span 3; }
+
+  .mosaic .m img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .mosaic .m:hover img { transform: scale(1.05); }
+  .mosaic .m .cap { position:absolute; bottom:0; left:0; right:0; padding:16px 8px 6px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
+  .mosaic .m:hover .cap { opacity:1; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e8d8d0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e8d8d0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(10,4,2,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d8c8b8; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .mosaic { grid-template-columns: repeat(4,1fr); grid-auto-rows: 80px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928340/portada.png" alt="Lisboa">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Lisboa<br><em>& Sintra</em></h1>
+    <div class="tag">Mayo 2025 · Viaje familiar</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🇵🇹 4ª capital europea</span>
+      <span>🏎️ Carreras en Tegucigalpa</span>
+      <span>🎂 Cumpleaños de Esther</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../suiza/">← Suiza</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>La cuarta capital europea de los viajes familiares</h2>
+    <p>Después de Londres, París y Roma, le tocó el turno a Lisboa. El viaje familiar de siempre: hermanos, cuñadas, sobrinos. Yo como siempre llegué un día después — estuve en las fiestas del pueblo de Laura — y me incorporé directamente a la fiesta.</p>
+    <p>Cumpleaños de Esther, desayunos pantagruélicos de los sobrinos (huevos, bacon y nocilla mezclados, con toda la tranquilidad del mundo), cenas al borde del Tajo, tranvías de dos paradas, pasteles de Belém, cuestas infinitas, cerveza Sagres y fotos de influencer con las susis. Y las carreras en lo que bautizamos como "Tegucigalpa".</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">4ª</div><div class="stat-label">capital europea</div></div>
+      <div class="stat"><div class="stat-value">3</div><div class="stat-label">vídeos de carrera</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">pasteles de Belém</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">cumpleaños de Esther</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Lisboa en imágenes</h2>
+
+    <!-- VÍDEOS CARRERAS -->
+    <p style="font-weight:500; font-size:14px; margin-bottom:6px;">🏎️ Las carreras de Tegucigalpa</p>
+    <div class="video-strip">
+      <div class="vid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1789928341/IMG_6875.mov" type="video/mp4"></video></div>
+      <div class="vid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1789928341/IMG_6874.mov" type="video/mp4"></video></div>
+      <div class="vid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1789928283/5372626a-f341-40de-b786-a957fef4ba6e.mov" type="video/mp4"></video></div>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin: 16px 0 4px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <!-- CUADRÍCULA -->
+    <div class="mosaic">
+      <div class="m w2 h2" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928340/0ff02875-ab8b-4ef5-9262-fa8c56283f14.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928340/IMG_6900.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928339/IMG_6891.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928337/IMG_6869.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m h2" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928336/IMG_6854.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928336/IMG_6849.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928335/IMG_6825.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928334/IMG_6774.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928333/IMG_6752.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m h2" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928332/IMG_6748.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928332/IMG_6745.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w3" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928331/IMG_6735.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928335/IMG_6837.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928330/IMG_6722.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928329/IMG_6712.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2 h2" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928328/d72d66ff-a959-4f70-9ed9-7944f0e83df5.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928327/ce5add88-2723-41e9-89ef-d2802fde5c78.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928272/2b2e5f15-ccf8-4de8-b76f-bdc34fe1497b.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928327/c461a94d-cea9-4462-b545-bffdebcdb0d9.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928326/c3b87dff-2ecd-4030-a7f2-1cc558f177bd.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928326/b986f12b-b18e-4738-bb73-a98163fd64fc.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928325/b78b1bbd-17d3-4d24-83fc-bd0b396200e7.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m h2" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928324/b9e21cec-30ce-41d2-ac15-6a353d31a9f8.jpg" alt="Lisboa"><div class="cap">Sintra</div></div>
+      <div class="m w2" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928324/a848f51c-86dd-421d-83e7-92a769846378.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w3" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928323/a19c56e6-b94b-4096-9405-5822167b8bf9.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928282/767773e6-2872-4d0c-bd63-608e2dee5209.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928281/82210e5c-d145-48ef-a36d-3b9fca57ff6e.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928280/48123c75-2fa4-484f-8c58-387d40b4ee0f.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928280/03835b81-454b-4ba6-9b39-2678cfa36619.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m h2" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928279/3714be47-e33a-44a6-9c6a-169b60e17953.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928278/329b5dc5-6c18-4f79-b7d4-f64265ff40fc.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928278/84c64c2e-fbe7-43da-910d-5410337bf463.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928277/81fb8cf3-e8ea-4b95-9b56-50d846f00896.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928276/75fc38f0-df72-44a6-9a81-916e09f2e209.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928276/73f1b0e5-4ce0-4e10-8d62-bf36fac47125.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w3" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928274/26b45e6e-637d-457c-80fd-83d7e4062f64.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928273/19d3a0c8-ef04-450e-b4e0-4e7a27536424.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928273/6eebea6d-242e-4039-bb29-62c3e6ccaf2c.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928273/2b3be713-f470-4171-a30c-5dff67081fdf.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928273/2bfae698-a94e-49b3-950d-46976d26e940.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+      <div class="m w2" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789928275/73ca73d0-2167-4adc-9e06-7f3e531459cf.jpg" alt="Lisboa"><div class="cap">Lisboa</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🎂</div>
+        <div>
+          <div class="moment-title">Cumpleaños de Esther</div>
+          <p class="moment-desc">Lisboa como escenario de cumpleaños. La ciudad pone el telón de fondo, la familia pone el resto.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏎️</div>
+        <div>
+          <div class="moment-title">Las carreras de "Tegucigalpa"</div>
+          <p class="moment-desc">Una calle, unos sobrinos y mucha energía. Lo que empezó como un paseo acabó siendo un Grand Prix improvisado. Tres vídeos para la posteridad.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍳</div>
+        <div>
+          <div class="moment-title">Desayunos de los sobrinos</div>
+          <p class="moment-desc">Huevos, bacon y nocilla. Juntos. En el mismo plato. Con toda la convicción del mundo. Los sobrinos saben lo que quieren.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">📸</div>
+        <div>
+          <div class="moment-title">Fotos de influencer con las susis (y alguna llorera)</div>
+          <p class="moment-desc">Las sesiones de fotos familiares tienen su ciencia. Poses, repeticiones, filtros y algún momento de emoción no planificada. Parte del ritual.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚃</div>
+        <div>
+          <div class="moment-title">Tranvías de 2 paradas</div>
+          <p class="moment-desc">El famoso tranvía 28 de Lisboa promete mucho y recorre poco. Pero el trayecto vale por sí solo — calles estrechas, casas con azulejos, cuestas imposibles.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🥐</div>
+        <div>
+          <div class="moment-title">Pasteles de Belém</div>
+          <p class="moment-desc">Obligatorio, irrenunciable, imprescindible. El pastel de nata original, en su lugar de origen, recién salido del horno. No hay discusión posible.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🌊</div>
+        <div>
+          <div class="moment-title">Cenas a la orilla del Tajo</div>
+          <p class="moment-desc">El Tajo de noche, cerveza Sagres en mano y la familia alrededor. Lisboa tiene ese don de hacer que las cenas duren más de lo planeado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Lisboa</span><div class="rating-bar"><div class="rating-fill" style="width:93%"></div></div><span class="rating-score">9.3</span></div>
+      <div class="rating-row"><span class="rating-label">Sintra</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+      <div class="rating-row"><span class="rating-label">Comida</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+      <div class="rating-row"><span class="rating-label">El plan familiar</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad</span><div class="rating-bar"><div class="rating-fill" style="width:85%"></div></div><span class="rating-score">8.5</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Las carreras de Tegucigalpa</li>
+          <li>Pasteles de Belém</li>
+          <li>Cenas al borde del Tajo</li>
+          <li>Sintra — un mundo aparte</li>
+          <li>Los desayunos imposibles de los sobrinos</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>Las cuestas — Lisboa no perdona</li>
+          <li>El tranvía en hora punta</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Lisboa es la ciudad más fácil de querer de Europa. Te lo pone todo a mano: el río, el fado, los pasteles y las cuestas para bajarlo todo."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Lisboa · Sintra · Mayo 2025 &nbsp;·&nbsp; <a href="../suiza/">← Suiza</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928340/0ff02875-ab8b-4ef5-9262-fa8c56283f14.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928340/IMG_6900.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928339/IMG_6891.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928337/IMG_6869.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928336/IMG_6854.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928336/IMG_6849.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928335/IMG_6825.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928334/IMG_6774.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928333/IMG_6752.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928332/IMG_6748.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928332/IMG_6745.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928331/IMG_6735.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928335/IMG_6837.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928330/IMG_6722.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928329/IMG_6712.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928328/d72d66ff-a959-4f70-9ed9-7944f0e83df5.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928327/ce5add88-2723-41e9-89ef-d2802fde5c78.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928272/2b2e5f15-ccf8-4de8-b76f-bdc34fe1497b.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928327/c461a94d-cea9-4462-b545-bffdebcdb0d9.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928326/c3b87dff-2ecd-4030-a7f2-1cc558f177bd.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928326/b986f12b-b18e-4738-bb73-a98163fd64fc.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928325/b78b1bbd-17d3-4d24-83fc-bd0b396200e7.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928324/b9e21cec-30ce-41d2-ac15-6a353d31a9f8.jpg',c:'Sintra'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928324/a848f51c-86dd-421d-83e7-92a769846378.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928323/a19c56e6-b94b-4096-9405-5822167b8bf9.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928282/767773e6-2872-4d0c-bd63-608e2dee5209.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928281/82210e5c-d145-48ef-a36d-3b9fca57ff6e.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928280/48123c75-2fa4-484f-8c58-387d40b4ee0f.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928280/03835b81-454b-4ba6-9b39-2678cfa36619.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928279/3714be47-e33a-44a6-9c6a-169b60e17953.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928278/329b5dc5-6c18-4f79-b7d4-f64265ff40fc.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928278/84c64c2e-fbe7-43da-910d-5410337bf463.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928277/81fb8cf3-e8ea-4b95-9b56-50d846f00896.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928276/75fc38f0-df72-44a6-9a81-916e09f2e209.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928276/73f1b0e5-4ce0-4e10-8d62-bf36fac47125.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928274/26b45e6e-637d-457c-80fd-83d7e4062f64.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928273/19d3a0c8-ef04-450e-b4e0-4e7a27536424.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928273/6eebea6d-242e-4039-bb29-62c3e6ccaf2c.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928273/2b3be713-f470-4171-a30c-5dff67081fdf.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928273/2bfae698-a94e-49b3-950d-46976d26e940.jpg',c:'Lisboa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789928275/73ca73d0-2167-4adc-9e06-7f3e531459cf.jpg',c:'Lisboa'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+</script>
+</body>
+</html>
