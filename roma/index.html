@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roma · Abril 2024</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #9b2335; --accent-light: #fbecee;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #120508; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e8d8d8; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #c8a8a8; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* VÍDEO */
+  .video-destacado { border-radius: 12px; overflow: hidden; margin: 20px 0; background: #000; }
+  .video-destacado video { width:100%; max-height: 420px; display:block; }
+  .video-label { font-size: 13px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  /* SUSTO CARD */
+  .susto-card {
+    border-left: 4px solid var(--accent);
+    background: var(--accent-light);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 20px 24px;
+    margin: 20px 0;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .susto-icon { font-size: 28px; flex-shrink: 0; }
+  .susto-info h3 { font-weight: 500; font-size: 15px; margin-bottom: 4px; color: var(--accent); }
+  .susto-info p { font-size: 13px; color: #5a2a2a; margin: 0; max-width: none; }
+
+  /* CUADRÍCULA PEQUEÑA */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 100px;
+    gap: 5px;
+    margin: 20px 0;
+  }
+  .mosaic .m { border-radius: 6px; overflow: hidden; cursor: zoom-in; background: #d8c0c0; position: relative; }
+  .mosaic .m.w2 { grid-column: span 2; }
+  .mosaic .m.w3 { grid-column: span 3; }
+  .mosaic .m.h2 { grid-row: span 2; }
+  .mosaic .m img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .mosaic .m:hover img { transform: scale(1.05); }
+  .mosaic .m .cap { position:absolute; bottom:0; left:0; right:0; padding:16px 8px 6px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
+  .mosaic .m:hover .cap { opacity:1; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e8d0d0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e8d0d0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(10,2,4,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d8c0c0; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .mosaic { grid-template-columns: repeat(4,1fr); grid-auto-rows: 80px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997106/IMG_3528.jpg" alt="Roma">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Roma<br><em>museo al aire libre</em></h1>
+    <div class="tag">Abril 2024 · Viaje familiar</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🇮🇹 Pasta, pizza y gelato</span>
+      <span>😱 Las sobrinas perdidas</span>
+      <span>🎭 La sorpresa de la Vía del Corso</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../fuerteventura/">← Fuerteventura</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>La tercera capital europea de los viajes familiares</h2>
+    <p>Roma en abril, con toda la familia. Yo llegué de Albania con vuelo independiente — sin avisar — y me encontré a toda la familia paseando por la Vía del Corso. El momentazo. Todavía creen que alguien se chivó.</p>
+    <p>Roma como museo al aire libre: Vaticano, Coliseo, Foro Romano, Castel Sant'Angelo, fontanas y más iglesias de las que se pueden contar. Y entre monumento y monumento: pasta amatriciana, pizza con nutella, gelato y Birra Peroni. Todo el rato.</p>
+
+    <div class="susto-card">
+      <div class="susto-icon">😱</div>
+      <div class="susto-info">
+        <h3>El susto de Candela y Laura cerca del Castel Sant'Angelo</h3>
+        <p>Las sobrinas se perdieron. Un buen rato de angustia que ahora se recuerda con risas. Por suerte se sabían el teléfono de sus padres, le pidieron a una señora amable que llamase, y todo terminó bien. Lección aprendida para todos.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">3ª</div><div class="stat-label">capital europea</div></div>
+      <div class="stat"><div class="stat-value">3h+</div><div class="stat-label">cola en el Vaticano</div></div>
+      <div class="stat"><div class="stat-value">21</div><div class="stat-label">abril · aniversario de Roma</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">pasta, gelato, peroni</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Roma en imágenes</h2>
+
+    <!-- VÍDEO -->
+    <div class="video-destacado">
+      <video controls preload="none">
+        <source src="https://res.cloudinary.com/il7cecht/video/upload/v1789997114/AVAssetExportPreset1280x720.mov" type="video/mp4">
+      </video>
+    </div>
+    <div class="video-label">🎵 "Será per che ti amoooooo..." · Vídeo resumen del viaje</div>
+
+    <p style="font-size:13px; color:var(--muted); margin: 20px 0 4px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <div class="mosaic">
+      <div class="m w2 h2" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997154/4cc22d3a-c1df-48a1-863f-eddb702b5e33.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997156/10735523-83a7-480f-ad64-668232f40b40.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997118/IMG_3651.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997117/IMG_3648.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997107/IMG_3547.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997108/IMG_3572.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w3" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997104/IMG_3525.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m h2" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997103/IMG_3516.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997120/IMG_3660.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997101/IMG_3479.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997098/d3ef1fe6-8bf1-4527-92b9-acb62fce79cb.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2 h2" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997155/53ae3173-86d2-4a03-a42a-201d1d9f2d43.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997157/ac711f02-b66e-4b9d-893f-964c8086e41e.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997133/IMG_3900.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997124/IMG_3765.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w3" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997109/IMG_3580.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997105/IMG_3527.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m h2" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997099/e8c99581-a759-4168-909b-b1438661c180.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997116/IMG_3638.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997115/IMG_3634.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997114/IMG_3630.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2 h2" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997131/IMG_3865.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997112/IMG_3621.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997152/0f9e352a-b7e1-49ee-accd-ab47e994e33b.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997122/IMG_3698.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997151/IMG_3964.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997111/IMG_3600.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w3" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997125/IMG_3794.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997126/IMG_3797.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997150/IMG_3915.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w2" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997130/IMG_3838.jpg" alt="Roma"><div class="cap">Roma</div></div>
+      <div class="m w3" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1789997127/IMG_3809.jpg" alt="Roma"><div class="cap">Roma</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🎭</div>
+        <div>
+          <div class="moment-title">La sorpresa de la Vía del Corso</div>
+          <p class="moment-desc">Llegar de Albania sin avisar y encontrarse a toda la familia de frente por la Vía del Corso. El momentazo del viaje. Todavía creen que alguien se chivó.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">😱</div>
+        <div>
+          <div class="moment-title">Las sobrinas perdidas cerca del Castel Sant'Angelo</div>
+          <p class="moment-desc">Candela y Laura se perdieron. Buen rato de angustia. Por suerte se sabían el teléfono, una señora amable llamó, y apareció todo el mundo. Ahora se recuerda con risas. En el momento no tanto.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🕌</div>
+        <div>
+          <div class="moment-title">Cola de 3 horas en los Museos Vaticanos</div>
+          <p class="moment-desc">La Capilla Sixtina vale la pena. La cola de tres horas es parte del precio de entrada no oficial. Consejo para el futuro: reservar con antelación.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍝</div>
+        <div>
+          <div class="moment-title">Pasta amatriciana, pizza con nutella y gelato</div>
+          <p class="moment-desc">El menú del viaje, repetido con entusiasmo en cada comida. Roma alimenta bien. Demasiado bien.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🗓️</div>
+        <div>
+          <div class="moment-title">El aniversario de Roma — 21 de abril</div>
+          <p class="moment-desc">El día que coincide con el cumpleaños legendario de la ciudad, 753 a.C. Una fecha que Roma lleva celebrando más tiempo que nadie.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍽️</div>
+        <div>
+          <div class="moment-title">El Ristorante La Villetta dal 1940 que se quedó sin visitar</div>
+          <p class="moment-desc">Cerca de la Pirámide Cestia. Se quedó en el tintero por no comer antes de las 15h. Pendiente para la próxima visita.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">La ciudad</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">Comida</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">El plan familiar</span><div class="rating-bar"><div class="rating-fill" style="width:93%"></div></div><span class="rating-score">9.3</span></div>
+      <div class="rating-row"><span class="rating-label">Cola del Vaticano</span><div class="rating-bar"><div class="rating-fill" style="width:15%"></div></div><span class="rating-score">1.5</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad</span><div class="rating-bar"><div class="rating-fill" style="width:78%"></div></div><span class="rating-score">7.8</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>La sorpresa de la Vía del Corso</li>
+          <li>Roma es Roma — no hay más que decir</li>
+          <li>La pasta amatriciana</li>
+          <li>Las sobrinas sanas y salvas</li>
+          <li>El aniversario de la ciudad el 21 de abril</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>La cola del Vaticano sin reserva previa</li>
+          <li>No ir al Ristorante La Villetta dal 1940</li>
+          <li>Perder a las sobrinas (obvio)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Roma no se visita. Roma se vive, se come, se pierde por sus calles y se encuentra por sorpresa en la Vía del Corso."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Roma · Abril 2024 &nbsp;·&nbsp; <a href="../fuerteventura/">← Fuerteventura</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997154/4cc22d3a-c1df-48a1-863f-eddb702b5e33.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997156/10735523-83a7-480f-ad64-668232f40b40.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997118/IMG_3651.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997117/IMG_3648.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997107/IMG_3547.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997108/IMG_3572.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997104/IMG_3525.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997103/IMG_3516.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997120/IMG_3660.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997101/IMG_3479.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997098/d3ef1fe6-8bf1-4527-92b9-acb62fce79cb.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997155/53ae3173-86d2-4a03-a42a-201d1d9f2d43.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997157/ac711f02-b66e-4b9d-893f-964c8086e41e.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997133/IMG_3900.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997124/IMG_3765.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997109/IMG_3580.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997105/IMG_3527.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997099/e8c99581-a759-4168-909b-b1438661c180.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997116/IMG_3638.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997115/IMG_3634.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997114/IMG_3630.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997131/IMG_3865.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997112/IMG_3621.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997152/0f9e352a-b7e1-49ee-accd-ab47e994e33b.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997122/IMG_3698.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997151/IMG_3964.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997111/IMG_3600.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997125/IMG_3794.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997126/IMG_3797.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997150/IMG_3915.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997130/IMG_3838.jpg',c:'Roma'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1789997127/IMG_3809.jpg',c:'Roma'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+</script>
+</body>
+</html>
