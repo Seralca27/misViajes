@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Burdeos · Toulouse · Febrero 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #5a2d6e; --accent-light: #f2ecf8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #0e0814; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(30px,4.5vw,56px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e0d8e8; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* CUMPLE CARD */
+  .cumple-card {
+    background: linear-gradient(135deg, #5a2d6e, #8b4fa8);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #fff;
+  }
+  .cumple-icon { font-size: 44px; flex-shrink: 0; }
+  .cumple-info h3 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; margin-bottom: 4px; }
+  .cumple-info p { font-size: 14px; color: rgba(255,255,255,0.8); margin: 0; max-width: none; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #c0b0d0; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* CUADRÍCULA MEDIANA VARIADA */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 160px;
+    gap: 6px;
+    margin: 20px 0;
+  }
+  .mosaic .m { border-radius: 8px; overflow: hidden; cursor: zoom-in; background: #c8b8d8; position: relative; }
+  .mosaic .m.w2 { grid-column: span 2; }
+  .mosaic .m.w3 { grid-column: span 3; }
+  .mosaic .m.h2 { grid-row: span 2; }
+  .mosaic .m img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .mosaic .m:hover img { transform: scale(1.04); }
+  .mosaic .m .cap { position:absolute; bottom:0; left:0; right:0; padding:24px 10px 8px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:11px; opacity:0; transition:opacity 0.2s; }
+  .mosaic .m:hover .cap { opacity:1; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e0d0e8; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e0d0e8; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(6,2,10,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d0c0e0; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .mosaic { grid-template-columns: repeat(3,1fr); grid-auto-rows: 130px; }
+    .cumple-card { flex-direction:column; gap:12px; padding:20px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790448460/IMG_4110.jpg" alt="Burdeos">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Burdeos <em>&</em><br><em>Toulouse</em></h1>
+    <div class="tag">Febrero 2025 · Finde de cumpleaños</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🎂 35 años</span>
+      <span>🐬 Belugas en Toulouse</span>
+      <span>🚴 Bruuum bruuuum en Burdeos</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../albania/">← Albania</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>El finde de los 35, con el planning al revés</h2>
+    <p>Regalo de cumpleaños de Laura: un finde express en el sur de Francia. Burdeos y Toulouse, dos ciudades que se complementan perfectamente. El único problema: confundimos las ciudades de ida y vuelta en el planning. Pas problème — se adaptó la ruta y quedó igual de bien.</p>
+    <p>Belugas en el acuario de Toulouse, carreras de bicicleta por Burdeos haciendo bruuuum bruuuum, croissants con vino en el Pape Châteaux con fiebre encima, y el espejo de agua en la Plaza de la Bolsa que nunca llegamos a ver.</p>
+
+    <div class="cumple-card">
+      <div class="cumple-icon">🎂</div>
+      <div class="cumple-info">
+        <h3>35 años · regalo de Laura</h3>
+        <p>Finde express en el sur de Francia. Burdeos y Toulouse como escenario. Con fiebre y todo, valió la pena.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">35</div><div class="stat-label">añazos</div></div>
+      <div class="stat"><div class="stat-value">2</div><div class="stat-label">ciudades</div></div>
+      <div class="stat"><div class="stat-value">0</div><div class="stat-label">espejo de agua visto</div></div>
+      <div class="stat"><div class="stat-value">🤧</div><div class="stat-label">con fiebre</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>El finde en imágenes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <div class="mosaic">
+      <div class="m w2 h2" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447698/IMG_4017.jpg" alt="Toulouse"><div class="cap">Toulouse</div></div>
+      <div class="m" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447698/IMG_4012.jpg" alt="Toulouse"><div class="cap">Toulouse</div></div>
+      <div class="m w2" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447700/IMG_4022.jpg" alt="Toulouse"><div class="cap">Toulouse</div></div>
+      <div class="m" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447701/IMG_4026.jpg" alt="Toulouse"><div class="cap">Toulouse</div></div>
+      <div class="m w2" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447700/IMG_3992.jpg" alt="Toulouse"><div class="cap">Toulouse</div></div>
+      <div class="m" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447699/IMG_3997.jpg" alt="Toulouse"><div class="cap">Toulouse</div></div>
+      <div class="m w2" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447697/IMG_3987.jpg" alt="Toulouse"><div class="cap">Toulouse</div></div>
+      <div class="m w3" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447696/4fa5dc6a-1454-4f6f-a541-4ab52e959347.jpg" alt="Francia"><div class="cap">Francia</div></div>
+      <div class="m h2" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447701/IMG_4058.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m w2" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447703/IMG_4062.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m w2" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447703/IMG_4072.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447702/IMG_4061.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m w2" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447708/IMG_4150.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m w2 h2" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447706/IMG_4130.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447706/IMG_4138.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m w2" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447696/d572f3fa-e71f-45d2-9784-fe1d97dde3e2.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447705/IMG_4124.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447705/IMG_4118.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m w2" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447705/IMG_4144.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m w3" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447703/IMG_4096.jpg" alt="Burdeos"><div class="cap">Burdeos · Pape Châteaux</div></div>
+      <div class="m" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447708/IMG_4152.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m w2" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447707/IMG_4176.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m w2" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447709/IMG_4194.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+      <div class="m" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790447709/IMG_4190.jpg" alt="Burdeos"><div class="cap">Burdeos</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🗺️</div>
+        <div>
+          <div class="moment-title">El planning al revés</div>
+          <p class="moment-desc">Ida a Burdeos, vuelta desde Toulouse. O eso creíamos. Era exactamente al revés. Pas problème — se adaptó la ruta y resultó funcionar igual de bien.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🐬</div>
+        <div>
+          <div class="moment-title">Belugas en Toulouse</div>
+          <p class="moment-desc">La Cité de l'Espace y el acuario de Toulouse. Las belugas son de esos animales que hipnotizan sin hacer nada especial. Solo nadar.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚴</div>
+        <div>
+          <div class="moment-title">Carreras en bici por Burdeos · bruuum bruuuum</div>
+          <p class="moment-desc">Burdeos es perfecta para recorrer en bici. Las carreras improvisadas por sus bulevares fueron más divertidas de lo que deberían ser para personas adultas.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🥐</div>
+        <div>
+          <div class="moment-title">Croissants y vino en el Pape Châteaux · con fiebre</div>
+          <p class="moment-desc">Desayunar croissants con vino del Médoc en una bodega con siglos de historia. Con 38 de fiebre encima. Una experiencia única en todos los sentidos.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">💧</div>
+        <div>
+          <div class="moment-title">El espejo de agua que nunca vimos</div>
+          <p class="moment-desc">El famoso Miroir d'Eau frente a la Plaza de la Bolsa. Estuvimos en Burdeos, pasamos cerca, y nunca lo vimos. Queda pendiente para la próxima.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Toulouse</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+      <div class="rating-row"><span class="rating-label">Burdeos</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+      <div class="rating-row"><span class="rating-label">Pape Châteaux</span><div class="rating-bar"><div class="rating-fill" style="width:93%"></div></div><span class="rating-score">9.3</span></div>
+      <div class="rating-row"><span class="rating-label">El regalo</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">La fiebre</span><div class="rating-bar"><div class="rating-fill" style="width:5%"></div></div><span class="rating-score">0.5</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:87%"></div></div><span class="rating-score">8.7</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>El regalo en sí — 10/10 Laura</li>
+          <li>Las bicicletas por Burdeos</li>
+          <li>Croissants y vino en la bodega</li>
+          <li>Las belugas de Toulouse</li>
+          <li>Adaptarse al planning al revés sin dramas</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>Viajar con 38 de fiebre</li>
+          <li>No ver el espejo de agua</li>
+          <li>El planning sin revisar bien los vuelos</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Cumplir 35 en el sur de Francia con croissants, vino y fiebre. Hay peores formas de entrar en los 35."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Burdeos · Toulouse · Febrero 2025</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447698/IMG_4017.jpg',c:'Toulouse'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447698/IMG_4012.jpg',c:'Toulouse'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447700/IMG_4022.jpg',c:'Toulouse'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447701/IMG_4026.jpg',c:'Toulouse'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447700/IMG_3992.jpg',c:'Toulouse'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447699/IMG_3997.jpg',c:'Toulouse'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447697/IMG_3987.jpg',c:'Toulouse'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447696/4fa5dc6a-1454-4f6f-a541-4ab52e959347.jpg',c:'Francia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447701/IMG_4058.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447703/IMG_4062.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447703/IMG_4072.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447702/IMG_4061.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447708/IMG_4150.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447706/IMG_4130.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447706/IMG_4138.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447696/d572f3fa-e71f-45d2-9784-fe1d97dde3e2.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447705/IMG_4124.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447705/IMG_4118.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447705/IMG_4144.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447703/IMG_4096.jpg',c:'Burdeos · Pape Châteaux'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447708/IMG_4152.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447707/IMG_4176.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447709/IMG_4194.jpg',c:'Burdeos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790447709/IMG_4190.jpg',c:'Burdeos'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+</script>
+</body>
+</html>
