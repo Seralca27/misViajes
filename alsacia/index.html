@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alsacia · Diciembre 2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #8b1a2a; --accent-light: #f8ecee;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #0e0408; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e8d4d6; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #c8a8a8; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* FOTO PARA ENMARCAR */
+  .frame-foto {
+    margin: 20px 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    cursor: zoom-in;
+  }
+  .frame-foto img { width: 100%; max-height: 420px; object-fit: cover; display: block; }
+  .frame-foto .frame-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 40px 20px 16px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: #fff;
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    font-style: italic;
+  }
+
+  /* HOSTEL CARD */
+  .caos-card {
+    border-left: 4px solid var(--accent);
+    background: var(--accent-light);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .caos-card h3 { font-weight: 500; font-size: 15px; color: var(--accent); margin-bottom: 6px; }
+  .caos-card p { font-size: 13px; color: #5a2a2a; margin: 0; max-width: none; }
+
+  /* CITY BLOCKS */
+  .city-block { margin: 28px 0; }
+  .city-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .city-name { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; }
+  .city-sub { font-size: 13px; color: var(--muted); font-style: italic; }
+  .city-count { font-size: 12px; color: var(--muted); margin-left: auto; }
+  .city-notes { margin: 6px 0 10px; }
+  .city-notes p { font-size: 13px; color: var(--muted); margin: 0; }
+  .city-notes span { display: inline-block; margin-right: 14px; }
+  .city-notes span::before { content: '· '; }
+
+  /* CUADRÍCULA UNIFORME PEQUEÑA */
+  .grid-uniform {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin: 10px 0;
+  }
+  .grid-uniform .g {
+    aspect-ratio: 1;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: zoom-in;
+    background: #c8b0b0;
+    position: relative;
+  }
+  .grid-uniform .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .grid-uniform .g:hover img { transform: scale(1.08); }
+  .grid-uniform .g .cap { position:absolute; inset:0; background:rgba(0,0,0,0); display:flex; align-items:flex-end; padding:6px; opacity:0; transition: all 0.2s; }
+  .grid-uniform .g:hover .cap { background:rgba(0,0,0,0.35); opacity:1; }
+  .grid-uniform .g .cap span { color:#fff; font-size:9px; line-height:1.2; }
+
+  /* CARRUSEL COMPACTO */
+  .carousel { position: relative; margin: 8px 0; }
+  .carousel-track { display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 8px; cursor: grab; scrollbar-width: none; }
+  .carousel-track:active { cursor: grabbing; }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track .thumb { flex: 0 0 auto; scroll-snap-align: start; width: 180px; height: 220px; border-radius: 8px; margin-bottom: 0; }
+  .carousel-track .thumb:first-child { width: 240px; }
+  .carousel-track .thumb img { width:100%; height:100%; object-fit:cover; }
+  .carousel-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .carousel-btn { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #d0b0b0; background: #fff; color: var(--ink); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s; }
+  .carousel-btn:hover { border-color: var(--accent); }
+  .carousel-hint { font-size: 11px; color: var(--muted); margin-left: 4px; }
+  .thumb { position: relative; cursor: zoom-in; background: #c8b0b0; overflow: hidden; border-radius: 8px; display: block; }
+  .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.35s ease; }
+  .thumb:hover img { transform: scale(1.04); }
+  .thumb .cap { position: absolute; bottom:0; left:0; right:0; padding: 20px 10px 8px; background: linear-gradient(transparent, rgba(0,0,0,0.45)); color: #fff; font-size: 10px; opacity: 0; transition: opacity 0.2s; }
+  .thumb:hover .cap { opacity: 1; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e8d0d0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e8d0d0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(10,2,4,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d0b8b8; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .grid-uniform { grid-template-columns: repeat(4,1fr); }
+    .carousel-track .thumb { width:150px; height:185px; }
+    .carousel-track .thumb:first-child { width:200px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504447/IMG_9335.jpg" alt="Alsacia">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Alsacia<br><em>navidad en estado puro</em></h1>
+    <div class="tag">Diciembre 2023 · Amigos de Feijoo</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🎄 14 amigos · pueblos de cuento</span>
+      <span>🍺 Academie de la Bière · breakdance</span>
+      <span>🏨 Hostel extraviado · noche del caos</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Navidad, caos y cerveza de 15 grados</h2>
+    <p>Otro viaje de invierno del grupo de Feijoo, esta vez en Alsacia. 14 amigos, pueblos de cuento nevados, mercados navideños, vino caliente, sopa de cebolla y mucho frío. La ruta por Colmar, Eguisheim, Turckheim y Riquewihr es uno de esos recorridos que parecen sacados de un cuento.</p>
+    <p>Y luego el caos: la reserva del hostel de Estrasburgo "extraviada" (ya pagada), llamadas a booking, hoteles llenos por el encendido de luces, noche divididos en hoteles distintos... y la consecuencia lógica: borrachera épica el domingo en la Academie de la Bière. Con breakdance, policía y pota variada. Nos vamos a Berlíiiin, toda la nocheeeeeeee.</p>
+
+    <div class="caos-card">
+      <h3>🏨 La reserva extraviada de Estrasburgo</h3>
+      <p>Hostel ya pagado, sin habitación disponible, finde del encendido de luces, ni un hotel en la ciudad. Al final divididos en diferentes hoteles — algunas pillaron 5 estrellas en el centro. Nos jodieron la noche del sábado... pero prepararon el domingo.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">14</div><div class="stat-label">amigos</div></div>
+      <div class="stat"><div class="stat-value">4</div><div class="stat-label">pueblos alsacianos</div></div>
+      <div class="stat"><div class="stat-value">15°</div><div class="stat-label">grado de la cerveza</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">foto para enmarcar</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>El viaje en imágenes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <!-- LA FOTO -->
+    <div style="margin-bottom:8px; font-size:13px; font-weight:500; color:var(--accent);">📸 La foto para enmarcar · Academie de la Bière</div>
+    <div class="frame-foto" onclick="lb(0)">
+      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504418/0f3859d9-a81d-49d8-8cd7-d639a4d7637e.jpg" alt="Academie de la Bière">
+      <div class="frame-label">"Nos vamos a Berlíiiin, toda la nocheeeeeeee"</div>
+    </div>
+
+    <!-- ALSACIA · PUEBLOS -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Pueblos Alsacianos</span>
+        <span class="city-sub">Colmar · Eguisheim · Turckheim · Riquewihr</span>
+        <span class="city-count">13 fotos</span>
+      </div>
+      <div class="city-notes"><p>
+        <span>Mercados navideños</span>
+        <span>Vino caliente</span>
+        <span>Jersey navideño</span>
+        <span>Mucho frío y mucha gente</span>
+      </p></div>
+      <div class="grid-uniform">
+        <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504418/1a94d369-7a24-44dd-857b-e64d4cd04a8d.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504419/90da4e5b-b58a-4538-93be-3985544e0c8d.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504422/741cd3e2-e5ec-4c15-b372-01213ca39b22.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504423/772c11dc-6541-46a2-b598-3f72ba643574.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504428/d3fff0e4-da89-4611-9eb1-2444dcf64e75.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504430/IMG_8798.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504431/IMG_8808.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504431/IMG_8813.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504431/IMG_8823.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504432/IMG_8831.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504433/IMG_8847.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504434/IMG_8855.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504434/IMG_8863.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+      </div>
+    </div>
+
+    <!-- MÁS ALSACIA -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Más Alsacia</span>
+        <span class="city-count">13 fotos</span>
+      </div>
+      <div class="grid-uniform">
+        <div class="g" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504418/66e487ed-d4ba-48e5-8d41-9e0fe1b1cea2.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504424/4856bb87-cdeb-4cc4-8e4d-c17052e698e2.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504426/c198e921-b73f-40a7-88a4-e1e31e3e250c.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504426/c796474d-7690-4a91-87bc-e8c46f38a5f8.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504435/IMG_8890.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504436/IMG_8898.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504437/IMG_8935.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504438/IMG_8949.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504439/IMG_8968.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504439/IMG_8986.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504440/IMG_9021.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504440/IMG_9029.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+        <div class="g" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504441/IMG_9039.jpg" alt="Alsacia"><div class="cap"><span>Alsacia</span></div></div>
+      </div>
+    </div>
+
+    <!-- FRIBURGO -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Friburgo · Alemania</span>
+        <span class="city-sub">Todos dispersos · sin cash · hileras de chupitos · coro</span>
+        <span class="city-count">9 fotos</span>
+      </div>
+      <div class="grid-uniform">
+        <div class="g" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504443/IMG_9087.jpg" alt="Friburgo"><div class="cap"><span>Friburgo</span></div></div>
+        <div class="g" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504418/50a1d314-7839-47f2-895a-9bbaebb4cf98.jpg" alt="Friburgo"><div class="cap"><span>Friburgo</span></div></div>
+        <div class="g" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504419/353f4b7f-1624-4249-b07e-69790e209ede.jpg" alt="Friburgo"><div class="cap"><span>Friburgo</span></div></div>
+        <div class="g" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504421/662d71bb-acaa-482a-8639-d02b4f7aef91.jpg" alt="Friburgo"><div class="cap"><span>Friburgo</span></div></div>
+        <div class="g" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504425/a4657668-28d8-4cd1-9a81-798383728ad7.jpg" alt="Friburgo"><div class="cap"><span>Friburgo</span></div></div>
+        <div class="g" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504429/ec7882fb-7a82-4612-a6bb-4097ed5fb8c6.jpg" alt="Friburgo"><div class="cap"><span>Friburgo</span></div></div>
+        <div class="g" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504442/IMG_9070.jpg" alt="Friburgo"><div class="cap"><span>Friburgo</span></div></div>
+        <div class="g" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504444/IMG_9144.jpg" alt="Friburgo"><div class="cap"><span>Friburgo</span></div></div>
+        <div class="g" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504443/IMG_9116.jpg" alt="Friburgo"><div class="cap"><span>Friburgo</span></div></div>
+      </div>
+    </div>
+
+    <!-- ESTRASBURGO -->
+    <div class="city-block">
+      <div class="city-header">
+        <span class="city-name">Estrasburgo</span>
+        <span class="city-sub">Encendido de luces · hostel del caos · Academie de la Bière</span>
+        <span class="city-count">11 fotos</span>
+      </div>
+      <div class="grid-uniform">
+        <div class="g" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504445/IMG_9185.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+        <div class="g" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504422/733c8bb4-ed3a-4e39-be6f-011faf30cb83.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+        <div class="g" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504427/d1e3ef83-3a25-4637-9585-f8d9fcb5dfe4.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+        <div class="g" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504428/e98cb957-d03c-4375-ac0a-8a69d8d708cb.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+        <div class="g" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504446/IMG_9197.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+        <div class="g" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504447/IMG_9322.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+        <div class="g" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504447/IMG_9335.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+        <div class="g" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504448/IMG_9343.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+        <div class="g" onclick="lb(44)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504449/IMG_9347.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+        <div class="g" onclick="lb(45)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504450/IMG_9356.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+        <div class="g" onclick="lb(46)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504450/IMG_9360.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+        <div class="g" onclick="lb(47)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790504451/IMG_9361.jpg" alt="Estrasburgo"><div class="cap"><span>Estrasburgo</span></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🏘️</div>
+        <div>
+          <div class="moment-title">Los pueblos alsacianos · cuento de Navidad</div>
+          <p class="moment-desc">Colmar, Eguisheim, Turckheim, Riquewihr. Casas de entramado de madera, nieve, luces, mercados. La Alsacia navideña es exactamente como la imaginas y aún mejor en persona.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🇩🇪</div>
+        <div>
+          <div class="moment-title">Friburgo · todos dispersos y sin cash</div>
+          <p class="moment-desc">La excursión a Alemania con el grupo disperso por la ciudad, sin efectivo y con hileras de chupitos por delante. Y cerrando el bar con los del coro hasta acabar en la pesebrera con la bronca de MBM.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏨</div>
+        <div>
+          <div class="moment-title">La reserva extraviada de Estrasburgo</div>
+          <p class="moment-desc">El hostel ya pagado que no tenía registro de la reserva. Finde del encendido de luces, ningún hotel disponible, llamadas a booking, noche divididos en hoteles distintos. Algunas durmieron en un cinco estrellas en el centro. Otras no.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍺</div>
+        <div>
+          <div class="moment-title">Academie de la Bière · la consecuencia lógica</div>
+          <p class="moment-desc">Cervezas de 15 grados, chupitos, breakdance, policía y pota variada. La noche del domingo compensó con creces la del sábado. La foto para enmarcar lo dice todo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎄</div>
+        <div>
+          <div class="moment-title">Jersey navideño colectivo</div>
+          <p class="moment-desc">El ritual del grupo. 14 personas con jerseys navideños por los mercados alsacianos. El espectáculo estaba tanto dentro como fuera del grupo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Los pueblos alsacianos</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">Friburgo</span><div class="rating-bar"><div class="rating-fill" style="width:85%"></div></div><span class="rating-score">8.5</span></div>
+      <div class="rating-row"><span class="rating-label">Estrasburgo</span><div class="rating-bar"><div class="rating-fill" style="width:82%"></div></div><span class="rating-score">8.2</span></div>
+      <div class="rating-row"><span class="rating-label">El grupo</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">La gestión del hostel</span><div class="rating-bar"><div class="rating-fill" style="width:2%"></div></div><span class="rating-score">0.2</span></div>
+      <div class="rating-row"><span class="rating-label">La Academie de la Bière</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Los pueblos — Alsacia en Navidad es magia</li>
+          <li>La foto para enmarcar de la Academie</li>
+          <li>El grupo completo con jersey navideño</li>
+          <li>Friburgo y los chupitos en hilera</li>
+          <li>El domingo compensó el sábado</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>El hostel de Estrasburgo</li>
+          <li>Las cervezas de 15 grados (o sí)</li>
+          <li>La noche del sábado arruinada</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Alsacia en Navidad te pone en modo cuento de hadas. La Academie de la Bière te saca de él."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Alsacia · Diciembre 2023 · Amigos de Feijoo</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504418/0f3859d9-a81d-49d8-8cd7-d639a4d7637e.jpg',c:'Academie de la Bière · la foto para enmarcar'},
+  // PUEBLOS 1-13
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504418/1a94d369-7a24-44dd-857b-e64d4cd04a8d.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504419/90da4e5b-b58a-4538-93be-3985544e0c8d.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504422/741cd3e2-e5ec-4c15-b372-01213ca39b22.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504423/772c11dc-6541-46a2-b598-3f72ba643574.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504428/d3fff0e4-da89-4611-9eb1-2444dcf64e75.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504430/IMG_8798.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504431/IMG_8808.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504431/IMG_8813.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504431/IMG_8823.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504432/IMG_8831.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504433/IMG_8847.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504434/IMG_8855.jpg',c:'Pueblos Alsacianos'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504434/IMG_8863.jpg',c:'Pueblos Alsacianos'},
+  // MÁS ALSACIA 14-26
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504418/66e487ed-d4ba-48e5-8d41-9e0fe1b1cea2.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504424/4856bb87-cdeb-4cc4-8e4d-c17052e698e2.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504426/c198e921-b73f-40a7-88a4-e1e31e3e250c.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504426/c796474d-7690-4a91-87bc-e8c46f38a5f8.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504435/IMG_8890.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504436/IMG_8898.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504437/IMG_8935.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504438/IMG_8949.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504439/IMG_8968.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504439/IMG_8986.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504440/IMG_9021.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504440/IMG_9029.jpg',c:'Alsacia'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504441/IMG_9039.jpg',c:'Alsacia'},
+  // FRIBURGO 27-35
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504443/IMG_9087.jpg',c:'Friburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504418/50a1d314-7839-47f2-895a-9bbaebb4cf98.jpg',c:'Friburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504419/353f4b7f-1624-4249-b07e-69790e209ede.jpg',c:'Friburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504421/662d71bb-acaa-482a-8639-d02b4f7aef91.jpg',c:'Friburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504425/a4657668-28d8-4cd1-9a81-798383728ad7.jpg',c:'Friburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504429/ec7882fb-7a82-4612-a6bb-4097ed5fb8c6.jpg',c:'Friburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504442/IMG_9070.jpg',c:'Friburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504444/IMG_9144.jpg',c:'Friburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504443/IMG_9116.jpg',c:'Friburgo'},
+  // ESTRASBURGO 36-47
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504445/IMG_9185.jpg',c:'Estrasburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504422/733c8bb4-ed3a-4e39-be6f-011faf30cb83.jpg',c:'Estrasburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504427/d1e3ef83-3a25-4637-9585-f8d9fcb5dfe4.jpg',c:'Estrasburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504428/e98cb957-d03c-4375-ac0a-8a69d8d708cb.jpg',c:'Estrasburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504446/IMG_9197.jpg',c:'Estrasburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504447/IMG_9322.jpg',c:'Estrasburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504447/IMG_9335.jpg',c:'Estrasburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504448/IMG_9343.jpg',c:'Estrasburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504449/IMG_9347.jpg',c:'Estrasburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504450/IMG_9356.jpg',c:'Estrasburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504450/IMG_9360.jpg',c:'Estrasburgo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790504451/IMG_9361.jpg',c:'Estrasburgo'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+</script>
+</body>
+</html>
