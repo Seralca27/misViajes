@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uzbekistán · Noviembre 2022</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #8b4a1a; --accent-light: #fdf2ea;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #100808; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.7; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e8ddd0; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #c8a888; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* VÍDEOS BODA */
+  .video-strip { display: flex; gap: 8px; margin: 20px 0; overflow-x: auto; scrollbar-width: none; }
+  .video-strip::-webkit-scrollbar { display: none; }
+  .video-strip .vid { flex: 0 0 auto; width: 280px; height: 200px; border-radius: 10px; overflow: hidden; background: #000; }
+  .video-strip .vid video { width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* CITY BLOCK CON PANORÁMICA */
+  .city-block { margin: 32px 0; }
+
+  /* PANORÁMICA COMO HEADER */
+  .city-panorama {
+    position: relative;
+    height: 200px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+  .city-panorama img { width:100%; height:100%; object-fit:cover; display:block; }
+  .city-panorama .pano-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+  }
+  .city-panorama .pano-title {
+    position: absolute;
+    top: 50%; left: 28px;
+    transform: translateY(-50%);
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 400;
+    color: #fff;
+    line-height: 1;
+  }
+  .city-panorama .pano-title em { font-style: italic; color: var(--warm); }
+  .city-panorama .pano-sub {
+    position: absolute;
+    bottom: 14px; left: 28px;
+    font-size: 12px; color: rgba(255,255,255,0.65);
+    font-style: italic;
+  }
+
+  /* NOTAS CIUDAD */
+  .city-notes {
+    background: #fff;
+    border: 1px solid #e8ddd0;
+    border-top: none;
+    padding: 10px 16px;
+    border-radius: 0;
+  }
+  .city-notes p { font-size: 13px; color: var(--muted); margin: 0; }
+  .city-notes span { display: inline-block; margin-right: 14px; }
+  .city-notes span::before { content: '· '; }
+
+  /* CARRUSEL COMPACTO */
+  .carousel { position: relative; margin: 0; }
+  .carousel-track {
+    display: flex; gap: 4px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-behavior: smooth; padding: 6px 0 8px;
+    cursor: grab; scrollbar-width: none;
+    border: 1px solid #e8ddd0; border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 6px;
+    background: #fff;
+  }
+  .carousel-track:active { cursor: grabbing; }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track .thumb { flex: 0 0 auto; scroll-snap-align: start; width: 150px; height: 180px; border-radius: 6px; }
+  .carousel-track .thumb img { width:100%; height:100%; object-fit:cover; display: block; border-radius: 6px; }
+  .carousel-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .carousel-btn { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #d0c0b0; background: #fff; color: var(--ink); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
+  .carousel-btn:hover { border-color: var(--accent); }
+  .carousel-hint { font-size: 11px; color: var(--muted); margin-left: 4px; }
+  .thumb { position: relative; cursor: zoom-in; overflow: hidden; }
+  .thumb img { transition: transform 0.3s; }
+  .thumb:hover img { transform: scale(1.05); }
+  .thumb .cap { position:absolute; bottom:0; left:0; right:0; padding:16px 8px 6px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; border-radius: 0 0 6px 6px; }
+  .thumb:hover .cap { opacity:1; }
+
+  /* Tashkent sin panorámica */
+  .city-block.no-pano .carousel-track {
+    border-radius: var(--radius);
+    border: 1px solid #e8ddd0;
+  }
+  .city-block.no-pano .city-notes {
+    border-radius: var(--radius) var(--radius) 0 0;
+    border: 1px solid #e8ddd0;
+    border-bottom: none;
+  }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e8d8c8; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e8d8c8; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(10,4,2,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d8c8b0; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .city-panorama { height:150px; }
+    .carousel-track .thumb { width:130px; height:155px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613780/IMG_2989.jpg" alt="Uzbekistán">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Uzbekistán<br><em>la perla de Asia Central</em></h1>
+    <div class="tag">Noviembre 2022 · Asia Central</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🕌 Taskent · Jiva · Bujará · Samarcanda</span>
+      <span>💃 Macarena y boda uzbeka</span>
+      <span>🫓 Samosas, plov y non callejero</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#taskent">Taskent</a>
+  <a href="#jiva">Jiva</a>
+  <a href="#bujara">Bujará</a>
+  <a href="#samarcanda">Samarcanda</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Mezcla soviética, asiática y árabe</h2>
+    <p>Uzbekistán fue una sorpresa mayúscula. Un destino que nadie tiene en el radar y que te deja con la boca abierta: madrasas turquesas, bazares laberínticos, coches a gas, consignas al descubierto y el traductor del móvil como único intérprete con la gente local.</p>
+    <p>La ruta clásica de la Ruta de la Seda: Taskent, Jiva, Bujará y Samarcanda. Éramos prácticamente los únicos turistas occidentales — la gente nos paraba por la calle para hacerse fotos. Bailando la macarena en Jiva casi acabamos en una boda uzbeka. Tren nocturno compartido. Las mejores samosas del mundo saliendo del tandoor.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">4</div><div class="stat-label">ciudades</div></div>
+      <div class="stat"><div class="stat-value">0</div><div class="stat-label">turistas occidentales más</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">boda a la que no fuimos</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">samosas del tandoor</div></div>
+    </div>
+
+    <!-- VÍDEOS BODA -->
+    <p style="font-weight:500; font-size:14px; margin-bottom:8px;">💃 Bailando la Macarena en Jiva · casi nos invitan a una boda</p>
+    <div class="video-strip">
+      <div class="vid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1790613786/VID_20221111_211041_457.mp4" type="video/mp4"></video></div>
+      <div class="vid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1790613786/VID_20221111_211047_599.mp4" type="video/mp4"></video></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Ciudad a ciudad</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:20px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <!-- TASKENT -->
+    <div class="city-block no-pano" id="taskent">
+      <div class="city-notes">
+        <p>
+          <span>Capital soviética</span>
+          <span>Coches a gas</span>
+          <span>Consignas al descubierto</span>
+          <span>Metro monumental</span>
+        </p>
+      </div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-taskent">
+          <div class="thumb" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613787/7f886a21-0ce9-4260-bf92-5aa679c3db24.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613788/60c6bee2-d0d8-4471-b0ef-4748247632cd.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613787/9bd3ba43-0253-48e0-b941-17518414c1ba.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613788/3385c2e5-80d8-444b-b791-89ef4f7fcfc2.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613789/45109f76-97b8-480f-a66f-788cbdde00e9.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613801/b66bc27b-2bf9-45c9-9ccb-d1525d809158.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613839/e041a9cc-6174-4525-9c4c-2c77c3e7053c.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613840/IMG_2613.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613840/IMG_2617.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613841/IMG_2625.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613842/IMG_2641.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613842/IMG_2636.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613843/IMG_2643.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613843/IMG_2664.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613844/IMG_2665.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613844/IMG_2668.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+          <div class="thumb" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613845/IMG_2678.jpg" alt="Taskent"><div class="cap">Taskent</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-taskent',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-taskent',1)">›</button>
+          <span class="carousel-hint">arrastra · clic para ampliar</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- JIVA -->
+    <div class="city-block" id="jiva">
+      <div class="city-panorama">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613847/IMG_2782.jpg" alt="Jiva panorámica">
+        <div class="pano-overlay"></div>
+        <div class="pano-title">Jiva</div>
+        <div class="pano-sub">Ciudad amurallada · danzas uzbekas · casi en una boda</div>
+      </div>
+      <div class="city-notes">
+        <p>
+          <span>Ciudad amurallada Ichan-Kala</span>
+          <span>Bailando danzas uzbekas y la Macarena</span>
+          <span>Invitados a una boda (no fuimos)</span>
+          <span>Madrasas de azulejos turquesa</span>
+        </p>
+      </div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-jiva">
+          <div class="thumb" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613789/4422caac-d8cb-4986-ac64-9d5c3d61a7ca.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613786/1c1d5325-332a-48e8-ab68-7da2e7987820.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613841/IMG_2634_Original.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613845/IMG_2679_Original.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613846/IMG_2769.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613849/IMG_2787.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613851/IMG_2798.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613851/IMG_2810.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613846/IMG_2706_Original.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613852/IMG_2815.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613852/IMG_2822.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613853/IMG_2835.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613854/IMG_2839.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+          <div class="thumb" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613854/IMG_2847.jpg" alt="Jiva"><div class="cap">Jiva</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-jiva',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-jiva',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUJARÁ -->
+    <div class="city-block" id="bujara">
+      <div class="city-panorama">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613726/IMG_2935.jpg" alt="Bujará panorámica">
+        <div class="pano-overlay"></div>
+        <div class="pano-title">Bujará</div>
+        <div class="pano-sub">La cagada del Pari en el Mausoleo · tren nocturno</div>
+      </div>
+      <div class="city-notes">
+        <p>
+          <span>La cagada del Pari en el Mausoleo</span>
+          <span>Tren nocturno compartido</span>
+          <span>Plov y samosas del tandoor</span>
+          <span>Mezquitas y madrasas everywhere</span>
+        </p>
+      </div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-bujara">
+          <div class="thumb" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613725/IMG_2937.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613725/IMG_2886.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613726/IMG_2968.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613770/IMG_2970.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613779/IMG_2973.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613846/IMG_2770.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613847/IMG_2777_Original.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613848/IMG_2783.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613852/IMG_2815.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613855/IMG_2854.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613855/IMG_2850.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613856/IMG_2863.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613857/IMG_2877.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(44)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613857/IMG_2865.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+          <div class="thumb" onclick="lb(45)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613858/IMG_2881.jpg" alt="Bujará"><div class="cap">Bujará</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-bujara',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-bujara',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAMARCANDA -->
+    <div class="city-block" id="samarcanda">
+      <div class="city-panorama">
+        <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613783/IMG_3020.jpg" alt="Samarcanda panorámica">
+        <div class="pano-overlay"></div>
+        <div class="pano-title">Samarcanda</div>
+        <div class="pano-sub">La Registan · Ruta de la Seda · el gran final</div>
+      </div>
+      <div class="city-notes">
+        <p>
+          <span>La Registan — plaza más bonita de Asia Central</span>
+          <span>Mausoleo de Tamerlán</span>
+          <span>Nos pedían fotos por la calle</span>
+          <span>Non callejero recién hecho</span>
+        </p>
+      </div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-samarcanda">
+          <div class="thumb" onclick="lb(46)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613780/IMG_2989.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(47)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613780/IMG_2991.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(48)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613780/IMG_2980.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(49)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613781/IMG_3001.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(50)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613782/IMG_3003.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(51)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613782/IMG_3011.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(52)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613839/eb7bfdcd-043f-4a12-bb13-909cd313dfa1.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(53)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613839/f36acd44-2ae0-4853-b4b0-f32ed890ee5c.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(54)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613782/IMG_3013.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(55)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613784/IMG_3037.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(56)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613784/IMG_3083.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(57)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613785/IMG_3091.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+          <div class="thumb" onclick="lb(58)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790613785/IMG_3089.jpg" alt="Samarcanda"><div class="cap">Samarcanda</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-samarcanda',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-samarcanda',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">💃</div>
+        <div>
+          <div class="moment-title">Bailando danzas uzbekas y la Macarena en Jiva</div>
+          <p class="moment-desc">La improvisación más memorable del viaje. Acabamos bailando con locales en la calle, y casi nos invitan a una boda. Debimos haber ido.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">📸</div>
+        <div>
+          <div class="moment-title">Éramos los únicos turistas occidentales</div>
+          <p class="moment-desc">En muchos lugares éramos la atracción. La gente nos paraba por la calle para hacerse fotos. El traductor del móvil como único puente con el mundo local.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">😬</div>
+        <div>
+          <div class="moment-title">La cagada del Pari en el Mausoleo</div>
+          <p class="moment-desc">Hay errores que quedan para siempre en la memoria del grupo. Este es uno de ellos. El Mausoleo de Bujará como escenario. El Pari como protagonista.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚂</div>
+        <div>
+          <div class="moment-title">Tren nocturno compartido · librado del bebé por ir solo</div>
+          <p class="moment-desc">Los trenes nocturnos uzbekos son una experiencia en sí mismos. Por ir solo en el compartimento me libré del bebé llorón. Suerte o estrategia, el resultado fue el mismo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🫓</div>
+        <div>
+          <div class="moment-title">Samosas del tandoor, plov y non callejero</div>
+          <p class="moment-desc">La gastronomía uzbeka es uno de los grandes descubrimientos del viaje. Samosas recién salidas del horno de barro, plov cocinado en ollas enormes, y el pan non callejero. Sencillo y brutal.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🕌</div>
+        <div>
+          <div class="moment-title">La Registan de Samarcanda</div>
+          <p class="moment-desc">La plaza más impresionante de Asia Central. Tres madrasas enfrentadas cubiertas de azulejos turquesa y dorado. Una de esas vistas que no esperas y que te dejan sin palabras.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚗</div>
+        <div>
+          <div class="moment-title">Coches a gas y consignas al descubierto</div>
+          <p class="moment-desc">Los taxis uzbekos funcionan a gas natural. La bombona va en el maletero, sin caja, al aire. Las consignas de los bazares igual — todo a la vista, sin candado. Otro nivel de confianza.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Samarcanda</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+      <div class="rating-row"><span class="rating-label">Jiva</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">Bujará</span><div class="rating-bar"><div class="rating-fill" style="width:93%"></div></div><span class="rating-score">9.3</span></div>
+      <div class="rating-row"><span class="rating-label">Taskent</span><div class="rating-bar"><div class="rating-fill" style="width:82%"></div></div><span class="rating-score">8.2</span></div>
+      <div class="rating-row"><span class="rating-label">La comida</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>La Registan — impresiona de verdad</li>
+          <li>Jiva amurallada · la macarena · casi la boda</li>
+          <li>La comida — samosas, plov, non</li>
+          <li>Precio/calidad imbatible</li>
+          <li>Ser de los pocos turistas occidentales</li>
+          <li>El tren nocturno sin bebé</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>No ir a la boda uzbeka</li>
+          <li>No llegar al Mar Aral</li>
+          <li>La cagada del Pari en el Mausoleo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Uzbekistán es el destino que nadie tiene en el radar y que todos deberían visitar antes de que lo descubran."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Uzbekistán · Noviembre 2022 · Ruta de la Seda</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  // TASKENT 0-16
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613787/7f886a21-0ce9-4260-bf92-5aa679c3db24.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613788/60c6bee2-d0d8-4471-b0ef-4748247632cd.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613787/9bd3ba43-0253-48e0-b941-17518414c1ba.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613788/3385c2e5-80d8-444b-b791-89ef4f7fcfc2.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613789/45109f76-97b8-480f-a66f-788cbdde00e9.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613801/b66bc27b-2bf9-45c9-9ccb-d1525d809158.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613839/e041a9cc-6174-4525-9c4c-2c77c3e7053c.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613840/IMG_2613.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613840/IMG_2617.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613841/IMG_2625.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613842/IMG_2641.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613842/IMG_2636.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613843/IMG_2643.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613843/IMG_2664.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613844/IMG_2665.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613844/IMG_2668.jpg',c:'Taskent'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613845/IMG_2678.jpg',c:'Taskent'},
+  // JIVA 17-30
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613789/4422caac-d8cb-4986-ac64-9d5c3d61a7ca.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613786/1c1d5325-332a-48e8-ab68-7da2e7987820.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613841/IMG_2634_Original.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613845/IMG_2679_Original.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613846/IMG_2769.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613849/IMG_2787.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613851/IMG_2798.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613851/IMG_2810.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613846/IMG_2706_Original.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613852/IMG_2815.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613852/IMG_2822.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613853/IMG_2835.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613854/IMG_2839.jpg',c:'Jiva'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613854/IMG_2847.jpg',c:'Jiva'},
+  // BUJARÁ 31-45
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613725/IMG_2937.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613725/IMG_2886.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613726/IMG_2968.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613770/IMG_2970.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613779/IMG_2973.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613846/IMG_2770.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613847/IMG_2777_Original.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613848/IMG_2783.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613852/IMG_2815.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613855/IMG_2854.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613855/IMG_2850.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613856/IMG_2863.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613857/IMG_2877.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613857/IMG_2865.jpg',c:'Bujará'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613858/IMG_2881.jpg',c:'Bujará'},
+  // SAMARCANDA 46-58
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613780/IMG_2989.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613780/IMG_2991.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613780/IMG_2980.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613781/IMG_3001.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613782/IMG_3003.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613782/IMG_3011.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613839/eb7bfdcd-043f-4a12-bb13-909cd313dfa1.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613839/f36acd44-2ae0-4853-b4b0-f32ed890ee5c.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613782/IMG_3013.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613784/IMG_3037.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613784/IMG_3083.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613785/IMG_3091.jpg',c:'Samarcanda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790613785/IMG_3089.jpg',c:'Samarcanda'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+function scrollC(id,dir){document.getElementById(id).scrollBy({left:dir*200,behavior:'smooth'});}
+
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+
+document.querySelectorAll('.carousel-track').forEach(track=>{
+  let down=false,sx,sl;
+  track.addEventListener('mousedown',e=>{down=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;});
+  track.addEventListener('mouseleave',()=>down=false);
+  track.addEventListener('mouseup',()=>down=false);
+  track.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx);});
+});
+
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
