@@ -99,9 +99,19 @@
     margin: 0 auto;
     padding: 0 32px 32px;
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+    /*flex-wrap: wrap;*/
   }
+
+ .filter-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  min-width: 44px;
+}
 
   .filter-btn {
     padding: 8px 18px;
@@ -348,14 +358,14 @@
 </header>
 
 <!-- FILTERS -->
-  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-    <span style="font-size:11px; font-weight:500; color:#888; letter-spacing:0.08em; text-transform:uppercase; margin-right:4px;">Zona</span>
-    <button class="filter-btn active" onclick="filter('todos', this)">Todos</button>
+<div class="filters">
+  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+    <span class="filter-label">Zona</span>
     <button class="filter-btn" onclick="filter('asia', this)">Asia</button>
     <button class="filter-btn" onclick="filter('europa', this)">Europa</button>
   </div>
   <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-    <span style="font-size:11px; font-weight:500; color:#888; letter-spacing:0.08em; text-transform:uppercase; margin-right:4px;">Año</span>
+    <span class="filter-label">Año</span>
     <button class="filter-btn" onclick="filter('2023', this)">2023</button>
     <button class="filter-btn" onclick="filter('2024', this)">2024</button>
     <button class="filter-btn" onclick="filter('2025', this)">2025</button>
