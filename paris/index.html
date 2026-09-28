@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>París · Disneyland · Mayo 2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #1a3a6a; --accent-light: #e8eef8;
+    --disney: #7b1fa2; --disney-light: #f3e5f5;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #08080e; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(30px,4.5vw,56px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #dde4f0; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #b0c0d8; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* VÍDEO */
+  .video-destacado { border-radius: 12px; overflow: hidden; margin: 20px 0; background: #000; }
+  .video-destacado video { width:100%; max-height: 400px; display:block; }
+  .video-label { font-size: 13px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  /* CUADRÍCULA PARIS */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 150px;
+    gap: 6px;
+    margin: 20px 0;
+  }
+  .mosaic .m { border-radius: 8px; overflow: hidden; cursor: zoom-in; background: #c8d0e0; position: relative; }
+  .mosaic .m.w2 { grid-column: span 2; }
+  .mosaic .m.w3 { grid-column: span 3; }
+  .mosaic .m.h2 { grid-row: span 2; }
+  .mosaic .m img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .mosaic .m:hover img { transform: scale(1.04); }
+  .mosaic .m .cap { position:absolute; bottom:0; left:0; right:0; padding:24px 10px 8px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:11px; opacity:0; transition:opacity 0.2s; }
+  .mosaic .m:hover .cap { opacity:1; }
+
+  /* SECCIÓN DISNEY */
+  .disney-section {
+    background: linear-gradient(135deg, #1a0533 0%, #0d1a3a 100%);
+    padding: 48px 32px;
+  }
+  .disney-section .inner {}
+  .disney-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .disney-header .magic { font-size: 36px; margin-bottom: 8px; }
+  .disney-header h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(28px,4vw,44px);
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .disney-header h2 em { color: #f8c; font-style: italic; }
+  .disney-header p { color: rgba(255,255,255,0.65); font-size: 14px; margin: 0 auto; text-align: center; }
+
+  /* CARRUSEL DISNEY */
+  .disney-carousel { position: relative; margin: 20px 0; }
+  .disney-track {
+    display: flex; gap: 8px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-behavior: smooth; padding-bottom: 10px;
+    cursor: grab; scrollbar-width: none;
+  }
+  .disney-track:active { cursor: grabbing; }
+  .disney-track::-webkit-scrollbar { display: none; }
+  .disney-track .dthumb {
+    flex: 0 0 auto; scroll-snap-align: start;
+    width: 200px; height: 240px;
+    border-radius: 12px; overflow: hidden; cursor: zoom-in;
+    background: #2a1040; position: relative;
+    border: 2px solid rgba(255,255,255,0.1);
+    transition: border-color 0.2s;
+  }
+  .disney-track .dthumb:hover { border-color: rgba(255,180,255,0.5); }
+  .disney-track .dthumb:first-child { width: 260px; }
+  .disney-track .dthumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.35s; }
+  .disney-track .dthumb:hover img { transform: scale(1.05); }
+  .disney-track .dthumb .cap { position:absolute; bottom:0; left:0; right:0; padding:20px 10px 8px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
+  .disney-track .dthumb:hover .cap { opacity:1; }
+
+  .disney-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .disney-btn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); color: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
+  .disney-btn:hover { border-color: rgba(255,180,255,0.6); }
+
+  /* CONFESIONES DISNEY */
+  .confesiones { display:flex; flex-direction:column; gap:12px; margin: 20px 0; }
+  .confesion {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .confesion-icon { font-size: 22px; flex-shrink: 0; }
+  .confesion-text { font-size: 14px; color: rgba(255,255,255,0.8); margin: 0; }
+  .confesion-text strong { color: #fff; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #dde4f0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:160px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#dde4f0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(4,4,12,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c8d4e4; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section, .disney-section { padding:36px 20px; }
+    .mosaic { grid-template-columns: repeat(3,1fr); grid-auto-rows: 120px; }
+    .verdict { grid-template-columns:1fr; }
+    .disney-track .dthumb { width:160px; height:200px; }
+    .disney-track .dthumb:first-child { width:200px; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590320/8fa11759-5bb0-4f1c-816c-391cada65b9e.jpg" alt="París">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>París<br><em>& Disneyland</em></h1>
+    <div class="tag">Mayo 2023 · Viaje familiar</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🗼 La Ciudad de la Luz</span>
+      <span>🏰 Disneyland · para los niños… y los no tan niños</span>
+      <span>🥐 Croissants, crepes y bière de hidratación</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#paris">París</a>
+  <a href="#disney">Disneyland</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Segundo viaje familiar · la excusa perfecta era Disneyland</h2>
+    <p>Tras el exitazo de Londres 2022, el segundo viaje familiar tenía una excusa inmejorable: Disneyland París. Para disfrute de los niños... y de los que no lo son tanto. Empezaba también mi tradición de ir por libre en vuelo independiente — con el jaleíto correspondiente de la reserva del hotel a mi nombre y la primera noche sin aparecer.</p>
+    <p>París en modo familia: croissants, crepes, la bière de hidratación en el Arco del Triunfo a 20€ el litro (turistada inevitable), a punto de liarla en el Louvre y viendo la Gioconda de milagro 5 minutos antes de que cerraran la sala. Y el día de la madre celebrado a la francesa. 🌹</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">2º</div><div class="stat-label">viaje familiar</div></div>
+      <div class="stat"><div class="stat-value">20€</div><div class="stat-label">el litro en el Arco</div></div>
+      <div class="stat"><div class="stat-value">5'</div><div class="stat-label">antes de cerrar el Louvre</div></div>
+      <div class="stat"><div class="stat-value">0</div><div class="stat-label">loopings (mentira)</div></div>
+    </div>
+
+    <!-- VÍDEO -->
+    <div class="video-destacado">
+      <video controls preload="none">
+        <source src="https://res.cloudinary.com/il7cecht/video/upload/v1790590342/AVAssetExportPreset960x540.mov" type="video/mp4">
+      </video>
+    </div>
+    <div class="video-label">🎬 Vídeo resumen · mon amour</div>
+  </div>
+</section>
+
+<!-- FOTOS París -->
+<section id="paris">
+  <div class="inner">
+    <div class="section-label">París</div>
+    <h2>La ciudad de la luz</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <div class="mosaic">
+      <div class="m w2 h2" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590322/81b9500a-2143-4ddb-960f-172c132cd360.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590350/da666ac2-111d-4841-9812-7a980204b3f4.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m w2" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590099/3d935a73-e5bd-4c08-ab69-dad7b43ee42a.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m w2" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590318/8a7c8a0c-1de3-4320-80c6-3696d597076a.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590319/8cad06f6-807d-44b6-96d1-ab7999b9b67b.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m w2" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590328/b3a0259c-e5d4-40a5-824a-29a373593bc0.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590352/IMG_5073.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m w2" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590351/IMG_5072.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m w3" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590400/IMG_5395.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m w2" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590353/IMG_5145.jpg" alt="Louvre"><div class="cap">Louvre · la Gioconda de milagro</div></div>
+      <div class="m" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590354/IMG_5148.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m w2" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590355/IMG_5155.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m h2" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590401/Montmatre.png" alt="Montmartre"><div class="cap">Montmartre</div></div>
+      <div class="m w2" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590372/IMG_5168.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m w2" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590396/IMG_5350.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590398/IMG_5365.jpg" alt="París"><div class="cap">París</div></div>
+      <div class="m w2" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590399/IMG_5374.jpg" alt="París"><div class="cap">París</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DISNEYLAND -->
+<div class="disney-section" id="disney">
+  <div class="inner">
+    <div class="disney-header">
+      <div class="magic">🏰✨🎠</div>
+      <h2>Disneyland París<br><em>para los niños… y los no tan niños</em></h2>
+      <p>Chupa de agua en la cola de Peter Pan · loopings que no existen · magia a precio de oro</p>
+    </div>
+
+    <!-- CONFESIONES -->
+    <div class="confesiones">
+      <div class="confesion">
+        <div class="confesion-icon">🌧️</div>
+        <p class="confesion-text"><strong>La chupa de agua en la cola de Peter Pan.</strong> Cola de hora y media. Lluvia sin previo aviso. Sin chubasquero. Llegar empapado a la atracción más corta del parque.</p>
+      </div>
+      <div class="confesion">
+        <div class="confesion-icon">😱</div>
+        <p class="confesion-text"><strong>"Súbete a la atracción que no tiene loopings..."</strong> Spoiler: sí tenía. El cagao correspondiente incluido en el precio.</p>
+      </div>
+      <div class="confesion">
+        <div class="confesion-icon">💸</div>
+        <p class="confesion-text"><strong>Los precios de Disney.</strong> El parque más caro per cápita de Europa. Cada bocado, cada foto, cada souvenir. El presupuesto se evaporó con la misma velocidad que el aguacero de Peter Pan.</p>
+      </div>
+    </div>
+
+    <!-- CARRUSEL DISNEY -->
+    <div class="disney-carousel">
+      <div class="disney-track" id="c-disney">
+        <div class="dthumb" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590373/IMG_5188.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590097/1eddd173-b232-4555-b67c-84131a7b1a54.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590099/6ac6bae8-11a1-4a03-8fd2-25cd12c58a09.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590322/742f456e-7c84-43e8-b573-c944abe9712a.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590324/7912e00a-addb-4356-a2dc-a7c498479d01.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590326/a2debaaf-706b-4324-ada3-109cfda6c3f4.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590374/IMG_5191.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590375/IMG_5204.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590377/IMG_5217.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590378/IMG_5219.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590380/IMG_5272.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590381/IMG_5283.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590384/IMG_5302.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590394/IMG_5320.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+        <div class="dthumb" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790590395/IMG_5330.jpg" alt="Disneyland"><div class="cap">Disneyland</div></div>
+      </div>
+      <div class="disney-controls">
+        <button class="disney-btn" onclick="scrollC('c-disney',-1)">‹</button>
+        <button class="disney-btn" onclick="scrollC('c-disney',1)">›</button>
+        <span style="font-size:11px; color:rgba(255,255,255,0.4); margin-left:6px;">arrastra · clic para ampliar</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🌹</div>
+        <div>
+          <div class="moment-title">Celebrando el día de la madre en París</div>
+          <p class="moment-desc">El mejor escenario posible para el día de la madre. París pone el telón de fondo, la familia pone el resto.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎟️</div>
+        <div>
+          <div class="moment-title">El jaleíto de la reserva — tradición inaugurada</div>
+          <p class="moment-desc">Reserva a mi nombre, primera noche sin aparecer, caos gestionado. El inicio de una tradición familiar que se repetiría en futuros viajes.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🖼️</div>
+        <div>
+          <div class="moment-title">La Gioconda 5 minutos antes de cerrar</div>
+          <p class="moment-desc">A punto de liarla en el Louvre. Vimos la sala cerrarse detrás de nosotros. La Gioconda, de milagro. Una de esas cosas que no se planean y que se cuentan para siempre.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍺</div>
+        <div>
+          <div class="moment-title">La bière de hidratación a 20€/L en el Arco del Triunfo</div>
+          <p class="moment-desc">La turistada clásica parisina. Precio de escándalo, vista paga y recuerdo garantizado. Se repite en cada visita.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🌧️</div>
+        <div>
+          <div class="moment-title">Chupa de agua en la cola de Peter Pan</div>
+          <p class="moment-desc">Cola larga, lluvia repentina, sin chubasquero. La atracción más esperada, la mojadura más inesperada. El combo Disney completo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">😱</div>
+        <div>
+          <div class="moment-title">"No tiene loopings"</div>
+          <p class="moment-desc">Sí los tenía. El cagao fue proporcional a la mentira. Hay que leer las fichas de las atracciones.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">París</span><div class="rating-bar"><div class="rating-fill" style="width:93%"></div></div><span class="rating-score">9.3</span></div>
+      <div class="rating-row"><span class="rating-label">Disneyland</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+      <div class="rating-row"><span class="rating-label">El Louvre</span><div class="rating-bar"><div class="rating-fill" style="width:85%"></div></div><span class="rating-score">8.5</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad París</span><div class="rating-bar"><div class="rating-fill" style="width:60%"></div></div><span class="rating-score">6</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad Disney</span><div class="rating-bar"><div class="rating-fill" style="width:40%"></div></div><span class="rating-score">4</span></div>
+      <div class="rating-row"><span class="rating-label">El plan familiar</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Día de la madre en París</li>
+          <li>La Gioconda de milagro</li>
+          <li>Disneyland con los niños</li>
+          <li>Croissants y crepes a tutiplén</li>
+          <li>El plan familiar completo</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>20€/L en el Arco del Triunfo</li>
+          <li>Cola de Peter Pan sin chubasquero</li>
+          <li>Confiar en que una atracción no tiene loopings</li>
+          <li>Entrar al Louvre sin tiempo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"París siempre es buena idea. Disneyland también, si aceptas que el presupuesto es orientativo."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>París · Disneyland · Mayo 2023 · Viaje familiar</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  // PARÍS 0-16
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590322/81b9500a-2143-4ddb-960f-172c132cd360.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590350/da666ac2-111d-4841-9812-7a980204b3f4.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590099/3d935a73-e5bd-4c08-ab69-dad7b43ee42a.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590318/8a7c8a0c-1de3-4320-80c6-3696d597076a.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590319/8cad06f6-807d-44b6-96d1-ab7999b9b67b.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590328/b3a0259c-e5d4-40a5-824a-29a373593bc0.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590352/IMG_5073.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590351/IMG_5072.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590400/IMG_5395.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590353/IMG_5145.jpg',c:'Louvre · la Gioconda de milagro'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590354/IMG_5148.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590355/IMG_5155.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590401/Montmatre.png',c:'Montmartre'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590372/IMG_5168.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590396/IMG_5350.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590398/IMG_5365.jpg',c:'París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590399/IMG_5374.jpg',c:'París'},
+  // DISNEY 17-31
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590373/IMG_5188.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590097/1eddd173-b232-4555-b67c-84131a7b1a54.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590099/6ac6bae8-11a1-4a03-8fd2-25cd12c58a09.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590322/742f456e-7c84-43e8-b573-c944abe9712a.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590324/7912e00a-addb-4356-a2dc-a7c498479d01.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590326/a2debaaf-706b-4324-ada3-109cfda6c3f4.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590374/IMG_5191.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590375/IMG_5204.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590377/IMG_5217.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590378/IMG_5219.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590380/IMG_5272.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590381/IMG_5283.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590384/IMG_5302.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590394/IMG_5320.jpg',c:'Disneyland París'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790590395/IMG_5330.jpg',c:'Disneyland París'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+function scrollC(id,dir){document.getElementById(id).scrollBy({left:dir*220,behavior:'smooth'});}
+
+document.querySelectorAll('.disney-track').forEach(track=>{
+  let down=false,sx,sl;
+  track.addEventListener('mousedown',e=>{down=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;});
+  track.addEventListener('mouseleave',()=>down=false);
+  track.addEventListener('mouseup',()=>down=false);
+  track.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx);});
+});
+
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
