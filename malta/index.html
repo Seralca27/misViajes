@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Malta · Enero 2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #b5451b; --accent-light: #fdf0ea;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #0a0c14; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; left: 48px; text-align: left; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; left: 48px; text-align: left; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-start; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e8ddd8; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #d0b8a8; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* CUADRÍCULA MEDIANA VARIADA */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 160px;
+    gap: 6px;
+    margin: 20px 0;
+  }
+  .mosaic .m { border-radius: 8px; overflow: hidden; cursor: zoom-in; background: #d0c0b8; position: relative; }
+  .mosaic .m.w2 { grid-column: span 2; }
+  .mosaic .m.w3 { grid-column: span 3; }
+  .mosaic .m.h2 { grid-row: span 2; }
+  .mosaic .m img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .mosaic .m:hover img { transform: scale(1.04); }
+  .mosaic .m .cap { position:absolute; bottom:0; left:0; right:0; padding:24px 10px 8px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:11px; opacity:0; transition:opacity 0.2s; }
+  .mosaic .m:hover .cap { opacity:1; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e8d8d0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e8d8d0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(8,4,2,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d8c8b8; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; left:24px; }
+    .hero-bottom { bottom:24px; left:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .mosaic { grid-template-columns: repeat(3,1fr); grid-auto-rows: 130px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584014/IMG_0964.jpg" alt="Malta">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Malta<br><em>languages darling</em></h1>
+    <div class="tag">Enero 2023 · Visita a Juandi</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🇲🇹 Gozo · Comino · Blue Lagoon</span>
+      <span>🍳 Full English breakfast</span>
+      <span>🪂 Acroyoga y metros de cerveza</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Visita a Juandi · beca MEC de inglés con 33 años</h2>
+    <p>Juandi, de beca MEC en Malta aprendiendo inglés con 33 años. <em>Languages darling.</em> La excusa perfecta para conocer la isla: Marxalok y su paseo en barca, excursión a Gozo y la Blue Lagoon de Comino, Mdina y Rabat telecurrando, y los teenagers de Sant Julian's con su escalanita del infierno.</p>
+    <p>Yo me estaba cuidando. Pero cuando en Malta te ponen un Full English breakfast delante — Chigo, apionabo y todo — la dieta puede esperar. Chupitos, metros de cerveza y una sesión de acroyoga que nadie pidió pero todos recordamos.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">3</div><div class="stat-label">islas visitadas</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">full english con apionabo</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">metros de cerveza</div></div>
+      <div class="stat"><div class="stat-value">33</div><div class="stat-label">años · beca MEC</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Malta en imágenes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <div class="mosaic">
+      <div class="m w2 h2" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790583994/0ce26b0d-ccd2-4f0c-9676-55d14f876843.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584007/IMG_0933.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m w2" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584008/IMG_0936.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m w2" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584009/IMG_0949.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584011/IMG_0955.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m w3" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584011/IMG_0959.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m w2" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584013/IMG_0960.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m h2" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584016/IMG_0999.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m w2" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584014/IMG_0971.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m w2" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584016/IMG_1012.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584017/IMG_1017.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m w2" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584018/IMG_1057.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m w2 h2" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584019/IMG_1063.jpg" alt="Gozo"><div class="cap">Gozo</div></div>
+      <div class="m" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584020/IMG_1074.jpg" alt="Gozo"><div class="cap">Gozo</div></div>
+      <div class="m w2" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584022/IMG_1081.jpg" alt="Comino"><div class="cap">Comino · Blue Lagoon</div></div>
+      <div class="m w3" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584023/IMG_1124.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584024/IMG_1128.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m w2" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584025/IMG_1132.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m w2" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584026/IMG_1153.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584026/IMG_1142.jpg" alt="Malta"><div class="cap">Malta</div></div>
+      <div class="m w2" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790584028/IMG_1169.jpg" alt="Malta"><div class="cap">Malta</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🎓</div>
+        <div>
+          <div class="moment-title">Juandi · beca MEC con 33 años · languages darling</div>
+          <p class="moment-desc">Aprender inglés en Malta con una beca del gobierno a los 33. Una decisión valiente que le convirtió en el anfitrión perfecto para enseñar la isla.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍳</div>
+        <div>
+          <div class="moment-title">Full English breakfast · "yo me estoy cuidando"</div>
+          <p class="moment-desc">Chigo, apionabo y todo lo que lleva un full English. La dieta puede esperar cuando el desayuno es así de contundente. Decisión tomada sin arrepentimientos.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">⛵</div>
+        <div>
+          <div class="moment-title">Marxalok y el paseo en barca</div>
+          <p class="moment-desc">El pueblo de pescadores y sus famosas barcas de colores. Uno de esos rincones de Malta que no esperabas y que se te quedan grabados.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏝️</div>
+        <div>
+          <div class="moment-title">Gozo · Blue Lagoon · Comino</div>
+          <p class="moment-desc">La excursión de un día: Gozo con su ciudadela, y luego Comino con la Blue Lagoon. En enero casi sin turistas. El agua azul turquesa para nosotros solos.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">💻</div>
+        <div>
+          <div class="moment-title">Mdina y Rabat telecurrando</div>
+          <p class="moment-desc">La ciudad medieval de Mdina mientras se telecurraba desde allí. Trabajo remoto en una de las ciudades más antiguas del Mediterráneo. El contexto importa.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🪂</div>
+        <div>
+          <div class="moment-title">Chupitos, metros de cerveza y acroyoga</div>
+          <p class="moment-desc">La combinación más improbable y más maltesa de la historia. Primero los metros de cerveza, luego los chupitos, y de alguna manera acabamos haciendo acroyoga.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🧗</div>
+        <div>
+          <div class="moment-title">La escalanita del infierno de Sant Julian's</div>
+          <p class="moment-desc">De bureo con los teenagers de la zona. La escalera que conecta los niveles de Sant Julian's — de noche, con los jóvenes locales. Un clásico que no esperabas vivir.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Malta</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+      <div class="rating-row"><span class="rating-label">Gozo y Comino</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">El full english</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">El acroyoga</span><div class="rating-bar"><div class="rating-fill" style="width:75%"></div></div><span class="rating-score">7.5</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad</span><div class="rating-bar"><div class="rating-fill" style="width:82%"></div></div><span class="rating-score">8.2</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:80%"></div></div><span class="rating-score">8</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Blue Lagoon en enero sin turistas</li>
+          <li>Gozo — la isla dentro de la isla</li>
+          <li>El full english sin remordimientos</li>
+          <li>Marxalok y las barcas de colores</li>
+          <li>Juandi de anfitrión con conocimiento local</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>La escalanita del infierno de noche</li>
+          <li>Los metros de cerveza antes del acroyoga</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Malta es pequeña, antigua y sorprendente. Y con un buen anfitrión local se disfruta el doble."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Malta · Enero 2023</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790583994/0ce26b0d-ccd2-4f0c-9676-55d14f876843.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584007/IMG_0933.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584008/IMG_0936.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584009/IMG_0949.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584011/IMG_0955.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584011/IMG_0959.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584013/IMG_0960.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584016/IMG_0999.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584014/IMG_0971.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584016/IMG_1012.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584017/IMG_1017.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584018/IMG_1057.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584019/IMG_1063.jpg',c:'Gozo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584020/IMG_1074.jpg',c:'Gozo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584022/IMG_1081.jpg',c:'Comino · Blue Lagoon'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584023/IMG_1124.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584024/IMG_1128.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584025/IMG_1132.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584026/IMG_1153.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584026/IMG_1142.jpg',c:'Malta'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790584028/IMG_1169.jpg',c:'Malta'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+
+// Swipe móvil
+let touchStartX = 0;
+document.getElementById('lightbox').addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+}, {passive: true});
+document.getElementById('lightbox').addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) diff > 0 ? shiftLb(1) : shiftLb(-1);
+});
+</script>
+</body>
+</html>
