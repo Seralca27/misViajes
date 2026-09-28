@@ -398,6 +398,16 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft')shiftLb(-1);
   if(e.key==='Escape')closeLb();
 });
+
+// Swipe en móvil
+let touchStartX = 0;
+document.getElementById('lightbox').addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+}, {passive: true});
+document.getElementById('lightbox').addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) diff > 0 ? shiftLb(1) : shiftLb(-1);
+});
 </script>
 </body>
 </html>
