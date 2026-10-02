@@ -1,448 +1,407 @@
-	<!DOCTYPE html>
-	<html lang="es">
-	<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Berlín · Diciembre 2023</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-	<style>
-	  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-	  :root {
-		--ink: #1a1a1a; --muted: #6b6b6b;
-		--accent: #2a2a2a; --accent-light: #f0f0f0;
-		--warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
-	  }
-	  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berlín · Diciembre 2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #2a2a2a; --accent-light: #f0f0f0;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
 
-	  /* HERO */
-	  .hero { min-height: 70vh; background: #080808; position: relative; overflow: hidden; }
-	  .hero-photos { position: absolute; inset: 0; }
-	  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.7; }
-	  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%); }
-	  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
-	  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
-	  .hero-top h1 em { font-style: italic; color: var(--warm); }
-	  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
-	  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
-	  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+  .hero { min-height: 70vh; background: #080808; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.7; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
 
-	  /* NAV */
-	  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #ddd; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
-	  nav::-webkit-scrollbar { display: none; }
-	  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
-	  nav a:hover { color: var(--ink); border-color: var(--ink); }
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #ddd; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--ink); }
 
-	  /* SECTIONS */
-	  section { padding: 48px 32px; }
-	  section:nth-of-type(odd) { background: var(--bg-a); }
-	  section:nth-of-type(even) { background: var(--bg-b); }
-	  .inner { max-width: 900px; margin: 0 auto; }
-	  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
-	  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
-	  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
 
-	  /* STATS */
-	  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #aaa; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
-	  .stat { background: #fff; padding: 20px; text-align: center; }
-	  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--ink); line-height: 1; margin-bottom: 2px; }
-	  .stat-label { font-size: 11px; color: var(--muted); }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #aaa; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--ink); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
 
-	  /* TIP CARD */
-	  .tip-card { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 18px 24px; margin: 20px 0; display: flex; gap: 14px; align-items: flex-start; }
-	  .tip-card .tip-icon { font-size: 22px; flex-shrink: 0; }
-	  .tip-card p { color: rgba(255,255,255,0.85); margin: 0; max-width: none; font-size: 14px; }
-	  .tip-card strong { color: var(--warm); }
+  .tip-card { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 18px 24px; margin: 20px 0; display: flex; gap: 14px; align-items: flex-start; }
+  .tip-card .tip-icon { font-size: 22px; flex-shrink: 0; }
+  .tip-card p { color: rgba(255,255,255,0.85); margin: 0; max-width: none; font-size: 14px; }
+  .tip-card strong { color: var(--warm); }
 
-	  /* CUADRÍCULA UNIFORME */
-	  .grid-uniform { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin: 20px 0; }
-	  .grid-uniform .g { aspect-ratio: 1; border-radius: 6px; overflow: hidden; cursor: zoom-in; background: #c8c8c8; position: relative; }
-	  .grid-uniform .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
-	  .grid-uniform .g:hover img { transform: scale(1.07); }
-	  .grid-uniform .g .cap { position:absolute; inset:0; background:rgba(0,0,0,0); display:flex; align-items:flex-end; padding:8px; opacity:0; transition: all 0.2s; }
-	  .grid-uniform .g:hover .cap { background:rgba(0,0,0,0.38); opacity:1; }
-	  .grid-uniform .g .cap span { color:#fff; font-size:9px; }
+  .grid-uniform { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin: 20px 0; }
+  .grid-uniform .g { aspect-ratio: 1; border-radius: 6px; overflow: hidden; cursor: zoom-in; background: #c8c8c8; position: relative; }
+  .grid-uniform .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .grid-uniform .g:hover img { transform: scale(1.07); }
+  .grid-uniform .g .cap { position:absolute; inset:0; background:rgba(0,0,0,0); display:flex; align-items:flex-end; padding:8px; opacity:0; transition: all 0.2s; }
+  .grid-uniform .g:hover .cap { background:rgba(0,0,0,0.38); opacity:1; }
+  .grid-uniform .g .cap span { color:#fff; font-size:9px; }
 
-	  /* SECCIÓN GRAFITIS KREUZBERG */
-	  .graffiti-section { background: #111; padding: 48px 32px; }
-	  .graffiti-section .section-label { color: #f0c060; }
-	  .graffiti-section h2 { color: #fff; }
-	  .graffiti-section p { color: rgba(255,255,255,0.65); }
+  .graffiti-section { background: #111; padding: 48px 32px; }
+  .graffiti-section .section-label { color: #f0c060; }
+  .graffiti-section h2 { color: #fff; }
+  .graffiti-section p { color: rgba(255,255,255,0.65); }
 
-	  /* MURO DE GRAFITIS — masonry visual con columnas */
-	  .graffiti-wall {
-		columns: 4;
-		column-gap: 6px;
-		margin: 20px 0;
-	  }
-	  .graffiti-wall .gitem {
-		break-inside: avoid;
-		margin-bottom: 6px;
-		border-radius: 6px;
-		overflow: hidden;
-		cursor: zoom-in;
-		position: relative;
-		display: block;
-	  }
-	  .graffiti-wall .gitem img { width:100%; display:block; transition: transform 0.35s, filter 0.35s; filter: saturate(1.1); }
-	  .graffiti-wall .gitem:hover img { transform: scale(1.03); filter: saturate(1.4) brightness(1.05); }
-	  .graffiti-wall .gitem .cap { position:absolute; bottom:0; left:0; right:0; padding:24px 10px 8px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
-	  .graffiti-wall .gitem:hover .cap { opacity:1; }
+  .graffiti-wall { columns: 4; column-gap: 6px; margin: 20px 0; }
+  .graffiti-wall .gitem { break-inside: avoid; margin-bottom: 6px; border-radius: 6px; overflow: hidden; cursor: zoom-in; position: relative; display: block; }
+  .graffiti-wall .gitem img { width:100%; display:block; transition: transform 0.35s, filter 0.35s; filter: saturate(1.1); }
+  .graffiti-wall .gitem:hover img { transform: scale(1.03); filter: saturate(1.5) brightness(1.05); }
+  .graffiti-wall .gitem .cap { position:absolute; bottom:0; left:0; right:0; padding:24px 10px 8px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
+  .graffiti-wall .gitem:hover .cap { opacity:1; }
 
-	  /* MOMENTOS */
-	  .moments { display:flex; flex-direction:column; margin:20px 0; }
-	  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e0e0e0; align-items:start; }
-	  .moment:last-child { border-bottom:none; }
-	  .moment-emoji { width:44px; height:44px; background:#f0f0f0; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
-	  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
-	  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e0e0e0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:#f0f0f0; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
 
-	  /* VALORACIÓN */
-	  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
-	  .rating-row { display:flex; align-items:center; gap:14px; }
-	  .rating-label { font-size:13px; min-width:180px; color:var(--muted); }
-	  .rating-bar { flex:1; height:5px; background:#e0e0e0; border-radius:3px; overflow:hidden; }
-	  .rating-fill { height:100%; background:var(--ink); border-radius:3px; }
-	  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:180px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e0e0e0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--ink); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
 
-	  /* VERDICT */
-	  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
-	  .verdict-box { padding:20px; border-radius:var(--radius); }
-	  .verdict-box.good { background:#edf6ed; }
-	  .verdict-box.bad { background:#fce8e8; }
-	  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
-	  .verdict-box.good .verdict-title { color:#2d6a4f; }
-	  .verdict-box.bad .verdict-title { color:#b03030; }
-	  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
-	  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
-	  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
 
-	  /* QUOTE */
-	  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
-	  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
 
-	  /* LIGHTBOX */
-	  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.97); align-items:center; justify-content:center; flex-direction:column; }
-	  .lightbox.open { display:flex; }
-	  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
-	  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
-	  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-	  .lb-prev { left:20px; } .lb-next { right:20px; }
-	  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
-	  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
-	  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
-	  .lb-dot.on { background:rgba(255,255,255,0.9); }
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
 
-	  /* FOOTER */
-	  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #ddd; }
-	  footer a { color:var(--ink); text-decoration:none; font-weight:500; }
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #ddd; }
+  footer a { color:var(--ink); text-decoration:none; font-weight:500; }
 
-	  @media (max-width:640px) {
-		.hero-top { top:24px; right:24px; }
-		.hero-bottom { bottom:24px; right:24px; }
-		nav { padding:0 16px; }
-		section, .graffiti-section { padding:36px 20px; }
-		.grid-uniform { grid-template-columns: repeat(4,1fr); }
-		.graffiti-wall { columns: 2; }
-		.verdict { grid-template-columns:1fr; }
-		.lb-nav { display:none; }
-	  }
-	</style>
-	</head>
-	<body>
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section, .graffiti-section { padding:36px 20px; }
+    .grid-uniform { grid-template-columns: repeat(4,1fr); }
+    .graffiti-wall { columns: 2; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
 
-	<div class="hero">
-	  <div class="hero-photos">
-		<img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935599/IMG_9934.jpg" alt="Berlín">
-	  </div>
-	  <div class="hero-overlay"></div>
-	  <div class="hero-top">
-		<h1>Berlín<br><em>la bolsa de variado</em></h1>
-		<div class="tag">Diciembre 2023 · Con el Pari</div>
-	  </div>
-	  <div class="hero-bottom">
-		<div class="hero-meta">
-		  <span>🎄 Mercados navideños · Alexander Platz</span>
-		  <span>🎨 Ruta de grafitis por Kreuzberg</span>
-		  <span>🚆 De milagro llegamos · huelga de trenes</span>
-		</div>
-	  </div>
-	</div>
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935601/IMG_9948.jpg" alt="Berlín">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Berlín<br><em>la bolsa de variado</em></h1>
+    <div class="tag">Diciembre 2023 · Con el Pari</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🎄 Mercados navideños · Alexander Platz</span>
+      <span>🎨 Ruta de grafitis por Kreuzberg</span>
+      <span>🚆 De milagro llegamos · huelga de trenes</span>
+    </div>
+  </div>
+</div>
 
-	<nav>
-	  <a href="#resumen">Resumen</a>
-	  <a href="#fotos">Berlín</a>
-	  <a href="#kreuzberg">Kreuzberg</a>
-	  <a href="#momentos">Momentos</a>
-	  <a href="#valoracion">Valoración</a>
-	  <a href="../alsacia/">← Alsacia</a>
-	</nav>
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Berlín</a>
+  <a href="#kreuzberg">Kreuzberg</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../alsacia/">← Alsacia</a>
+</nav>
 
-	<!-- RESUMEN -->
-	<section id="resumen">
-	  <div class="inner">
-		<div class="section-label">El viaje</div>
-		<h2>Continuación de Alsacia · de milagro llegamos</h2>
-		<p>Tras Alsacia y unos días de relax y resaca en Suiza, la bolsa de variado de Pari y yo siguió hasta Berlín. Casi no llegamos: huelga de trenes en Alemania, y gracias a que le llegó una notificación al Pari pudimos adelantar el tren desde Basilea a tiempo.</p>
-		<p>Berlín en diciembre: mercados navideños y currywurst por Alexander Platz, free tour de la II Guerra Mundial (historia triste pero obligatoria), tanto frío que tuvimos que entrar en el Zara a por unos calcetines gordos, y la Puerta de Brandeburgo en obras, para variar. Y la ruta de grafitis por Kreuzberg.</p>
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Continuación de Alsacia · de milagro llegamos</h2>
+    <p>Tras Alsacia y unos días de relax y resaca en Suiza, la bolsa de variado de Pari y yo siguió hasta Berlín. Casi no llegamos: huelga general de trenes en Alemania, y gracias a que le llegó una notificación al Pari pudimos adelantar el tren desde Basilea a tiempo.</p>
+    <p>Berlín en diciembre: mercados navideños y currywurst por Alexander Platz, free tour de la II Guerra Mundial (historia triste pero obligatoria), tanto frío que tuvimos que entrar en el Zara a por unos calcetines gordos, y la Puerta de Brandeburgo en obras, para variar.</p>
 
-		<div class="tip-card">
-		  <div class="tip-icon">🧦</div>
-		  <p><strong>Tip de supervivencia berlinesa:</strong> en diciembre Berlín es otro nivel de frío. Los calcetines de repuesto en el Zara de Alexander Platz pueden salvar una tarde entera. No es glamuroso, pero funciona.</p>
-		</div>
+    <div class="tip-card">
+      <div class="tip-icon">🧦</div>
+      <p><strong>Tip de supervivencia berlinesa:</strong> en diciembre Berlín es otro nivel de frío. Los calcetines de repuesto en el Zara de Alexander Platz pueden salvar una tarde entera. No es glamuroso, pero funciona.</p>
+    </div>
 
-		<div class="stats">
-		  <div class="stat"><div class="stat-value">2</div><div class="stat-label">viajeros</div></div>
-		  <div class="stat"><div class="stat-value">0°</div><div class="stat-label">o menos · mucho frío</div></div>
-		  <div class="stat"><div class="stat-value">🚧</div><div class="stat-label">Puerta de Brandeburgo</div></div>
-		  <div class="stat"><div class="stat-value">1</div><div class="stat-label">par de calcetines de emergencia</div></div>
-		</div>
-	  </div>
-	</section>
+    <div class="stats">
+      <div class="stat"><div class="stat-value">2</div><div class="stat-label">viajeros</div></div>
+      <div class="stat"><div class="stat-value">0°</div><div class="stat-label">o menos · mucho frío</div></div>
+      <div class="stat"><div class="stat-value">🚧</div><div class="stat-label">Puerta de Brandeburgo</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">par calcetines emergencia</div></div>
+    </div>
+  </div>
+</section>
 
-	<!-- FOTOS BERLÍN -->
-	<section id="fotos">
-	  <div class="inner">
-		<div class="section-label">Galería · Berlín</div>
-		<h2>La ciudad en imágenes</h2>
-		<p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería · Berlín</div>
+    <h2>La ciudad en imágenes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+    <div class="grid-uniform">
+      <div class="g" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9833.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9844.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9848.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935564/IMG_9850.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9851.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9854.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935566/IMG_9855.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9852.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935591/IMG_9857.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935592/IMG_9859.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935594/IMG_9867.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935594/IMG_9872.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935595/IMG_9881.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935595/IMG_9891.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935597/IMG_9902.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935597/IMG_9893.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935598/IMG_9908.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935638/IMG_9996.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935603/IMG_9961.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935605/IMG_9966.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935602/IMG_9955.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935601/IMG_9938.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+      <div class="g" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935600/IMG_9937.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
+    </div>
+  </div>
+</section>
 
-		<div class="grid-uniform">
-		  <div class="g" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9833.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9844.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9848.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935564/IMG_9850.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9851.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9854.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935566/IMG_9855.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9852.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935591/IMG_9857.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935592/IMG_9859.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935594/IMG_9867.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935594/IMG_9872.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935595/IMG_9881.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935595/IMG_9891.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935597/IMG_9902.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935597/IMG_9893.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		  <div class="g" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935598/IMG_9908.jpg" alt="Berlín"><div class="cap"><span>Berlín</span></div></div>
-		</div>
-	  </div>
-	</section>
+<div class="graffiti-section" id="kreuzberg">
+  <div class="inner">
+    <div class="section-label">Arte urbano</div>
+    <h2>Ruta de grafitis · Kreuzberg</h2>
+    <p>El barrio más auténtico de Berlín. Kreuzberg es un museo al aire libre donde las paredes son el lienzo. La ruta de grafitis te lleva de mural en mural sin mapa fijo — solo caminando y mirando.</p>
+    <div class="graffiti-wall">
+      <div class="gitem" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935604/IMG_9964.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+      <div class="gitem" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935605/IMG_9972.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+      <div class="gitem" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935606/IMG_9973.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+      <div class="gitem" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935607/IMG_9974.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+      <div class="gitem" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935607/IMG_9975.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+      <div class="gitem" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935608/IMG_9976.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+      <div class="gitem" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935609/IMG_9977.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+      <div class="gitem" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935610/IMG_9978.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+      <div class="gitem" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935610/IMG_9980.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+      <div class="gitem" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935611/IMG_9981.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+      <div class="gitem" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935627/IMG_9982.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+      <div class="gitem" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935628/IMG_9984.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
+    </div>
+  </div>
+</div>
 
-	<!-- KREUZBERG GRAFITIS -->
-	<div class="graffiti-section" id="kreuzberg">
-	  <div class="inner">
-		<div class="section-label">Arte urbano</div>
-		<h2>Ruta de grafitis · Kreuzberg</h2>
-		<p>El barrio más auténtico de Berlín. Kreuzberg es un museo al aire libre donde las paredes son el lienzo y cada esquina esconde una pieza diferente. La ruta de grafitis te lleva de mural en mural sin mapa fijo — solo caminando y mirando.</p>
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🚆</div>
+        <div>
+          <div class="moment-title">La huelga de trenes · llegamos de milagro</div>
+          <p class="moment-desc">Huelga general de trenes en Alemania. Sin la notificación que le llegó al Pari para adelantar el tren desde Basilea, nos quedábamos en Suiza. El margen fue de minutos.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🌭</div>
+        <div>
+          <div class="moment-title">Mercados navideños y currywurst en Alexander Platz</div>
+          <p class="moment-desc">La currywurst de Alexander Platz es de esas cosas que hay que comer en Berlín aunque no tengas hambre. Los mercados navideños de diciembre le dan a la plaza otro ambiente.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎗️</div>
+        <div>
+          <div class="moment-title">Free tour de la II Guerra Mundial</div>
+          <p class="moment-desc">Berlín obliga a parar y pensar. El free tour por los lugares históricos — el Reichstag, el Memorial del Holocausto, el búnker de Hitler — es de esas visitas que pesan y que hay que hacer.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🧦</div>
+        <div>
+          <div class="moment-title">Los calcetines de emergencia del Zara</div>
+          <p class="moment-desc">El frío de Berlín en diciembre es serio. En algún momento de la tarde los pies deciden que ya no pueden más. La solución: entrar en el primer Zara y comprar calcetines gordos. Sin vergüenza.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚧</div>
+        <div>
+          <div class="moment-title">La Puerta de Brandeburgo en obras</div>
+          <p class="moment-desc">El icono de Berlín, cubierto de andamiaje. Un clásico de viajar: el monumento que más querías ver tapado de lonas.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎨</div>
+        <div>
+          <div class="moment-title">Ruta de grafitis por Kreuzberg</div>
+          <p class="moment-desc">Kreuzberg es el alma de Berlín. Cada muro, cada callejón, cada esquina tiene algo. La ruta no tiene guía ni mapa — solo caminas y aparecen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-		<div class="graffiti-wall">
-		  <div class="gitem" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935604/IMG_9964.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935605/IMG_9972.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935606/IMG_9973.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935607/IMG_9974.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935607/IMG_9975.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935608/IMG_9976.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935609/IMG_9977.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935610/IMG_9978.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935610/IMG_9980.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935611/IMG_9981.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935627/IMG_9982.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935628/IMG_9984.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935600/IMG_9937.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935601/IMG_9938.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935601/IMG_9948.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935602/IMG_9955.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935603/IMG_9961.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935605/IMG_9966.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		  <div class="gitem" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790935638/IMG_9996.jpg" alt="Kreuzberg"><div class="cap">Kreuzberg</div></div>
-		</div>
-	  </div>
-	</div>
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Kreuzberg y los grafitis</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">El free tour IIGM</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">La currywurst</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+      <div class="rating-row"><span class="rating-label">El frío</span><div class="rating-bar"><div class="rating-fill" style="width:10%"></div></div><span class="rating-score">1</span></div>
+      <div class="rating-row"><span class="rating-label">La Puerta de Brandeburgo</span><div class="rating-bar"><div class="rating-fill" style="width:30%"></div></div><span class="rating-score">3</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Kreuzberg — el alma de Berlín</li>
+          <li>El free tour de la II Guerra Mundial</li>
+          <li>Currywurst en Alexander Platz</li>
+          <li>Los mercados navideños</li>
+          <li>Llegar de milagro gracias al Pari</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>Berlín en diciembre sin calcetines de repuesto</li>
+          <li>Confiar en los trenes alemanes en huelga</li>
+          <li>Ir a ver la Puerta de Brandeburgo sin mirar si hay obras</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"Berlín no se visita. Berlín se absorbe. Cada calle tiene una historia, cada muro tiene una capa. Y hay que ir con calcetines gordos."</p>
+    </div>
+  </div>
+</section>
 
-	<!-- MOMENTOS -->
-	<section id="momentos">
-	  <div class="inner">
-		<div class="section-label">Memoria</div>
-		<h2>Los momentos que quedan</h2>
-		<div class="moments">
-		  <div class="moment">
-			<div class="moment-emoji">🚆</div>
-			<div>
-			  <div class="moment-title">La huelga de trenes · llegamos de milagro</div>
-			  <p class="moment-desc">Huelga general de trenes en Alemania. Sin la notificación que le llegó al Pari para adelantar el tren desde Basilea, nos quedábamos en Suiza. El margen fue de minutos.</p>
-			</div>
-		  </div>
-		  <div class="moment">
-			<div class="moment-emoji">🌭</div>
-			<div>
-			  <div class="moment-title">Mercados navideños y currywurst en Alexander Platz</div>
-			  <p class="moment-desc">La currywurst de Alexander Platz es de esas cosas que hay que comer en Berlín aunque no tengas hambre. Los mercados navideños de diciembre le dan a la plaza otro ambiente.</p>
-			</div>
-		  </div>
-		  <div class="moment">
-			<div class="moment-emoji">🎗️</div>
-			<div>
-			  <div class="moment-title">Free tour de la II Guerra Mundial</div>
-			  <p class="moment-desc">Berlín obliga a parar y pensar. El free tour por los lugares históricos de la guerra — el Reichstag, el Memorial del Holocausto, el búnker de Hitler — es una de esas visitas que pesan y que hay que hacer.</p>
-			</div>
-		  </div>
-		  <div class="moment">
-			<div class="moment-emoji">🧦</div>
-			<div>
-			  <div class="moment-title">Los calcetines de emergencia del Zara</div>
-			  <p class="moment-desc">El frío de Berlín en diciembre es serio. En algún momento de la tarde, sin previo aviso, los pies deciden que ya no pueden más. La solución: entrar en el primer Zara y comprar calcetines gordos. Sin vergüenza.</p>
-			</div>
-		  </div>
-		  <div class="moment">
-			<div class="moment-emoji">🚧</div>
-			<div>
-			  <div class="moment-title">La Puerta de Brandeburgo en obras</div>
-			  <p class="moment-desc">El icono de Berlín, en obras. El andamiaje como telón de fondo de las fotos. Un clásico de viajar: el monumento que más querías ver cubierto de lonas.</p>
-			</div>
-		  </div>
-		  <div class="moment">
-			<div class="moment-emoji">🎨</div>
-			<div>
-			  <div class="moment-title">Ruta de grafitis por Kreuzberg</div>
-			  <p class="moment-desc">Kreuzberg es el alma de Berlín. Cada muro, cada callejón, cada esquina tiene algo. La ruta de grafitis no tiene guía ni mapa — solo caminas y aparecen.</p>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	</section>
+<footer>
+  <p>Berlín · Diciembre 2023 · <a href="../alsacia/">← Alsacia</a></p>
+</footer>
 
-	<!-- VALORACIÓN -->
-	<section id="valoracion">
-	  <div class="inner">
-		<div class="section-label">Balance</div>
-		<h2>¿Cómo fue?</h2>
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
 
-		<div class="ratings">
-		  <div class="rating-row"><span class="rating-label">Kreuzberg y los grafitis</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
-		  <div class="rating-row"><span class="rating-label">El free tour IIGM</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
-		  <div class="rating-row"><span class="rating-label">La currywurst</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
-		  <div class="rating-row"><span class="rating-label">El frío</span><div class="rating-bar"><div class="rating-fill" style="width:10%"></div></div><span class="rating-score">1</span></div>
-		  <div class="rating-row"><span class="rating-label">La Puerta de Brandeburgo</span><div class="rating-bar"><div class="rating-fill" style="width:30%"></div></div><span class="rating-score">3</span></div>
-		  <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
-		</div>
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9833.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9844.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9848.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935564/IMG_9850.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9851.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9854.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935566/IMG_9855.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9852.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935591/IMG_9857.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935592/IMG_9859.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935594/IMG_9867.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935594/IMG_9872.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935595/IMG_9881.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935595/IMG_9891.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935597/IMG_9902.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935597/IMG_9893.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935598/IMG_9908.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935638/IMG_9996.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935603/IMG_9961.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935605/IMG_9966.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935602/IMG_9955.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935601/IMG_9938.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935600/IMG_9937.jpg',c:'Berlín'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935604/IMG_9964.jpg',c:'Kreuzberg · grafitis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935605/IMG_9972.jpg',c:'Kreuzberg · grafitis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935606/IMG_9973.jpg',c:'Kreuzberg · grafitis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935607/IMG_9974.jpg',c:'Kreuzberg · grafitis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935607/IMG_9975.jpg',c:'Kreuzberg · grafitis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935608/IMG_9976.jpg',c:'Kreuzberg · grafitis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935609/IMG_9977.jpg',c:'Kreuzberg · grafitis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935610/IMG_9978.jpg',c:'Kreuzberg · grafitis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935610/IMG_9980.jpg',c:'Kreuzberg · grafitis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935611/IMG_9981.jpg',c:'Kreuzberg · grafitis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935627/IMG_9982.jpg',c:'Kreuzberg · grafitis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935628/IMG_9984.jpg',c:'Kreuzberg · grafitis'},
+];
 
-		<div class="verdict">
-		  <div class="verdict-box good">
-			<div class="verdict-title">Lo mejor</div>
-			<ul class="verdict-list">
-			  <li>Kreuzberg — el alma de Berlín</li>
-			  <li>El free tour de la II Guerra Mundial</li>
-			  <li>Currywurst en Alexander Platz</li>
-			  <li>Los mercados navideños</li>
-			  <li>Llegar de milagro gracias al Pari</li>
-			</ul>
-		  </div>
-		  <div class="verdict-box bad">
-			<div class="verdict-title">Lo que no repetiría</div>
-			<ul class="verdict-list">
-			  <li>Berlín en diciembre sin calcetines de repuesto</li>
-			  <li>Ir a ver la Puerta de Brandeburgo sin mirar si hay obras</li>
-			  <li>Confiar en los trenes alemanes en huelga</li>
-			</ul>
-		  </div>
-		</div>
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
 
-		<div class="quote-block">
-		  <p>"Berlín no se visita. Berlín se absorbe. Cada calle tiene una historia, cada muro tiene una capa. Y hay que ir con calcetines gordos."</p>
-		</div>
-	  </div>
-	</section>
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
 
-	<footer>
-	  <p>Berlín · Diciembre 2023 · <a href="../alsacia/">← Alsacia</a></p>
-	</footer>
-
-	<!-- LIGHTBOX -->
-	<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
-	  <button class="lb-close" onclick="closeLb()">✕</button>
-	  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
-	  <img id="lb-img" src="" alt="">
-	  <div class="lb-caption" id="lb-cap"></div>
-	  <div class="lb-dots" id="lb-dots"></div>
-	  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
-	</div>
-
-	<script>
-	const photos = [
-	  // BERLÍN 0-16
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9833.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9844.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935563/IMG_9848.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935564/IMG_9850.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9851.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9854.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935566/IMG_9855.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935565/IMG_9852.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935591/IMG_9857.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935592/IMG_9859.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935594/IMG_9867.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935594/IMG_9872.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935595/IMG_9881.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935595/IMG_9891.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935597/IMG_9902.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935597/IMG_9893.jpg',c:'Berlín'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935598/IMG_9908.jpg',c:'Berlín'},
-	  // KREUZBERG 17-35
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935604/IMG_9964.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935605/IMG_9972.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935606/IMG_9973.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935607/IMG_9974.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935607/IMG_9975.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935608/IMG_9976.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935609/IMG_9977.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935610/IMG_9978.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935610/IMG_9980.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935611/IMG_9981.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935627/IMG_9982.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935628/IMG_9984.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935600/IMG_9937.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935601/IMG_9938.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935601/IMG_9948.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935602/IMG_9955.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935603/IMG_9961.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935605/IMG_9966.jpg',c:'Kreuzberg · grafitis'},
-	  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790935638/IMG_9996.jpg',c:'Kreuzberg · grafitis'},
-	];
-
-	let cur=0;
-	const lbox=document.getElementById('lightbox');
-	const lbImg=document.getElementById('lb-img');
-	const lbCap=document.getElementById('lb-cap');
-	const lbDots=document.getElementById('lb-dots');
-
-	photos.forEach((_,i)=>{
-	  const d=document.createElement('button');
-	  d.className='lb-dot'+(i===0?' on':'');
-	  d.onclick=e=>{e.stopPropagation();lb(i);};
-	  lbDots.appendChild(d);
-	});
-
-	function lb(i){
-	  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
-	  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
-	  lbox.classList.add('open');document.body.style.overflow='hidden';
-	}
-	function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
-	function closeLbOutside(e){if(e.target===lbox)closeLb();}
-	function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
-	document.addEventListener('keydown',e=>{
-	  if(!lbox.classList.contains('open'))return;
-	  if(e.key==='ArrowRight')shiftLb(1);
-	  if(e.key==='ArrowLeft')shiftLb(-1);
-	  if(e.key==='Escape')closeLb();
-	});
-	let touchStartX=0;
-	document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
-	document.getElementById('lightbox').addEventListener('touchend',e=>{
-	  const diff=touchStartX-e.changedTouches[0].clientX;
-	  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
-	});
-	</script>
-	</body>
-	</html>
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
