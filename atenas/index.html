@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atenas · Noviembre 2022</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #1a4a7a; --accent-light: #e6f0f8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #060c18; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #d8e4ec; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #a8c0d0; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* CUADRÍCULA UNIFORME MEDIANA */
+  .grid-uniform {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin: 20px 0;
+  }
+  .grid-uniform .g {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: zoom-in;
+    background: #b8c8d8;
+    position: relative;
+  }
+  .grid-uniform .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .grid-uniform .g:hover img { transform: scale(1.05); }
+  .grid-uniform .g .cap { position:absolute; inset:0; background:rgba(0,0,0,0); display:flex; align-items:flex-end; padding:10px; opacity:0; transition: all 0.2s; }
+  .grid-uniform .g:hover .cap { background:rgba(0,0,0,0.35); opacity:1; }
+  .grid-uniform .g .cap span { color:#fff; font-size:11px; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d8e4ec; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#d0dce8; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(2,6,14,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c0d0dc; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .grid-uniform { grid-template-columns: repeat(3,1fr); }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923866/IMG_3118.jpg" alt="Atenas">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Atenas<br><em>Kalimera</em></h1>
+    <div class="tag">Noviembre 2022 · Parada en Grecia</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🏛️ Acrópolis sin colas</span>
+      <span>🥙 Gyros, musaka y uozo</span>
+      <span>🗺️ Free tour by Mingo</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../uzbekistan/">← Uzbekistán</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Parada de vuelta desde Uzbekistán · visita al Mingo</h2>
+    <p>El Mingo estaba en Atenas de voluntariado. La vuelta desde Uzbekistán pasaba por ahí. Decisión obvia: parada en Grecia. La Acrópolis y el estadio olímpico casi para nosotros solos en noviembre, un free tour improvisado con el propio Mingo de guía, flea market, shishas y terraza con vistas.</p>
+    <p>El hotel baratísimo en Omonio tenía su explicación: el barrio tiene cierta... actividad nocturna de otro tipo. Musaka, gyros y uozo para compensar.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">0</div><div class="stat-label">colas en la Acrópolis</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">guía local — el Mingo</div></div>
+      <div class="stat"><div class="stat-value">💊</div><div class="stat-label">Omonio de noche</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">gyros</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Atenas en imágenes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <div class="grid-uniform">
+      <div class="g" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923866/IMG_3123.jpg" alt="Atenas"><div class="cap"><span>Atenas</span></div></div>
+      <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923866/3c240a16-80ee-45c8-84df-4e4ac091e471.jpg" alt="Atenas"><div class="cap"><span>Atenas</span></div></div>
+      <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923866/5b2ad7ce-88ba-4681-a073-377ccf4e6d09.jpg" alt="Atenas"><div class="cap"><span>Atenas</span></div></div>
+      <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923867/IMG_3201.jpg" alt="Atenas"><div class="cap"><span>Atenas</span></div></div>
+      <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923867/9e840c05-2a38-4b1d-b95c-b6c7db849ebb.jpg" alt="Atenas"><div class="cap"><span>Atenas</span></div></div>
+      <div class="g" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923866/IMG_3137.jpg" alt="Acrópolis"><div class="cap"><span>Acrópolis</span></div></div>
+      <div class="g" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923867/60f3bee4-05d2-4f56-9f85-3731118b64bf.jpg" alt="Atenas"><div class="cap"><span>Atenas</span></div></div>
+      <div class="g" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923868/34b396ae-6e2b-43d3-95a7-4de68c6f7c99.jpg" alt="Atenas"><div class="cap"><span>Atenas</span></div></div>
+      <div class="g" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923867/IMG_3196.jpg" alt="Atenas"><div class="cap"><span>Atenas</span></div></div>
+      <div class="g" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923867/IMG_3191.jpg" alt="Estadio olímpico"><div class="cap"><span>Estadio olímpico</span></div></div>
+      <div class="g" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923867/IMG_3205.jpg" alt="Atenas"><div class="cap"><span>Atenas</span></div></div>
+      <div class="g" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923867/IMG_3218.jpg" alt="Atenas"><div class="cap"><span>Atenas</span></div></div>
+      <div class="g" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790923866/b40537ab-733d-4314-b7fd-5a9809e70497.jpg" alt="Atenas"><div class="cap"><span>Atenas</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🏛️</div>
+        <div>
+          <div class="moment-title">La Acrópolis sin gente</div>
+          <p class="moment-desc">Noviembre es la época perfecta para Atenas. La Acrópolis y el estadio olímpico prácticamente para nosotros solos. Sin colas, sin empujones, con tiempo para mirar.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🗺️</div>
+        <div>
+          <div class="moment-title">Free tour by Mingo</div>
+          <p class="moment-desc">Tener un amigo local cambia completamente la experiencia. El Mingo de guía improvisado por su barrio, con el conocimiento de quien vive allí y no de quien lo visita.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🛍️</div>
+        <div>
+          <div class="moment-title">Flea market, shishas y terraza con vistas</div>
+          <p class="moment-desc">El mercado de pulgas de Monastiraki, shishas en algún rincón y una terraza con la Acrópolis de fondo. El plan perfecto para un día en Atenas.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏨</div>
+        <div>
+          <div class="moment-title">El hotel barato de Omonio · misterio resuelto</div>
+          <p class="moment-desc">El precio del hotel era demasiado bueno para ser verdad. La explicación llegó al salir por la noche: Omonio es uno de esos barrios con una vida nocturna muy particular.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🥙</div>
+        <div>
+          <div class="moment-title">Musaka, gyros y uozo</div>
+          <p class="moment-desc">La santísima trinidad de la gastronomía griega. La musaka recién hecha, los gyros callejeros y el uozo de rigor. Grecia sabe lo que hace con la comida.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">La Acrópolis</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">El free tour de Mingo</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">La comida</span><div class="rating-bar"><div class="rating-fill" style="width:93%"></div></div><span class="rating-score">9.3</span></div>
+      <div class="rating-row"><span class="rating-label">El hotel de Omonio</span><div class="rating-bar"><div class="rating-fill" style="width:45%"></div></div><span class="rating-score">4.5</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad ciudad</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>La Acrópolis en noviembre — sin turistas</li>
+          <li>Tener a Mingo de anfitrión local</li>
+          <li>Musaka, gyros y uozo</li>
+          <li>Terraza con vistas a la Acrópolis</li>
+          <li>Precio muy competitivo</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>El hotel de Omonio (investigar antes)</li>
+          <li>Salir de noche por Omonio sin saberlo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Atenas en noviembre es una ciudad distinta. Sin el calor ni la multitud, se entiende mejor por qué fue el centro del mundo."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Atenas · Noviembre 2022 &nbsp;·&nbsp; <a href="../uzbekistan/">← Uzbekistán</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923866/IMG_3123.jpg',c:'Atenas'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923866/3c240a16-80ee-45c8-84df-4e4ac091e471.jpg',c:'Atenas'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923866/5b2ad7ce-88ba-4681-a073-377ccf4e6d09.jpg',c:'Atenas'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923867/IMG_3201.jpg',c:'Atenas'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923867/9e840c05-2a38-4b1d-b95c-b6c7db849ebb.jpg',c:'Atenas'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923866/IMG_3137.jpg',c:'Acrópolis'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923867/60f3bee4-05d2-4f56-9f85-3731118b64bf.jpg',c:'Atenas'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923868/34b396ae-6e2b-43d3-95a7-4de68c6f7c99.jpg',c:'Atenas'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923867/IMG_3196.jpg',c:'Atenas'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923867/IMG_3191.jpg',c:'Estadio olímpico'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923867/IMG_3205.jpg',c:'Atenas'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923867/IMG_3218.jpg',c:'Atenas'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790923866/b40537ab-733d-4314-b7fd-5a9809e70497.jpg',c:'Atenas'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
