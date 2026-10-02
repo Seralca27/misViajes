@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fez · Merzouga · Abril 2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #b5630a; --accent-light: #fdf3e6;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #120800; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.75; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e8ddd0; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #d0b088; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* TIP CARD */
+  .tip-card { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 18px 24px; margin: 20px 0; display: flex; gap: 14px; align-items: flex-start; }
+  .tip-card .tip-icon { font-size: 22px; flex-shrink: 0; }
+  .tip-card p { color: rgba(255,255,255,0.85); margin: 0; max-width: none; font-size: 14px; }
+  .tip-card strong { color: var(--warm); }
+
+  /* CUADRÍCULA UNIFORME PEQUEÑA */
+  .grid-uniform {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+    margin: 20px 0;
+  }
+  .grid-uniform .g {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: zoom-in;
+    background: #d8c0a0;
+    position: relative;
+  }
+  .grid-uniform .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .grid-uniform .g:hover img { transform: scale(1.07); }
+  .grid-uniform .g .cap { position:absolute; inset:0; background:rgba(0,0,0,0); display:flex; align-items:flex-end; padding:8px; opacity:0; transition: all 0.2s; }
+  .grid-uniform .g:hover .cap { background:rgba(0,0,0,0.38); opacity:1; }
+  .grid-uniform .g .cap span { color:#fff; font-size:9px; line-height:1.2; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e8d8c0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:150px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e8d8c0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(12,6,2,0.96); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  /* FOOTER */
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d8c8a8; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .grid-uniform { grid-template-columns: repeat(4,1fr); }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930237/IMG_4661.jpg" alt="Marruecos">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Fez · Merzouga<br><em>Africaaaaa!</em></h1>
+    <div class="tag">Abril 2023 · Marruecos</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🏜️ Dunas y haimas de lujo</span>
+      <span>🌀 El laberinto de Fez</span>
+      <span>🍺 El super de los catalanes en el desierto</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Dunas, laberintos y un supermercado catalán en el Sahara</h2>
+    <p>Marruecos en Ramadán — mala idea si quieres cerveza, buena idea para todo lo demás. Ruta en 4x4 con Omar como guía por Merzouga: dunas del Sahara, sandboard con resultados cuestionables, haimas de lujo, danzas africanas y puesta de sol que justifica el viaje entero.</p>
+    <p>Chigo rebozándose por la arena recién tatuada — una de esas decisiones que se pagan en el momento. El laberinto de Fez y sus tenerías (el olor a cuero te avisa antes de llegar). Tatuajes de henna como chavales de 15 años. Pastella, tajín y cuscús — todo para compartir, ponle la carita de ironía que corresponde.</p>
+
+    <div class="tip-card">
+      <div class="tip-icon">🍺</div>
+      <p><strong>Tip no solicitado:</strong> ir a Marruecos en Ramadán complica bastante encontrar cerveza. Aún así, en mitad del desierto de Merzouga, unos catalanes habían montado un supermercado. El universo siempre provee.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">2</div><div class="stat-label">destinos</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">guía Omar en 4x4</div></div>
+      <div class="stat"><div class="stat-value">0</div><div class="stat-label">buenas caídas de sandboard</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">super catalán en el desierto</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Fez y el Sahara en imágenes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <div class="grid-uniform">
+      <div class="g" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930227/IMG_4547.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930228/IMG_4564.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930226/64D40061-FD60-47E0-AB8C-8B720D0A8342_Original.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930229/IMG_4570.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930226/67fc880e-f671-41e7-9e2f-0e4291c44985.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930229/IMG_4574.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930233/IMG_4582.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930225/7a6a4d6b-3124-40fe-a58d-78aec2394d1e.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930230/IMG_4578.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930231/IMG_4579.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930236/IMG_4583.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930237/IMG_4695.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930237/IMG_4698.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930239/IMG_4712.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930240/IMG_4723.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930240/IMG_5581_Original.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930239/IMG_4709.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930232/IMG_4586.jpg" alt="Marruecos"><div class="cap"><span>Merzouga</span></div></div>
+      <div class="g" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930224/3EBF8346-99CB-428D-9787-046D844F1F49_Original.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930232/IMG_4608.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930233/IMG_4613.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930228/69AEE5E0-16AF-467B-8050-01B98162F994_Original.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930233/IMG_4621.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930234/IMG_4631.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930224/5BFF5103-5520-459E-89A1-26FFDDEAFA40_Original.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930219/3B0E7A1B-CAB9-4564-9A62-29F4B2F29D3C_Original.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930235/IMG_4642.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930236/IMG_4657.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930236/IMG_4644.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930236/IMG_4649.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+      <div class="g" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1790930237/IMG_4690.jpg" alt="Fez"><div class="cap"><span>Fez</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🏜️</div>
+        <div>
+          <div class="moment-title">Ruta en 4x4 con Omar por Merzouga</div>
+          <p class="moment-desc">Omar como guía por las dunas del Sahara. En 4x4, sin caminos definidos, parando donde la foto lo pedía. La manera correcta de ver el desierto.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏂</div>
+        <div>
+          <div class="moment-title">Sandboard · se nos dio regular</div>
+          <p class="moment-desc">La teoría es sencilla: tabla, duna, deslizarse. La práctica resultó ser más compleja. Las caídas, abundantes. El espectáculo, garantizado para los que miraban.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🌅</div>
+        <div>
+          <div class="moment-title">Puesta de sol en las dunas · haimas de lujo</div>
+          <p class="moment-desc">La puesta de sol desde lo alto de las dunas de Erg Chebbi. Uno de esos momentos que no hace falta describir. Y dormir en haimas de lujo en medio de la nada.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🐊</div>
+        <div>
+          <div class="moment-title">Chigo rebozándose con el tatuaje recién hecho</div>
+          <p class="moment-desc">Hacerse un tatuaje de henna y luego tirarse a rodar por la arena. Decisiones que se toman en el momento y que se recuerdan para siempre.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🫙</div>
+        <div>
+          <div class="moment-title">El supermercado catalán en el Sahara</div>
+          <p class="moment-desc">Ramadán, desierto, sin cerveza en ningún sitio. Y de repente, unos catalanes con un super en mitad de la nada. El universo sabe lo que hace.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🌀</div>
+        <div>
+          <div class="moment-title">El laberinto de Fez y sus tenerías</div>
+          <p class="moment-desc">La medina de Fez es el laberinto más caótico y fascinante de África. Y las tenerías Chouara te avisan antes de verlas: el olor a cuero es inconfundible desde lejos.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎨</div>
+        <div>
+          <div class="moment-title">Tatuajes de henna como chavales de 15 años</div>
+          <p class="moment-desc">Sin filtros, sin vergüenza. Tatuajes de henna en el zoco como cualquier turista despistado. El arrepentimiento llegó aproximadamente a las dos semanas, cuando empezaron a desaparecer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Las dunas de Merzouga</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+      <div class="rating-row"><span class="rating-label">Fez y la medina</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">La comida</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+      <div class="rating-row"><span class="rating-label">El sandboard</span><div class="rating-bar"><div class="rating-fill" style="width:55%"></div></div><span class="rating-score">5.5</span></div>
+      <div class="rating-row"><span class="rating-label">Ir en Ramadán</span><div class="rating-bar"><div class="rating-fill" style="width:40%"></div></div><span class="rating-score">4</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Puesta de sol en las dunas del Sahara</li>
+          <li>La ruta en 4x4 con Omar</li>
+          <li>Las haimas de lujo en el desierto</li>
+          <li>El laberinto de Fez</li>
+          <li>El super catalán salvando la situación</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>Ir en Ramadán si quieres cerveza</li>
+          <li>El sandboard sin preparación</li>
+          <li>Tatuaje de henna antes de rodar por las dunas</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>"El Sahara no se entiende hasta que lo ves. Y una vez lo ves, tampoco se entiende del todo — pero eso es parte de la gracia."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Fez · Merzouga · Abril 2023 · Marruecos</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930227/IMG_4547.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930228/IMG_4564.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930226/64D40061-FD60-47E0-AB8C-8B720D0A8342_Original.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930229/IMG_4570.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930226/67fc880e-f671-41e7-9e2f-0e4291c44985.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930229/IMG_4574.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930233/IMG_4582.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930225/7a6a4d6b-3124-40fe-a58d-78aec2394d1e.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930230/IMG_4578.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930231/IMG_4579.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930236/IMG_4583.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930237/IMG_4695.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930237/IMG_4698.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930239/IMG_4712.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930240/IMG_4723.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930240/IMG_5581_Original.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930239/IMG_4709.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930232/IMG_4586.jpg',c:'Merzouga'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930224/3EBF8346-99CB-428D-9787-046D844F1F49_Original.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930232/IMG_4608.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930233/IMG_4613.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930228/69AEE5E0-16AF-467B-8050-01B98162F994_Original.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930233/IMG_4621.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930234/IMG_4631.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930224/5BFF5103-5520-459E-89A1-26FFDDEAFA40_Original.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930219/3B0E7A1B-CAB9-4564-9A62-29F4B2F29D3C_Original.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930235/IMG_4642.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930236/IMG_4657.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930236/IMG_4644.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930236/IMG_4649.jpg',c:'Fez'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1790930237/IMG_4690.jpg',c:'Fez'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
