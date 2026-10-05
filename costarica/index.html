@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Costa Rica · Octubre 2021</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #1a6a2a; --accent-light: #e6f4e8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #040e06; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #d8e8d8; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #a0c8a8; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* SECCIÓN NATURALEZA */
+  .nature-section { background: #0a1a0c; padding: 48px 32px; }
+  .nature-section .section-label { color: #7ec87e; }
+  .nature-section h2 { color: #fff; }
+  .nature-section > .inner > p { color: rgba(255,255,255,0.65); }
+
+  /* ANIMAL CARDS */
+  .animal-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .animal-card-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 10px;
+  }
+  .animal-icon { font-size: 28px; }
+  .animal-title { font-family: 'Instrument Serif', serif; font-size: 20px; color: #fff; font-weight: 400; }
+  .animal-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .animal-desc { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 12px; max-width: none; }
+
+  /* MEDIA ROW dentro de animal card */
+  .media-row { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+  .media-row::-webkit-scrollbar { display: none; }
+  .media-row .mthumb {
+    flex: 0 0 auto; width: 140px; height: 140px;
+    border-radius: 8px; overflow: hidden; cursor: zoom-in;
+    background: #1a2a1a; position: relative;
+  }
+  .media-row .mthumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .media-row .mthumb:hover img { transform: scale(1.06); }
+  .media-row .mvid {
+    flex: 0 0 auto; width: 200px; height: 140px;
+    border-radius: 8px; overflow: hidden;
+    background: #000;
+  }
+  .media-row .mvid video { width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* GALERÍA ANIMALES EXTRA */
+  .animal-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+    margin-top: 24px;
+  }
+  .animal-grid .ag {
+    aspect-ratio: 1; border-radius: 6px; overflow: hidden;
+    cursor: zoom-in; background: #1a2a1a; position: relative;
+  }
+  .animal-grid .ag img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s, filter 0.3s; filter: saturate(1.1); }
+  .animal-grid .ag:hover img { transform: scale(1.07); filter: saturate(1.4); }
+  .animal-grid .ag .cap { position:absolute; inset:0; background:rgba(0,0,0,0); display:flex; align-items:flex-end; padding:8px; opacity:0; transition: all 0.2s; }
+  .animal-grid .ag:hover .cap { background:rgba(0,0,0,0.4); opacity:1; }
+  .animal-grid .ag .cap span { color:#fff; font-size:9px; }
+
+  /* SECCIÓN MOMENTOS ÉPICOS */
+  .epico-card {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-light);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 18px 20px;
+    margin: 20px 0;
+  }
+  .epico-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .epico-icon { font-size: 22px; }
+  .epico-title { font-weight: 500; font-size: 15px; color: var(--accent); }
+  .epico-desc { font-size: 13px; color: #3d3d3d; margin: 0; max-width: none; }
+
+  /* MEDIA DENTRO DE EPICO */
+  .epico-media { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-top: 12px; }
+  .epico-media::-webkit-scrollbar { display: none; }
+  .epico-media .em-vid { flex: 0 0 auto; width: 240px; height: 160px; border-radius: 8px; overflow: hidden; background: #000; }
+  .epico-media .em-vid video { width:100%; height:100%; object-fit:cover; display:block; }
+  .epico-media .em-img { flex: 0 0 auto; width: 140px; height: 160px; border-radius: 8px; overflow: hidden; cursor: zoom-in; background: #c8d8c8; }
+  .epico-media .em-img img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .epico-media .em-img:hover img { transform: scale(1.05); }
+
+  /* CUADRÍCULA GENERAL PEQUEÑA */
+  .grid-mini {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin: 20px 0;
+  }
+  .grid-mini .g { aspect-ratio: 1; border-radius: 5px; overflow: hidden; cursor: zoom-in; background: #c8d8c8; position: relative; }
+  .grid-mini .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .grid-mini .g:hover img { transform: scale(1.08); }
+  .grid-mini .g .cap { position:absolute; inset:0; background:rgba(0,0,0,0); display:flex; align-items:flex-end; padding:6px; opacity:0; transition: all 0.2s; }
+  .grid-mini .g:hover .cap { background:rgba(0,0,0,0.38); opacity:1; }
+  .grid-mini .g .cap span { color:#fff; font-size:9px; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d8e8d8; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:160px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#d0e8d0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  /* VERDICT */
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  /* QUOTE */
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(2,8,2,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c0d8c0; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section, .nature-section { padding:36px 20px; }
+    .animal-grid { grid-template-columns: repeat(4,1fr); }
+    .grid-mini { grid-template-columns: repeat(5,1fr); }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212324/IMG_7451_Original.jpg" alt="Costa Rica">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Costa Rica<br><em>Pura Vida!</em></h1>
+    <div class="tag">Octubre 2021 · 2 semanas</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🦁 Pumas, perezosos y ballenas</span>
+      <span>🌋 Arenal · Tortuguero · Corcovado</span>
+      <span>🍍 Casados, piñas coladas y bureo caribeño</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#animales">Animales</a>
+  <a href="#momentos-epicos">Momentos</a>
+  <a href="#galeria">Galería</a>
+  <a href="#valoracion">Valoración</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Dos semanas de Pura Vida</h2>
+    <p>Costa Rica en octubre: bosques tropicales, volcanes, playas en el Caribe y el Pacífico, y biodiversidad a tope. Tortuguero, el Volcán Arenal, Tamarindo, el Parque de Corcovado, el Río Celeste, Puerto Viejo… y San José de paso al aterrizar y despegar.</p>
+    <p>Dos semanas de casados en las sodas de carretera, cascadas, cervezas, caminatas, tirolinas, tormentas tropicales, piñas coladas y un poco de bureo caribeño. Todo salió a la perfección — uno de esos viajes que quedan de referencia.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">14</div><div class="stat-label">días</div></div>
+      <div class="stat"><div class="stat-value">6+</div><div class="stat-label">destinos</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">puma visto</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">casados comidos</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ANIMALES -->
+<div class="nature-section" id="animales">
+  <div class="inner">
+    <div class="section-label">Biodiversidad</div>
+    <h2>Los animales del viaje</h2>
+    <p>Costa Rica tiene el 5% de la biodiversidad del planeta en el 0,03% de su superficie. Se nota.</p>
+
+    <!-- TORTUGAS -->
+    <div class="animal-card">
+      <div class="animal-card-header">
+        <div class="animal-icon">🐢</div>
+        <div>
+          <div class="animal-title">Nacimiento de tortugas · Tortuguero</div>
+          <div class="animal-sub">Tortugas verdes desovando · cientos de tortuguitas naciendo</div>
+        </div>
+      </div>
+      <p class="animal-desc">Ver a las tortugas verdes salir al mar a desovar ya es increíble. Pero presenciar el nacimiento de cientos de tortuguitas saliendo del huevo al mismo tiempo es otra dimensión.</p>
+      <div class="media-row">
+        <div class="mvid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1791212338/VID_20211003_172820.mp4" type="video/mp4"></video></div>
+      </div>
+    </div>
+
+    <!-- PEREZOSO -->
+    <div class="animal-card">
+      <div class="animal-card-header">
+        <div class="animal-icon">🦥</div>
+        <div>
+          <div class="animal-title">A la caza del perezoso · Manuel Antonio</div>
+          <div class="animal-sub">Monos, tucanes, pájaros de colores… y el esquivo perezoso</div>
+        </div>
+      </div>
+      <p class="animal-desc">Prismáticos en mano, recorriendo el parque de Manuel Antonio hasta encontrarlo. Hasta un par de veces. El perezoso no tenía prisa. Nosotros tampoco.</p>
+      <div class="media-row">
+        <div class="mvid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1791212331/IMG_7631.mov" type="video/mp4"></video></div>
+        <div class="mthumb" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212339/3c88b964-774e-414c-9871-8a04f2ab0cdd.jpg" alt="Perezoso"></div>
+        <div class="mthumb" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212313/dab22353-03fc-4012-8fa5-10eb54fc296e.jpg" alt="Perezoso"></div>
+      </div>
+    </div>
+
+    <!-- BALLENAS -->
+    <div class="animal-card">
+      <div class="animal-card-header">
+        <div class="animal-icon">🐋</div>
+        <div>
+          <div class="animal-title">Avistamiento de ballenas jorobadas · Isla del Caño</div>
+          <div class="animal-sub">Madre e hija saltando a pocos metros · de camino al snorkel</div>
+        </div>
+      </div>
+      <p class="animal-desc">Íbamos al snorkel en la Isla del Caño. La lancha iba a todo gas. Y de repente, madre e hija jorobadas saltando del Pacífico a pocos metros. Uno de los mejores momentos del viaje. En el snorkel después: mantas rayas y tiburones toro.</p>
+      <div class="media-row">
+        <div class="mvid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1791212344/47A7CAA7-331B-41D0-902E-2BDD7F3C1BB7-32899-0000075860B45044.mov" type="video/mp4"></video></div>
+        <div class="mvid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1791212344/3978BE59-547E-4D50-AA02-EB09F7CF8B95-32899-00000758FF889458.mov" type="video/mp4"></video></div>
+        <div class="mvid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1791212326/IMG_6384.TRIM.mov" type="video/mp4"></video></div>
+      </div>
+    </div>
+
+    <!-- PUMA -->
+    <div class="animal-card">
+      <div class="animal-card-header">
+        <div class="animal-icon">🦁</div>
+        <div>
+          <div class="animal-title">El puma · Corcovado</div>
+          <div class="animal-sub">Alegría y tensión a partes iguales · hasta el guía sacó el móvil</div>
+        </div>
+      </div>
+      <p class="animal-desc">El puma suele estar escondido. No ese día en Corcovado. Momento de euforia contenida: no puedes gritar, no puedes correr, no puedes hacer ruido. Solo mirar. El guía, que supuestamente lo había visto mil veces, también sacó el móvil.</p>
+      <div class="media-row">
+        <div class="mvid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1791212332/IMG_7747.mov" type="video/mp4"></video></div>
+        <div class="mthumb" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212341/578b2867-9747-4ea3-be48-070ba43ba88b.jpg" alt="Puma"></div>
+        <div class="mthumb" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212340/7a0afb21-ad0f-46b9-a62f-4074d5ef01c2.jpg" alt="Puma"></div>
+        <div class="mthumb" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212312/77338e6a-709b-42ba-bc16-836be37308ac.jpg" alt="Puma"></div>
+      </div>
+    </div>
+
+    <!-- MÁS ANIMALES -->
+    <p style="font-size:13px; color:rgba(255,255,255,0.5); margin-top:24px; margin-bottom:8px;">Más fauna de Manuel Antonio y alrededores · clic para ampliar</p>
+    <div class="animal-grid">
+      <div class="ag" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212339/3fdd868f-df24-4fb8-b0e1-e7f6b74816ed.jpg" alt="Animal"><div class="cap"><span>Manuel Antonio</span></div></div>
+      <div class="ag" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212332/IMG_7759.jpg" alt="Animal"><div class="cap"><span>Manuel Antonio</span></div></div>
+      <div class="ag" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212330/IMG_7733.jpg" alt="Animal"><div class="cap"><span>Manuel Antonio</span></div></div>
+      <div class="ag" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212328/IMG_7636.jpg" alt="Animal"><div class="cap"><span>Manuel Antonio</span></div></div>
+      <div class="ag" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212315/IMG_6322.jpg" alt="Animal"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="ag" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212316/IMG_6342.jpg" alt="Animal"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="ag" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212313/dc90ecbe-85e8-467d-a49e-b4e244dc8f18_1.jpg" alt="Animal"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="ag" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212312/b3721e87-8ea9-4dd7-b48d-c18f35948a04.jpg" alt="Animal"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="ag" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212312/a77d50e4-36c0-476a-a0b4-18bb4772420a.jpg" alt="Animal"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="ag" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791213927/ce9c53ac-bfca-4586-933b-c6b49b591bd0.jpg" alt="Animal"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="ag" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791213926/bb11b3c4-9d7b-4a09-8228-1c79d1fbe5d7.jpg" alt="Animal"><div class="cap"><span>Costa Rica</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MOMENTOS ÉPICOS -->
+<section id="momentos-epicos">
+  <div class="inner">
+    <div class="section-label">Momentos épicos</div>
+    <h2>Los que no estaban en el plan</h2>
+
+    <!-- TIROLINAS -->
+    <div class="epico-card">
+      <div class="epico-header">
+        <div class="epico-icon">🪂</div>
+        <div class="epico-title">Tirolinas en Monteverde · el Pari y el vértigo</div>
+      </div>
+      <p class="epico-desc">El Pari, motivado y dispuesto a superar su vértigo, no pasó de la primera tirolina. Yo, por presión social del grupo, acabé haciendo el Tarzan Swing — columpio al vacío similar al puenting. Una y no más.</p>
+      <div class="epico-media">
+        <div class="em-vid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1791214151/VIDEO-2021-10-09-23-02-03.mp4" type="video/mp4"></video></div>
+      </div>
+    </div>
+
+    <!-- BOTELLÓN -->
+    <div class="epico-card">
+      <div class="epico-header">
+        <div class="epico-icon">🛻</div>
+        <div class="epico-title">La pick-up de Puerto Viejo · Ana llama mañana</div>
+      </div>
+      <p class="epico-desc">Cuando la fiesta de playa acabó, unos locales ofrecieron continuar en otro sitio. Antes de contestar, el Pari y la Yadi ya estaban subidos en la pick-up listos para ir donde fuera. Acabamos en un botellón clandestino en medio del monte con Ana llama mañana y más amigos.</p>
+      <div class="epico-media">
+        <div class="em-img" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212334/IMG_7806.jpg" alt="Puerto Viejo"></div>
+        <div class="em-img" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212338/IMG_20211014_011824.jpg" alt="Puerto Viejo"></div>
+        <div class="em-img" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212338/IMG_20211014_011759.jpg" alt="Puerto Viejo"></div>
+      </div>
+    </div>
+
+    <!-- MAREA -->
+    <div class="epico-card">
+      <div class="epico-header">
+        <div class="epico-icon">🌊</div>
+        <div class="epico-title">Agua trágame · Chigo y Yadi vs. la marea</div>
+      </div>
+      <p class="epico-desc">Dejamos dormidas a Chigo y Yadi en la orilla del mar mientras subía la marea. Hasta que las alcanzó. Empapadas con toda la ropa, toallas, mochilas. El móvil, por suerte, sobrevivió.</p>
+      <div class="epico-media">
+        <div class="em-vid"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1791212334/IMG_7701.mov" type="video/mp4"></video></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA GENERAL -->
+<section id="galeria">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>El resto del viaje</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+    <div class="grid-mini">
+      <div class="g" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212341/94ade9d1-3548-48f2-9eee-48510f4cfda9.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212338/1cd10c0f-af35-4ddb-adfc-2a3965b657e9.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212336/IMG_20211005_150515.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212335/IMG_20211003_143411.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212335/IMG_20211005_100730.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212335/IMG_20211003_151150.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212334/IMG_7769.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212333/IMG_7766.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212327/IMG_7534_Original.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212325/IMG_7468_Original.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212324/IMG_7450.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212324/IMG_7402_Original.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212323/IMG_7389.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212323/IMG_7329_Original.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212323/IMG_7295.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212320/IMG_6468.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212320/IMG_6396.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212316/IMG_6366.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212316/IMG_6369.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212315/IMG_6314.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212313/B45AF735-1F3E-48EF-ADDA-60D369915FDE.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212313/IMG_6056.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+      <div class="g" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791212313/IMG_6163.jpg" alt="Costa Rica"><div class="cap"><span>Costa Rica</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">La biodiversidad</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">Las ballenas jorobadas</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">El puma en Corcovado</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">Los casados de soda</span><div class="rating-bar"><div class="rating-fill" style="width:93%"></div></div><span class="rating-score">9.3</span></div>
+      <div class="rating-row"><span class="rating-label">El Tarzan Swing</span><div class="rating-bar"><div class="rating-fill" style="width:60%"></div></div><span class="rating-score">6</span></div>
+      <div class="rating-row"><span class="rating-label">La pick-up de Puerto Viejo</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Las ballenas jorobadas madre e hija</li>
+          <li>El puma en Corcovado</li>
+          <li>Nacimiento de tortugas en Tortuguero</li>
+          <li>La pick-up de Puerto Viejo</li>
+          <li>Los casados en sodas de carretera</li>
+          <li>Que todo saliera a la perfección</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>El Tarzan Swing (o sí, con más convicción)</li>
+          <li>Dejar a gente dormida en la orilla del mar</li>
+          <li>El Pari y la primera tirolina</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"Costa Rica tiene el 5% de la biodiversidad del planeta. En dos semanas entendimos por qué."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Costa Rica · Octubre 2021 · Pura Vida</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  // ANIMALES protagonistas 0-15
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212339/3c88b964-774e-414c-9871-8a04f2ab0cdd.jpg',c:'Perezoso · Manuel Antonio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212313/dab22353-03fc-4012-8fa5-10eb54fc296e.jpg',c:'Perezoso · Manuel Antonio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212341/578b2867-9747-4ea3-be48-070ba43ba88b.jpg',c:'Puma · Corcovado'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212340/7a0afb21-ad0f-46b9-a62f-4074d5ef01c2.jpg',c:'Puma · Corcovado'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212312/77338e6a-709b-42ba-bc16-836be37308ac.jpg',c:'Puma · Corcovado'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212339/3fdd868f-df24-4fb8-b0e1-e7f6b74816ed.jpg',c:'Manuel Antonio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212332/IMG_7759.jpg',c:'Manuel Antonio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212330/IMG_7733.jpg',c:'Manuel Antonio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212328/IMG_7636.jpg',c:'Manuel Antonio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212315/IMG_6322.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212316/IMG_6342.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212313/dc90ecbe-85e8-467d-a49e-b4e244dc8f18_1.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212312/b3721e87-8ea9-4dd7-b48d-c18f35948a04.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212312/a77d50e4-36c0-476a-a0b4-18bb4772420a.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791213927/ce9c53ac-bfca-4586-933b-c6b49b591bd0.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791213926/bb11b3c4-9d7b-4a09-8228-1c79d1fbe5d7.jpg',c:'Costa Rica'},
+  // MOMENTOS ÉPICOS 16-18
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212334/IMG_7806.jpg',c:'Puerto Viejo · la pick-up'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212338/IMG_20211014_011824.jpg',c:'Puerto Viejo · botellón'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212338/IMG_20211014_011759.jpg',c:'Puerto Viejo · botellón'},
+  // GALERÍA 19-41
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212341/94ade9d1-3548-48f2-9eee-48510f4cfda9.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212338/1cd10c0f-af35-4ddb-adfc-2a3965b657e9.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212336/IMG_20211005_150515.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212335/IMG_20211003_143411.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212335/IMG_20211005_100730.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212335/IMG_20211003_151150.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212334/IMG_7769.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212333/IMG_7766.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212327/IMG_7534_Original.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212325/IMG_7468_Original.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212324/IMG_7450.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212324/IMG_7402_Original.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212323/IMG_7389.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212323/IMG_7329_Original.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212323/IMG_7295.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212320/IMG_6468.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212320/IMG_6396.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212316/IMG_6366.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212316/IMG_6369.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212315/IMG_6314.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212313/B45AF735-1F3E-48EF-ADDA-60D369915FDE.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212313/IMG_6056.jpg',c:'Costa Rica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791212313/IMG_6163.jpg',c:'Costa Rica'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
