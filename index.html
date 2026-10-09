@@ -142,7 +142,7 @@
     padding: 0 32px 80px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 6px;
   }
 
   /* TRIP CARD */
@@ -150,7 +150,7 @@
     position: relative;
     border-radius: var(--radius);
     overflow: hidden;
-    aspect-ratio: 3/4;
+    aspect-ratio: 4/5;
     background: var(--faint);
     cursor: pointer;
     text-decoration: none;
@@ -314,7 +314,7 @@
     header { flex-direction: column; align-items: flex-start; padding: 32px 20px 24px; }
     .header-stats { gap: 20px; }
     .filters { padding: 0 20px 24px; }
-    .grid { grid-template-columns: repeat(2, 1fr); padding: 0 20px 60px; gap: 14px; }
+    .grid { grid-template-columns: repeat(2, 1fr); padding: 0 20px 60px; gap: 5px; }
     .card.featured { grid-column: span 2; }
     .card-title { font-size: 18px; }
     .card.featured .card-title { font-size: 22px; }
@@ -343,15 +343,15 @@
   </div>
   <div class="header-stats">
     <div>
-      <span class="hstat-value" id="count-viajes">23</span>
+      <span class="hstat-value" id="count-viajes">24</span>
       <span class="hstat-label">viajes</span>
     </div>
     <div>
-      <span class="hstat-value">23</span>
+      <span class="hstat-value">24</span>
       <span class="hstat-label">países</span>
     </div>
     <div>
-      <span class="hstat-value">113</span>
+      <span class="hstat-value">128</span>
       <span class="hstat-label">días fuera</span>
     </div>
   </div>
@@ -368,6 +368,7 @@
   </div>
   <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
     <span class="filter-label">Año</span>
+    <button class="filter-btn" onclick="filter('2018', this)">2018</button>
     <button class="filter-btn" onclick="filter('2021', this)">2021</button>
     <button class="filter-btn" onclick="filter('2022', this)">2022</button>
     <button class="filter-btn" onclick="filter('2023', this)">2023</button>
@@ -676,6 +677,26 @@
     <div class="card-hover">
       <div class="card-hover-text">Ver viaje →</div>
       <div class="card-hover-frase">"Croissants, vino y fiebre en el sur de Francia."</div>
+    </div>
+  </a>
+</div>
+
+<!-- JAPÓN -->
+<div class="card-wrap" data-tags="asia 2018">
+  <a class="card" href="./japon/">
+    <img class="card-photo" src="https://res.cloudinary.com/il7cecht/image/upload/v1791548924/IMG_3172.jpg" alt="Japón">
+    <div class="card-overlay"></div>
+    <div class="card-body">
+      <div class="card-region">Asia · Japón</div>
+      <div class="card-title">Japón</div>
+      <div class="card-meta">
+        <span class="card-date">Jun 2018</span>
+        <span class="card-tag">🇯🇵 Tokio · Kyoto · Hiroshima</span>
+      </div>
+    </div>
+    <div class="card-hover">
+      <div class="card-hover-text">Ver viaje →</div>
+      <div class="card-hover-frase">"De pensar en Grecia a acabar en Japón."</div>
     </div>
   </a>
 </div>
