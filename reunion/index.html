@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isla Reunión · Abril 2017</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #0a6a5a; --accent-light: #e6f4f2;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #040e0c; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(30px,4.5vw,56px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #d8e8e4; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #90c0b8; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* ACTIVIDADES */
+  .actividades { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+  .act { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; background: #fff; border-radius: var(--radius); border: 1px solid #d0e8e4; }
+  .act-icon { font-size: 22px; flex-shrink: 0; }
+  .act-text { font-size: 14px; color: #3d3d3d; margin: 0; max-width: none; }
+  .act-text strong { color: var(--accent); }
+
+  /* VÍDEO BARRANQUISMO */
+  .video-barra {
+    margin: 20px 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #000;
+    position: relative;
+    padding-top: 56.25%;
+  }
+  .video-barra iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  .video-label { font-size: 13px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  /* VÍDEO WILD FRANK */
+  .video-pill { display: flex; gap: 10px; align-items: flex-start; background: var(--ink); color: #fff; border-radius: var(--radius); padding: 14px 16px; margin: 12px 0; }
+  .video-pill .vp-icon { font-size: 20px; flex-shrink: 0; }
+  .video-pill .vp-info { flex: 1; min-width: 0; }
+  .video-pill .vp-title { font-size: 13px; font-weight: 500; color: var(--warm); margin-bottom: 6px; }
+  .video-pill .vp-video { border-radius: 8px; overflow: hidden; background: #000; }
+  .video-pill .vp-video video { width: 100%; max-height: 220px; display: block; }
+
+  /* CUADRÍCULA UNIFORME */
+  .grid-uniform { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin: 20px 0; }
+  .grid-uniform .g { aspect-ratio: 1; border-radius: 6px; overflow: hidden; cursor: zoom-in; background: #b8d8d4; position: relative; }
+  .grid-uniform .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .grid-uniform .g:hover img { transform: scale(1.07); }
+  .grid-uniform .g .cap { position:absolute; inset:0; background:rgba(0,0,0,0); display:flex; align-items:flex-end; padding:8px; opacity:0; transition: all 0.2s; }
+  .grid-uniform .g:hover .cap { background:rgba(0,0,0,0.38); opacity:1; }
+  .grid-uniform .g .cap span { color:#fff; font-size:9px; }
+
+  /* CARRUSEL BODA */
+  .carousel { position: relative; margin: 10px 0; }
+  .carousel-track { display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 8px; cursor: grab; scrollbar-width: none; }
+  .carousel-track:active { cursor: grabbing; }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track .thumb { flex: 0 0 auto; scroll-snap-align: start; width: 180px; height: 220px; border-radius: 8px; overflow: hidden; cursor: zoom-in; background: #c0d8d4; position: relative; }
+  .carousel-track .thumb:first-child { width: 240px; }
+  .carousel-track .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.35s; }
+  .carousel-track .thumb:hover img { transform: scale(1.04); }
+  .carousel-track .thumb .cap { position:absolute; bottom:0; left:0; right:0; padding:20px 10px 8px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
+  .carousel-track .thumb:hover .cap { opacity:1; }
+  .carousel-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .carousel-btn { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #b0d0cc; background: #fff; color: var(--ink); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
+  .carousel-btn:hover { border-color: var(--accent); }
+  .carousel-hint { font-size: 11px; color: var(--muted); margin-left: 4px; }
+
+  /* TIP CARD */
+  .tip-card { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 18px 24px; margin: 20px 0; display: flex; gap: 14px; align-items: flex-start; }
+  .tip-icon { font-size: 22px; flex-shrink: 0; }
+  .tip-card p { color: rgba(255,255,255,0.85); margin: 0; max-width: none; font-size: 14px; }
+  .tip-card strong { color: var(--warm); }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d8e8e4; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:160px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#d0e8e4; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(2,8,6,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c0d8d4; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .grid-uniform { grid-template-columns: repeat(4,1fr); }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563755/IMG_9558.jpg" alt="Isla Reunión">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Isla Reunión<br><em>L'île intense</em></h1>
+    <div class="tag">Abril 2017 · Una boda multiaventura</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🌋 Piton de la Fournaise · 3070m</span>
+      <span>🪂 Parapente · barranquismo · snorkel</span>
+      <span>💒 La boda de Baltita y Elsa</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#aventura">Aventura</a>
+  <a href="#boda">La boda</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>La boda de Baltita y Elsa · la excusa perfecta</h2>
+    <p>La Reunión es una isla francesa en medio del Índico, entre África y Madagascar. Una mezcla de volcán activo, selva tropical, playas de coral y montañas de más de 3000 metros. No paramos ni un día.</p>
+
+    <div class="actividades">
+      <div class="act"><div class="act-icon">🤿</div><p class="act-text"><strong>Snorkel</strong> en la playa L'Ermitage — arrecifes de coral y fauna marina del Índico.</p></div>
+      <div class="act"><div class="act-icon">🏔️</div><p class="act-text"><strong>Ascenso al Piton des Neiges (3070m)</strong> — el pico más alto de la isla. Noche en refugio de montaña. Los novios se presentaron por sorpresa para subir con nosotros.</p></div>
+      <div class="act"><div class="act-icon">💦</div><p class="act-text"><strong>Barranquismo por el río Langevin</strong> — con accidente incluido. En el último salto caí sobre una roca y esguince para varias semanas. Por suerte era el penúltimo día.</p></div>
+      <div class="act"><div class="act-icon">🌋</div><p class="act-text"><strong>Túneles de lava del Piton de la Fournaise</strong> — café en una ruta subterránea formada por las erupciones del volcán.</p></div>
+      <div class="act"><div class="act-icon">🪂</div><p class="act-text"><strong>Parapente</strong> — para pasar la resaca de la boda. No hay mejor manera.</p></div>
+      <div class="act"><div class="act-icon">🦶</div><p class="act-text"><strong>Cráter de la Fournaise</strong> — subida hasta el cráter con el pie como un botijo por el esguince. Era el último día y no podía irme sin verlo.</p></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">6</div><div class="stat-label">actividades</div></div>
+      <div class="stat"><div class="stat-value">3070</div><div class="stat-label">metros ascendidos</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">esguince de recuerdo</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">vuelo extra comprado</div></div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">✈️</div>
+      <p><strong>PD. Los vuelos:</strong> escala en París a la vuelta. El vuelo Reunión-París llegaba un día después del París-Madrid que había cogido. Tuve que comprar otro vuelo París-Madrid. Con cambio de aeropuerto incluido.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AVENTURA -->
+<section id="aventura">
+  <div class="inner">
+    <div class="section-label">Multiaventura</div>
+    <h2>La isla en modo activo</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <!-- VÍDEO BARRANQUISMO -->
+    <p style="font-weight:500; font-size:14px; margin-bottom:8px; color:var(--accent);">💦 Barranquismo por el río Langevin</p>
+    <div class="video-barra">
+      <iframe src="https://www.youtube.com/embed/QQ3TEs4KcOY?start=65" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <div class="video-label">🎬 Barranquismo Langevin · aquí ocurrió el esguince</div>
+
+    <!-- VÍDEO WILD FRANK -->
+    <div class="video-pill" style="margin-top:20px;">
+      <div class="vp-icon">🦁</div>
+      <div class="vp-info">
+        <div class="vp-title">Wiiiild Fraaaaank 🎉</div>
+        <div class="vp-video">
+          <video controls preload="none">
+            <source src="https://res.cloudinary.com/il7cecht/video/upload/v1791563763/IMG_9001.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUADRÍCULA AVENTURA -->
+    <div class="grid-uniform" style="margin-top:20px;">
+      <div class="g" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563756/IMG_8842.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563756/IMG_8901.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563757/IMG_8906.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563758/IMG_8915.jpg" alt="Piton des Neiges"><div class="cap"><span>Piton des Neiges</span></div></div>
+      <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563759/IMG_8927.jpg" alt="Piton des Neiges"><div class="cap"><span>Piton des Neiges</span></div></div>
+      <div class="g" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563760/IMG_8941.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563761/IMG_8960.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563761/IMG_8986.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563762/IMG_8995.png" alt="Barranquismo"><div class="cap"><span>Barranquismo</span></div></div>
+      <div class="g" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563764/IMG_9005.png" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563765/IMG_9010.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563765/IMG_9011.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563776/IMG_9213.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563777/IMG_9257.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563778/IMG_9272.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563779/IMG_9281.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563780/IMG_9300.jpg" alt="Parapente"><div class="cap"><span>Parapente</span></div></div>
+      <div class="g" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563780/IMG_9307.jpg" alt="Parapente"><div class="cap"><span>Parapente</span></div></div>
+      <div class="g" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563781/IMG_9318.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563782/IMG_9319.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563783/IMG_9321.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563785/IMG_9331.jpg" alt="Cráter Fournaise"><div class="cap"><span>Cráter Fournaise</span></div></div>
+      <div class="g" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563785/IMG_9334.jpg" alt="Cráter Fournaise"><div class="cap"><span>Cráter Fournaise</span></div></div>
+      <div class="g" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563750/IMG_9346.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563750/IMG_9357.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563750/IMG_9377.png" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563751/IMG_9378.png" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563751/IMG_9382.png" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563751/IMG_9550.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563751/IMG_9553.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563753/IMG_9555.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+      <div class="g" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563754/IMG_9556.jpg" alt="Reunión"><div class="cap"><span>Reunión</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BODA -->
+<section id="boda">
+  <div class="inner">
+    <div class="section-label">La boda</div>
+    <h2>Baltita y Elsa · a pie de playa · Les Invalides</h2>
+    <p>Boda a pie de playa con buffet libre — nos servíamos cada plato nosotros mismos. Nuestra mesa: Les Invalides. La isla como telón de fondo, el Índico a pocos metros.</p>
+
+    <div class="carousel">
+      <div class="carousel-track" id="c-boda">
+        <div class="thumb" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563766/IMG_9016.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563767/IMG_9041.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563768/IMG_9073.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563775/IMG_9165.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563769/IMG_9083.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563769/IMG_9087.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563773/IMG_9154.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563774/IMG_9159.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563776/IMG_9176.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563770/IMG_9100.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563771/IMG_9109.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563772/IMG_9124.jpg" alt="Boda"><div class="cap">La boda</div></div>
+        <div class="thumb" onclick="lb(44)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791563772/IMG_9119.jpg" alt="Boda"><div class="cap">La boda</div></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="scrollC('c-boda',-1)">‹</button>
+        <button class="carousel-btn" onclick="scrollC('c-boda',1)">›</button>
+        <span class="carousel-hint">arrastra · clic para ampliar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">😱</div>
+        <div>
+          <div class="moment-title">Los novios subiéndose al Piton por sorpresa</div>
+          <p class="moment-desc">Noche en el refugio de montaña con los invitados. Y de madrugada aparecen Baltita y Elsa para subir al amanecer con nosotros. La mejor sorpresa posible en el pico más alto de la isla.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">💦</div>
+        <div>
+          <div class="moment-title">El esguince del barranquismo · penúltimo día</div>
+          <p class="moment-desc">Último salto del río Langevin. Roca. Esguince. Pie como un botijo para las siguientes semanas. La suerte: era el penúltimo día. La mala suerte: el último día había que subir al cráter del volcán.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🪂</div>
+        <div>
+          <div class="moment-title">Parapente para pasar la resaca de la boda</div>
+          <p class="moment-desc">La resaca se pasa volando. Literalmente. Parapente sobre la isla al día siguiente de la boda. Con vistas al Índico y al volcán. Método aprobado.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🦶</div>
+        <div>
+          <div class="moment-title">Subir al cráter con el pie como un botijo</div>
+          <p class="moment-desc">Último día. Esguince de dos días. Cráter activo del Piton de la Fournaise pendiente. No había opción de no ir. Se subió. Con consecuencias.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">✈️</div>
+        <div>
+          <div class="moment-title">El vuelo extra · cambio de aeropuerto incluido</div>
+          <p class="moment-desc">Los dos vuelos de vuelta cogidos el mismo día, con el problema de que el primero llegaba el día siguiente. Solución: comprar otro billete. Con cambio de aeropuerto en París. Lección aprendida.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">💒</div>
+        <div>
+          <div class="moment-title">La boda a pie de playa · Les Invalides</div>
+          <p class="moment-desc">Boda en el paraíso, buffet libre donde te servías tú mismo cada plato, y la mesa Les Invalides. La combinación perfecta de elegancia tropical y autosuficiencia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">La isla</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">El Piton des Neiges</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+      <div class="rating-row"><span class="rating-label">La boda</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">El parapente</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">El barranquismo</span><div class="rating-bar"><div class="rating-fill" style="width:70%"></div></div><span class="rating-score">7</span></div>
+      <div class="rating-row"><span class="rating-label">La gestión de vuelos</span><div class="rating-bar"><div class="rating-fill" style="width:5%"></div></div><span class="rating-score">0.5</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>La isla — paisaje de otro planeta</li>
+          <li>Los novios apareciendo en el Piton</li>
+          <li>Parapente post-boda</li>
+          <li>El cráter del volcán activo</li>
+          <li>La boda a pie de playa</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>Coger los vuelos sin revisar las fechas</li>
+          <li>El último salto del barranquismo</li>
+          <li>Subir al cráter con un esguince</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"L'île intense. El nombre lo dice todo. En una semana hicimos más actividades que en muchos años de vacaciones normales."</p>
+    </div>
+  </div>
+</section>
+
+<footer><p>Isla Reunión · Abril 2017 · La boda de Baltita y Elsa</p></footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  // AVENTURA 0-31
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563756/IMG_8842.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563756/IMG_8901.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563757/IMG_8906.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563758/IMG_8915.jpg',c:'Piton des Neiges'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563759/IMG_8927.jpg',c:'Piton des Neiges'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563760/IMG_8941.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563761/IMG_8960.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563761/IMG_8986.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563762/IMG_8995.png',c:'Barranquismo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563764/IMG_9005.png',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563765/IMG_9010.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563765/IMG_9011.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563776/IMG_9213.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563777/IMG_9257.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563778/IMG_9272.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563779/IMG_9281.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563780/IMG_9300.jpg',c:'Parapente'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563780/IMG_9307.jpg',c:'Parapente'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563781/IMG_9318.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563782/IMG_9319.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563783/IMG_9321.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563785/IMG_9331.jpg',c:'Cráter Fournaise'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563785/IMG_9334.jpg',c:'Cráter Fournaise'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563750/IMG_9346.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563750/IMG_9357.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563750/IMG_9377.png',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563751/IMG_9378.png',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563751/IMG_9382.png',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563751/IMG_9550.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563751/IMG_9553.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563753/IMG_9555.jpg',c:'Reunión'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563754/IMG_9556.jpg',c:'Reunión'},
+  // BODA 32-44
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563766/IMG_9016.jpg',c:'La boda · Baltita y Elsa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563767/IMG_9041.jpg',c:'La boda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563768/IMG_9073.jpg',c:'La boda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563775/IMG_9165.jpg',c:'La boda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563769/IMG_9083.jpg',c:'La boda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563769/IMG_9087.jpg',c:'La boda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563773/IMG_9154.jpg',c:'La boda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563774/IMG_9159.jpg',c:'La boda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563776/IMG_9176.jpg',c:'La boda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563770/IMG_9100.jpg',c:'La boda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563771/IMG_9109.jpg',c:'La boda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563772/IMG_9124.jpg',c:'La boda'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791563772/IMG_9119.jpg',c:'La boda'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+function scrollC(id,dir){document.getElementById(id).scrollBy({left:dir*200,behavior:'smooth'});}
+
+document.querySelectorAll('.carousel-track').forEach(track=>{
+  let down=false,sx,sl;
+  track.addEventListener('mousedown',e=>{down=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;});
+  track.addEventListener('mouseleave',()=>down=false);
+  track.addEventListener('mouseup',()=>down=false);
+  track.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx);});
+});
+
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
