@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japón · Junio 2018</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #b5001a; --accent-light: #fbe8ea;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #0a0004; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; left: 48px; text-align: left; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; left: 48px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e8d8d8; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #c8a0a0; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* CITY BLOCK */
+  .city-block { margin: 28px 0; }
+  .city-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .city-name { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; }
+  .city-sub { font-size: 13px; color: var(--muted); font-style: italic; }
+  .city-count { font-size: 12px; color: var(--muted); margin-left: auto; }
+  .city-notes { margin: 6px 0 10px; }
+  .city-notes p { font-size: 13px; color: var(--muted); margin: 0; }
+  .city-notes span { display: inline-block; margin-right: 14px; }
+  .city-notes span::before { content: '· '; }
+
+  /* CARRUSEL MUY PEQUEÑO (Tokio) */
+  .carousel-xs .carousel-track .thumb { width: 120px; height: 120px; border-radius: 6px; }
+  .carousel-xs .carousel-track .thumb:first-child { width: 160px; }
+
+  /* CARRUSEL NORMAL */
+  .carousel { position: relative; margin: 8px 0; }
+  .carousel-track { display: flex; gap: 5px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 6px; cursor: grab; scrollbar-width: none; }
+  .carousel-track:active { cursor: grabbing; }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track .thumb { flex: 0 0 auto; scroll-snap-align: start; width: 170px; height: 200px; border-radius: 8px; }
+  .carousel-track .thumb:first-child { width: 220px; }
+  .carousel-track .thumb img { width:100%; height:100%; object-fit:cover; display:block; border-radius: 8px; }
+  .carousel-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .carousel-btn { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #d0b0b0; background: #fff; color: var(--ink); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
+  .carousel-btn:hover { border-color: var(--accent); }
+  .carousel-hint { font-size: 11px; color: var(--muted); margin-left: 4px; }
+
+  /* THUMB */
+  .thumb { position: relative; cursor: zoom-in; overflow: hidden; background: #d0c0c0; display: block; }
+  .thumb img { transition: transform 0.3s; }
+  .thumb:hover img { transform: scale(1.05); }
+  .thumb .cap { position:absolute; bottom:0; left:0; right:0; padding:18px 8px 6px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
+  .thumb:hover .cap { opacity:1; }
+
+  /* VÍDEO EN CARRUSEL */
+  .carousel-track .vid-item { flex: 0 0 auto; scroll-snap-align: start; width: 240px; height: 200px; border-radius: 8px; overflow: hidden; background: #000; }
+  .carousel-track .vid-item video { width:100%; height:100%; object-fit:cover; display:block; }
+  .carousel-xs .carousel-track .vid-item { width: 160px; height: 120px; }
+
+  /* VÍDEOS DIFERENCIADOS */
+  .video-pill {
+    display: flex; gap: 8px; align-items: flex-start;
+    background: var(--ink); color: #fff;
+    border-radius: var(--radius); padding: 14px 16px; margin: 12px 0;
+  }
+  .video-pill .vp-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .video-pill .vp-info { flex: 1; min-width: 0; }
+  .video-pill .vp-title { font-size: 13px; font-weight: 500; color: var(--warm); margin-bottom: 6px; }
+  .video-pill .vp-video { border-radius: 8px; overflow: hidden; background: #000; }
+  .video-pill .vp-video video { width: 100%; max-height: 220px; display: block; }
+
+  /* SECCIÓN NEONES */
+  .neon-section { background: #050010; padding: 48px 32px; }
+  .neon-section .section-label { color: #ff6ec7; }
+  .neon-section h2 { color: #fff; }
+  .neon-section p { color: rgba(255,255,255,0.55); }
+  .neon-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin: 16px 0;
+  }
+  .neon-grid .ng {
+    aspect-ratio: 3/4;
+    border-radius: 8px; overflow: hidden; cursor: zoom-in;
+    background: #100020; position: relative;
+  }
+  .neon-grid .ng img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.4s, filter 0.4s; filter: saturate(1.2) brightness(0.9); }
+  .neon-grid .ng:hover img { transform: scale(1.06); filter: saturate(1.6) brightness(1.1); }
+
+  /* SECCIÓN COMIDA */
+  .food-strip { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 16px 0; }
+  .food-strip::-webkit-scrollbar { display: none; }
+  .food-strip .fs { flex: 0 0 auto; width: 150px; height: 150px; border-radius: 8px; overflow: hidden; cursor: zoom-in; background: #e0d0c0; position: relative; }
+  .food-strip .fs img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .food-strip .fs:hover img { transform: scale(1.06); }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e8d0d0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:160px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e8d0d0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(4,0,8,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d8c0c0; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; left:24px; }
+    .hero-bottom { bottom:24px; left:24px; }
+    nav { padding:0 16px; }
+    section, .neon-section { padding:36px 20px; }
+    .neon-grid { grid-template-columns: repeat(2,1fr); }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548929/IMG_3848.jpg" alt="Japón">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Japón<br><em>Pagodas, Ramen y Toris</em></h1>
+    <div class="tag">Junio 2018 · Railway Pass</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🇯🇵 Tokio · Hakone · Kyoto · Nara · Hiroshima · Miyajima</span>
+      <span>⚽ Viendo el Mundial en el avión</span>
+      <span>🍜 Ramen, sake y máquinas expendedoras</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#tokio">Tokio</a>
+  <a href="#hakone">Hakone</a>
+  <a href="#kyoto">Kyoto</a>
+  <a href="#nara">Nara</a>
+  <a href="#hiroshima">Hiroshima</a>
+  <a href="#miyajima">Miyajima</a>
+  <a href="#comida">Comida</a>
+  <a href="#momentos">Momentos</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>De pensar en Grecia a acabar en Japón · culpa del pater</h2>
+    <p>El plan era Grecia. El padre lo cambió todo. ¿Quién va a ir a Japón? Pues nosotros, en junio de 2018, viendo los partidos del Mundial en directo desde el avión camino a Tokio.</p>
+    <p>Railway Pass en mano y a recorrer el país de norte a sur: Tokio y sus contrastes, Hakone y el Monte Fuji, Kyoto y sus templos, los ciervos de Nara, el Memorial de Hiroshima y la isla de Miyajima. Probando todas las bebidas raras de las máquinas expendedoras del camino.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">6</div><div class="stat-label">ciudades</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">Railway Pass</div></div>
+      <div class="stat"><div class="stat-value">0</div><div class="stat-label">carteras robadas (Japón)</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">ramen consumido</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS POR CIUDAD -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Ciudad a ciudad</div>
+    <h2>El viaje en imágenes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <!-- TOKIO -->
+    <div class="city-block" id="tokio">
+      <div class="city-header">
+        <span class="city-name">Tokio</span>
+        <span class="city-sub">Shibuya · Akihabara · Kabukicho · Kamakura</span>
+      </div>
+      <div class="city-notes"><p>
+        <span>Shibuya crossing</span>
+        <span>Manga y videojuegos en Akihabara</span>
+        <span>Hotel cápsula en Ginza</span>
+        <span>Neones de Kabukicho</span>
+        <span>Buda gigante de Kamakura</span>
+      </p></div>
+
+      <div class="video-pill">
+        <div class="vp-icon">🎵</div>
+        <div class="vp-info">
+          <div class="vp-title">Tocando la ocarina en el metro de Tokio</div>
+          <div class="vp-video"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1791548936/VIDEO-2018-07-06-14-39-05.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+
+      <div class="carousel carousel-xs">
+        <div class="carousel-track" id="c-tokio">
+          <div class="thumb" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548909/3f8736a1-957f-44a8-9db2-cead9f4ca020.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548918/IMG_2579.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548918/IMG_2611.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548918/IMG_2598.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548917/IMG_2572.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548917/IMG_2568.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548918/IMG_2680.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548920/IMG_2763.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548919/IMG_2760.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548919/IMG_2719.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548919/IMG_2703.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548922/IMG_2888.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548922/IMG_2878.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548922/IMG_2867.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548921/IMG_2853.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548923/IMG_2985.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548923/IMG_2916.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548909/6651ac21-54de-483e-8b0f-ddb6e528927e.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548910/21773b32-706b-4873-a5e0-2060fdf55da8.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548912/ad48eb75-615c-4c12-b398-fc9df25f02f1.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548915/f6a14ac2-5ee1-4a30-980f-f9f1a081bc38.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548916/f52be781-85ef-4a96-b9e4-4a2edd6c4270.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548915/eff256a4-8778-434a-8987-337cb80d8e96.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548924/IMG_3009.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548930/IMG_3946.jpg" alt="Tokio"><div class="cap">Kamakura</div></div>
+          <div class="thumb" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548930/IMG_3949.jpg" alt="Tokio"><div class="cap">Kamakura</div></div>
+          <div class="thumb" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548914/db33ac16-ef8c-4085-a699-e31474c591dc.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548933/IMG_4190.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548932/IMG_4145.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548933/IMG_4238.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548933/IMG_4216.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548913/be7bd5d4-eba1-4c2c-812a-32559835b056.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+          <div class="thumb" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548913/b896f0e3-2f96-4727-9454-90dc7fb6e040.jpg" alt="Tokio"><div class="cap">Tokio</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-tokio',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-tokio',1)">›</button>
+          <span class="carousel-hint">arrastra · clic para ampliar</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HAKONE -->
+    <div class="city-block" id="hakone">
+      <div class="city-header">
+        <span class="city-name">Hakone · Monte Fuji</span>
+        <span class="city-sub">Tren de montaña · tatami · amanecer robado al Mingo</span>
+      </div>
+      <div class="city-notes"><p>
+        <span>Tren Hakone Tozan de montaña</span>
+        <span>Noches en tatami como Doraemon</span>
+        <span>Solo el Mingo se levantó al amanecer</span>
+        <span>Le robamos las fotos del Fuji</span>
+      </p></div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-hakone">
+          <div class="thumb" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548934/PHOTO-2018-06-28-17-11-46.jpg" alt="Hakone"><div class="cap">Hakone</div></div>
+          <div class="thumb" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548913/d717d2c6-0eba-4c65-97e9-02ada258c386.jpg" alt="Hakone"><div class="cap">Hakone</div></div>
+          <div class="thumb" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548910/90591164-9b95-49d3-904e-cc4af28ae584.jpg" alt="Monte Fuji"><div class="cap">Monte Fuji · foto del Mingo</div></div>
+          <div class="thumb" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548926/IMG_3332.jpg" alt="Hakone"><div class="cap">Hakone</div></div>
+          <div class="thumb" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548925/IMG_3278.jpg" alt="Hakone"><div class="cap">Hakone</div></div>
+          <div class="thumb" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548925/IMG_3293.jpg" alt="Hakone"><div class="cap">Hakone</div></div>
+          <div class="thumb" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548910/15658d88-96dd-43fe-be80-cb24be4f2f1a.jpg" alt="Monte Fuji"><div class="cap">Monte Fuji</div></div>
+          <div class="thumb" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548910/9850ccb8-ab34-4813-b90f-e7139fd7d8c2.jpg" alt="Hakone"><div class="cap">Hakone</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-hakone',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-hakone',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- KYOTO -->
+    <div class="city-block" id="kyoto">
+      <div class="city-header">
+        <span class="city-name">Kyoto</span>
+        <span class="city-sub">Templo de Oro · timada con el kobe · geishas en Gion</span>
+      </div>
+      <div class="city-notes"><p>
+        <span>Templo de Oro (Kinkaku-ji)</span>
+        <span>Timada con el kobe</span>
+        <span>El Mingo pierde la cartera (nadie la robó)</span>
+        <span>Buscando geishas en Gion</span>
+      </p></div>
+
+      <div class="video-pill">
+        <div class="vp-icon">🚽</div>
+        <div class="vp-info">
+          <div class="vp-title">El WC japonés · tecnología de otro nivel</div>
+          <div class="vp-video"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1791548935/VIDEO-2018-06-25-11-43-42.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+
+      <div class="carousel">
+        <div class="carousel-track" id="c-kyoto">
+          <div class="thumb" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548934/PHOTO-2018-07-02-14-55-26.jpg" alt="Kyoto"><div class="cap">Kyoto</div></div>
+          <div class="thumb" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548934/PHOTO-2018-07-01-11-13-17.jpg" alt="Kyoto"><div class="cap">Kyoto</div></div>
+          <div class="thumb" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548934/PHOTO-2018-07-01-07-42-50.jpg" alt="Kyoto"><div class="cap">Kyoto</div></div>
+          <div class="thumb" onclick="lb(44)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548909/269c2c2f-30c0-4cec-87f2-b27f83ac426e.jpg" alt="Kyoto"><div class="cap">Kyoto</div></div>
+          <div class="thumb" onclick="lb(45)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548926/IMG_3624.jpg" alt="Kyoto"><div class="cap">Kyoto</div></div>
+          <div class="thumb" onclick="lb(46)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548927/IMG_3636.jpg" alt="Kyoto"><div class="cap">Kyoto</div></div>
+          <div class="thumb" onclick="lb(47)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548928/IMG_3808.jpg" alt="Kyoto"><div class="cap">Kyoto</div></div>
+          <div class="thumb" onclick="lb(48)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548928/IMG_3830.jpg" alt="Kyoto"><div class="cap">Kyoto</div></div>
+          <div class="thumb" onclick="lb(49)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548927/IMG_3681.jpg" alt="Kyoto"><div class="cap">Kyoto · Gion</div></div>
+          <div class="thumb" onclick="lb(50)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548927/IMG_3689.jpg" alt="Kyoto"><div class="cap">Kyoto · Gion</div></div>
+          <div class="thumb" onclick="lb(51)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548928/IMG_3704.jpg" alt="Kyoto"><div class="cap">Kyoto</div></div>
+          <div class="thumb" onclick="lb(52)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548928/IMG_3738.jpg" alt="Kyoto"><div class="cap">Kyoto</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-kyoto',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-kyoto',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NARA -->
+    <div class="city-block" id="nara">
+      <div class="city-header">
+        <span class="city-name">Nara</span>
+        <span class="city-sub">Los ciervos sagrados</span>
+      </div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-nara">
+          <div class="thumb" onclick="lb(53)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548926/IMG_3587.jpg" alt="Nara"><div class="cap">Nara</div></div>
+          <div class="thumb" onclick="lb(54)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548926/IMG_3614.jpg" alt="Nara"><div class="cap">Nara</div></div>
+          <div class="thumb" onclick="lb(55)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548910/7765924e-f9fd-4fa0-bc92-b59e3d718394.jpg" alt="Nara"><div class="cap">Nara</div></div>
+          <div class="thumb" onclick="lb(56)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548909/6963efea-9ead-40fd-a855-dada664d4ae4.jpg" alt="Nara"><div class="cap">Nara</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-nara',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-nara',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HIROSHIMA -->
+    <div class="city-block" id="hiroshima">
+      <div class="city-header">
+        <span class="city-name">Hiroshima</span>
+        <span class="city-sub">Memorial de la bomba atómica · visita que pesa</span>
+      </div>
+      <div class="carousel">
+        <div class="carousel-track" id="c-hiroshima">
+          <div class="thumb" onclick="lb(57)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548930/IMG_3961.jpg" alt="Hiroshima"><div class="cap">Hiroshima</div></div>
+          <div class="thumb" onclick="lb(58)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548931/IMG_3965.jpg" alt="Hiroshima"><div class="cap">Hiroshima</div></div>
+          <div class="thumb" onclick="lb(59)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548931/IMG_3964.jpg" alt="Hiroshima"><div class="cap">Hiroshima</div></div>
+          <div class="thumb" onclick="lb(60)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548912/b4cdac22-7288-4938-9134-bc6ff77a9af4.jpg" alt="Hiroshima"><div class="cap">Hiroshima</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-hiroshima',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-hiroshima',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MIYAJIMA -->
+    <div class="city-block" id="miyajima">
+      <div class="city-header">
+        <span class="city-name">Miyajima</span>
+        <span class="city-sub">Aprendiendo japonés · Otonomayaki rico rico</span>
+      </div>
+      <div class="city-notes"><p>
+        <span>El torii flotante</span>
+        <span>El perro de san roque no tiene rabo</span>
+        <span>Otonomayaki rico rico con las dueñas del hostel</span>
+      </p></div>
+
+      <div class="video-pill">
+        <div class="vp-icon">🎌</div>
+        <div class="vp-info">
+          <div class="vp-title">Miyajima · el torii y el hostel</div>
+          <div class="vp-video"><video controls preload="none"><source src="https://res.cloudinary.com/il7cecht/video/upload/v1791548935/VIDEO-2018-07-05-11-57-39.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+
+      <div class="carousel">
+        <div class="carousel-track" id="c-miyajima">
+          <div class="thumb" onclick="lb(61)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548915/f3a9b8cf-dff2-4324-b2fa-8a1807cf59c3.jpg" alt="Miyajima"><div class="cap">Miyajima</div></div>
+          <div class="thumb" onclick="lb(62)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548931/IMG_4033.jpg" alt="Miyajima"><div class="cap">Miyajima</div></div>
+          <div class="thumb" onclick="lb(63)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548909/6dfd7824-a0fd-46aa-95ea-37caa289c819.jpg" alt="Miyajima"><div class="cap">Miyajima</div></div>
+          <div class="thumb" onclick="lb(64)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548931/IMG_3996.jpg" alt="Miyajima"><div class="cap">Miyajima</div></div>
+          <div class="thumb" onclick="lb(65)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548913/c0169518-e74e-475d-a2ae-005781437a58.jpg" alt="Miyajima"><div class="cap">Miyajima</div></div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollC('c-miyajima',-1)">‹</button>
+          <button class="carousel-btn" onclick="scrollC('c-miyajima',1)">›</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NEONES -->
+<div class="neon-section">
+  <div class="inner">
+    <div class="section-label">Tokio de noche</div>
+    <h2>Luces de neón · Kabukicho</h2>
+    <p>Cuando cae la noche en Tokio, la ciudad enciende otro modo. Kabukicho, Shibuya, Shinjuku — las calles se llenan de luces de colores, pantallas gigantes y neones que compiten entre sí.</p>
+    <div class="neon-grid">
+      <div class="ng" onclick="lb(66)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548932/IMG_4160.jpg" alt="Neones Tokio"></div>
+      <div class="ng" onclick="lb(67)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548921/IMG_2810.jpg" alt="Neones Tokio"></div>
+      <div class="ng" onclick="lb(68)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548920/IMG_2794.jpg" alt="Neones Tokio"></div>
+      <div class="ng" onclick="lb(69)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548921/IMG_2811.jpg" alt="Neones Tokio"></div>
+      <div class="ng" onclick="lb(70)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548921/IMG_2808.jpg" alt="Neones Tokio"></div>
+      <div class="ng" onclick="lb(71)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548920/IMG_2788.jpg" alt="Neones Tokio"></div>
+      <div class="ng" onclick="lb(72)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548917/IMG_2560.jpg" alt="Neones Tokio"></div>
+      <div class="ng" onclick="lb(73)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548916/IMG_2553.jpg" alt="Neones Tokio"></div>
+    </div>
+  </div>
+</div>
+
+<!-- COMIDA -->
+<section id="comida">
+  <div class="inner">
+    <div class="section-label">Gastronomía</div>
+    <h2>Probando la cocina japonesa</h2>
+    <p>Ramen, sushi, yakitori, tempura, matcha… y el kobe que resultó ser una timada. Las máquinas expendedoras de bebidas raras como bonus track en cada estación.</p>
+    <div class="food-strip">
+      <div class="fs" onclick="lb(74)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548932/IMG_4044.jpg" alt="Comida japonesa"></div>
+      <div class="fs" onclick="lb(75)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548929/IMG_3885.jpg" alt="Comida japonesa"></div>
+      <div class="fs" onclick="lb(76)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548929/IMG_3872.jpg" alt="Comida japonesa"></div>
+      <div class="fs" onclick="lb(77)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548924/IMG_3141.jpg" alt="Comida japonesa"></div>
+      <div class="fs" onclick="lb(78)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548923/IMG_2936.jpg" alt="Comida japonesa"></div>
+      <div class="fs" onclick="lb(79)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791548909/95c763ba-8548-4aa0-b128-d9f6c446de22.jpg" alt="Comida japonesa"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">✈️</div>
+        <div>
+          <div class="moment-title">Viendo el Mundial en el avión camino a Tokio</div>
+          <p class="moment-desc">Rusia 2018, partidos en directo desde el asiento del avión. La mejor manera de empezar un viaje a Japón.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎵</div>
+        <div>
+          <div class="moment-title">Tocando la ocarina en el metro de Tokio</div>
+          <p class="moment-desc">El metro de Tokio en hora punta. Una ocarina. El resultado: interés y perplejidad a partes iguales de los pasajeros japoneses.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🌅</div>
+        <div>
+          <div class="moment-title">El amanecer del Fuji que solo vio el Mingo</div>
+          <p class="moment-desc">El plan era madrugar para ver el amanecer en el Monte Fuji. Solo el Mingo se levantó. El resto le robamos las fotos.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">👛</div>
+        <div>
+          <div class="moment-title">El Mingo pierde la cartera en Kyoto</div>
+          <p class="moment-desc">La cartera desapareció. En cualquier otro país, historia acabada. En Japón, alguien la encontró y la dejó donde estaba. Sin tocar nada. Japón es otro nivel.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚽</div>
+        <div>
+          <div class="moment-title">El WC japonés</div>
+          <p class="moment-desc">El inodoro japonés es un electrodoméstico completo. Calefacción, bidet, música, desodorizante automático. El vídeo lo dice todo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🦌</div>
+        <div>
+          <div class="moment-title">Los ciervos de Nara</div>
+          <p class="moment-desc">Cientos de ciervos sagrados sueltos por el parque. Se acercan, te miran y esperan que les des las galletas de arroz. Cuando no tienes, insisten.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎌</div>
+        <div>
+          <div class="moment-title">Aprendiendo japonés con las dueñas del hostel de Miyajima</div>
+          <p class="moment-desc">"El perro de san roque no tiene rabo" en japonés. El Otonomayaki casero. Las dueñas del hostel enseñando con paciencia infinita. Una de esas noches que se recuerdan.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section>
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Japón en general</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">Tokio</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+      <div class="rating-row"><span class="rating-label">Kyoto</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">La comida</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+      <div class="rating-row"><span class="rating-label">El kobe</span><div class="rating-bar"><div class="rating-fill" style="width:45%"></div></div><span class="rating-score">4.5</span></div>
+      <div class="rating-row"><span class="rating-label">Los japoneses</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Japón en general — de los mejores viajes</li>
+          <li>Los japoneses y su honestidad</li>
+          <li>Tokio de noche con los neones</li>
+          <li>El amanecer del Fuji (foto del Mingo)</li>
+          <li>Los ciervos de Nara</li>
+          <li>La comida — todo</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>La timada con el kobe</li>
+          <li>No madrugar para el Fuji</li>
+          <li>Perder la cartera (aunque apareció)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"De pensar en Grecia a acabar en Japón. La mejor decisión equivocada que hemos tomado."</p>
+    </div>
+  </div>
+</section>
+
+<footer><p>Japón · Junio 2018 · Railway Pass</p></footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  // TOKIO 0-32
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548909/3f8736a1-957f-44a8-9db2-cead9f4ca020.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548918/IMG_2579.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548918/IMG_2611.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548918/IMG_2598.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548917/IMG_2572.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548917/IMG_2568.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548918/IMG_2680.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548920/IMG_2763.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548919/IMG_2760.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548919/IMG_2719.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548919/IMG_2703.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548922/IMG_2888.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548922/IMG_2878.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548922/IMG_2867.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548921/IMG_2853.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548923/IMG_2985.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548923/IMG_2916.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548909/6651ac21-54de-483e-8b0f-ddb6e528927e.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548910/21773b32-706b-4873-a5e0-2060fdf55da8.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548912/ad48eb75-615c-4c12-b398-fc9df25f02f1.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548915/f6a14ac2-5ee1-4a30-980f-f9f1a081bc38.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548916/f52be781-85ef-4a96-b9e4-4a2edd6c4270.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548915/eff256a4-8778-434a-8987-337cb80d8e96.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548924/IMG_3009.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548930/IMG_3946.jpg',c:'Kamakura · Buda gigante'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548930/IMG_3949.jpg',c:'Kamakura'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548914/db33ac16-ef8c-4085-a699-e31474c591dc.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548933/IMG_4190.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548932/IMG_4145.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548933/IMG_4238.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548933/IMG_4216.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548913/be7bd5d4-eba1-4c2c-812a-32559835b056.jpg',c:'Tokio'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548913/b896f0e3-2f96-4727-9454-90dc7fb6e040.jpg',c:'Tokio'},
+  // HAKONE 33-40
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548934/PHOTO-2018-06-28-17-11-46.jpg',c:'Hakone'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548913/d717d2c6-0eba-4c65-97e9-02ada258c386.jpg',c:'Hakone'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548910/90591164-9b95-49d3-904e-cc4af28ae584.jpg',c:'Monte Fuji · foto del Mingo'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548926/IMG_3332.jpg',c:'Hakone'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548925/IMG_3278.jpg',c:'Hakone'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548925/IMG_3293.jpg',c:'Hakone'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548910/15658d88-96dd-43fe-be80-cb24be4f2f1a.jpg',c:'Monte Fuji'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548910/9850ccb8-ab34-4813-b90f-e7139fd7d8c2.jpg',c:'Hakone'},
+  // KYOTO 41-52
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548934/PHOTO-2018-07-02-14-55-26.jpg',c:'Kyoto'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548934/PHOTO-2018-07-01-11-13-17.jpg',c:'Kyoto'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548934/PHOTO-2018-07-01-07-42-50.jpg',c:'Kyoto'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548909/269c2c2f-30c0-4cec-87f2-b27f83ac426e.jpg',c:'Kyoto'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548926/IMG_3624.jpg',c:'Kyoto'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548927/IMG_3636.jpg',c:'Kyoto'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548928/IMG_3808.jpg',c:'Kyoto'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548928/IMG_3830.jpg',c:'Kyoto'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548927/IMG_3681.jpg',c:'Kyoto · Gion'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548927/IMG_3689.jpg',c:'Kyoto · Gion'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548928/IMG_3704.jpg',c:'Kyoto'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548928/IMG_3738.jpg',c:'Kyoto'},
+  // NARA 53-56
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548926/IMG_3587.jpg',c:'Nara · ciervos sagrados'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548926/IMG_3614.jpg',c:'Nara'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548910/7765924e-f9fd-4fa0-bc92-b59e3d718394.jpg',c:'Nara'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548909/6963efea-9ead-40fd-a855-dada664d4ae4.jpg',c:'Nara'},
+  // HIROSHIMA 57-60
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548930/IMG_3961.jpg',c:'Hiroshima · Memorial'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548931/IMG_3965.jpg',c:'Hiroshima'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548931/IMG_3964.jpg',c:'Hiroshima'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548912/b4cdac22-7288-4938-9134-bc6ff77a9af4.jpg',c:'Hiroshima'},
+  // MIYAJIMA 61-65
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548915/f3a9b8cf-dff2-4324-b2fa-8a1807cf59c3.jpg',c:'Miyajima'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548931/IMG_4033.jpg',c:'Miyajima'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548909/6dfd7824-a0fd-46aa-95ea-37caa289c819.jpg',c:'Miyajima'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548931/IMG_3996.jpg',c:'Miyajima'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548913/c0169518-e74e-475d-a2ae-005781437a58.jpg',c:'Miyajima'},
+  // NEONES 66-73
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548932/IMG_4160.jpg',c:'Tokio de noche · Kabukicho'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548921/IMG_2810.jpg',c:'Tokio de noche'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548920/IMG_2794.jpg',c:'Tokio de noche'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548921/IMG_2811.jpg',c:'Tokio de noche'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548921/IMG_2808.jpg',c:'Tokio de noche'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548920/IMG_2788.jpg',c:'Tokio de noche'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548917/IMG_2560.jpg',c:'Tokio de noche'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548916/IMG_2553.jpg',c:'Tokio de noche'},
+  // COMIDA 74-79
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548932/IMG_4044.jpg',c:'Comida japonesa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548929/IMG_3885.jpg',c:'Comida japonesa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548929/IMG_3872.jpg',c:'Comida japonesa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548924/IMG_3141.jpg',c:'Comida japonesa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548923/IMG_2936.jpg',c:'Comida japonesa'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791548909/95c763ba-8548-4aa0-b128-d9f6c446de22.jpg',c:'Comida japonesa'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+function scrollC(id,dir){document.getElementById(id).scrollBy({left:dir*200,behavior:'smooth'});}
+
+document.querySelectorAll('.carousel-track').forEach(track=>{
+  let down=false,sx,sl;
+  track.addEventListener('mousedown',e=>{down=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;});
+  track.addEventListener('mouseleave',()=>down=false);
+  track.addEventListener('mouseup',()=>down=false);
+  track.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx);});
+});
+
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
