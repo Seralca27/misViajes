@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singapur · Agosto 2017</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #c8511b; --accent-light: #fdf0e8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #08080e; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e8ddd0; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* PANORÁMICA */
+  .panorama {
+    position: relative; border-radius: var(--radius); overflow: hidden;
+    height: 220px; margin: 20px 0; cursor: zoom-in;
+  }
+  .panorama img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.4s; }
+  .panorama:hover img { transform: scale(1.03); }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #d8b898; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* NOTA ATENTADO */
+  .nota-card {
+    border-left: 4px solid #8b1a1a;
+    background: #fbecec;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .nota-card .ni { font-size: 22px; flex-shrink: 0; }
+  .nota-card p { font-size: 13px; color: #5a2020; margin: 0; max-width: none; }
+
+  /* MOSAIC PEQUEÑO VARIADO */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 90px;
+    gap: 5px;
+    margin: 20px 0;
+  }
+  .mosaic .m { border-radius: 6px; overflow: hidden; cursor: zoom-in; background: #d0c8b8; position: relative; }
+  .mosaic .m.w2 { grid-column: span 2; }
+  .mosaic .m.w3 { grid-column: span 3; }
+  .mosaic .m.h2 { grid-row: span 2; }
+  .mosaic .m img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .mosaic .m:hover img { transform: scale(1.05); }
+  .mosaic .m .cap { position:absolute; bottom:0; left:0; right:0; padding:14px 8px 6px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
+  .mosaic .m:hover .cap { opacity:1; }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e8d8c0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* VALORACIÓN */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:160px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e8d8c0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(6,4,2,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d8c8a8; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .mosaic { grid-template-columns: repeat(4,1fr); grid-auto-rows: 80px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806983/IMG_3034.jpg" alt="Singapur">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Singapur<br><em>lujo occidental, alma oriente</em></h1>
+    <div class="tag">Agosto 2017 · Sudeste asiático</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🌆 Marina Bay · Gardens by the Bay</span>
+      <span>🦀 Chili crab y estrella Michelin callejera</span>
+      <span>💸 Todo pagao por el primo</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../camboya/">→ Camboya</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Un país-ciudad rico, futurista y moderno en medio del caos del sudeste asiático</h2>
+    <p>Singapur es una anomalía en el sudeste asiático. Limpio, ordenado, caro y eficiente hasta el extremo. Un estado-ciudad que combina rascacielos futuristas con barrios tradicionales de Little India, Chinatown y el Kampong Glam. Y todo pagao por el primo.</p>
+
+    <div class="panorama" onclick="lb(0)">
+      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806903/IMG_2640.jpg" alt="Singapur panorámica">
+    </div>
+
+    <div class="nota-card">
+      <div class="ni">🖤</div>
+      <p>Estábamos en Singapur cuando ocurrió el atentado de Las Ramblas en Barcelona. Una de esas noticias que te llegan lejos de casa y te dejan sin palabras.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">primo pagando</div></div>
+      <div class="stat"><div class="stat-value">⭐</div><div class="stat-label">Michelin callejero</div></div>
+      <div class="stat"><div class="stat-value">0</div><div class="stat-label">noches durmiendo Javito</div></div>
+      <div class="stat"><div class="stat-value">∞</div><div class="stat-label">chili crab</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTOS -->
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Singapur en imágenes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <div class="mosaic">
+      <div class="m w2 h2" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806868/IMG_2488.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806897/IMG_2511.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806898/IMG_2540.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806899/IMG_2559.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m h2" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806902/IMG_2628.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806905/IMG_2641.jpg" alt="Marina Bay"><div class="cap">Marina Bay</div></div>
+      <div class="m w2" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806905/IMG_2662.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806949/IMG_2663.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w3" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806950/IMG_2691.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806952/IMG_2697.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806953/IMG_2699.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2 h2" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806954/IMG_2701.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806955/IMG_2719.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806956/IMG_2734.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806958/IMG_2782.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806959/IMG_2783.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w3" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806960/IMG_2790.jpg" alt="Gardens by the Bay"><div class="cap">Gardens by the Bay</div></div>
+      <div class="m w2" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806961/IMG_2796.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806964/IMG_2806.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m h2" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806965/IMG_2814.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806966/IMG_2825.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806967/IMG_2830.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806969/IMG_2853.jpg" alt="Marina Bay Sands"><div class="cap">Marina Bay Sands</div></div>
+      <div class="m" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806970/IMG_2865.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806971/IMG_2870.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w3" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806973/IMG_2946.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806974/IMG_2952.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806976/IMG_2962.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806977/IMG_2970.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806978/IMG_2976.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2 h2" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806980/IMG_3008.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806981/IMG_3010.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m w2" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806983/IMG_3030.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+      <div class="m" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791806986/IMG_3045.jpg" alt="Singapur"><div class="cap">Singapur</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">💸</div>
+        <div>
+          <div class="moment-title">Todo pagao por el primo</div>
+          <p class="moment-desc">La mejor manera de visitar uno de los países más caros del mundo. El primo como anfitrión y patrocinador. Deuda moral para siempre.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">⭐</div>
+        <div>
+          <div class="moment-title">Estrella Michelin callejera · Maxwell Food Centre</div>
+          <p class="moment-desc">Singapur tiene el hawker más famoso del mundo con estrella Michelin. Noodles de Tian Tian por menos de 3 dólares. El premio Michelin más democrático de la historia.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🦀</div>
+        <div>
+          <div class="moment-title">Chili crab</div>
+          <p class="moment-desc">El plato nacional de Singapur. Cangrejo en salsa picante de tomate. Messy, caro y absolutamente imprescindible. Se come con las manos, sin opción.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏊</div>
+        <div>
+          <div class="moment-title">La infinity pool del Marina Bay Sands · solo de visita</div>
+          <p class="moment-desc">La piscina más fotografiada de Asia, en la azotea del edificio más icónico de Singapur. Vista espectacular del skyline. Acceso solo para huéspedes del hotel. Nosotros: solo de visita.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">😴</div>
+        <div>
+          <div class="moment-title">Javito y los ronquidos de Álvaro</div>
+          <p class="moment-desc">Javito, ex de la prima, sin poder dormir por los ronquidos de Álvaro toda la noche. El jet lag y los ronquidos son una combinación letal.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🖤</div>
+        <div>
+          <div class="moment-title">El atentado de Las Ramblas</div>
+          <p class="moment-desc">Estábamos en Singapur cuando llegó la noticia del atentado en Barcelona. Esas noticias que te pillan lejos y que te recuerdan que el mundo puede cambiar en cualquier momento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">La ciudad</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">La comida</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">Gardens by the Bay</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad</span><div class="rating-bar"><div class="rating-fill" style="width:60%"></div></div><span class="rating-score">6</span></div>
+      <div class="rating-row"><span class="rating-label">Precio/calidad (primo)</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:82%"></div></div><span class="rating-score">8.2</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>La comida — de las mejores del viaje</li>
+          <li>Gardens by the Bay</li>
+          <li>El Michelin callejero a 3 dólares</li>
+          <li>El primo pagando todo</li>
+          <li>La mezcla de culturas en un solo lugar</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>Compartir habitación con Álvaro (si roncas)</li>
+          <li>Solo de visita en la infinity pool</li>
+          <li>Sin el primo pagando: es muy caro</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"Singapur es lo que pasaría si el futuro y Asia se fusionaran en una sola ciudad-estado. Y funcionara."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Singapur · Agosto 2017 &nbsp;·&nbsp; <a href="../camboya/">→ Camboya</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806903/IMG_2640.jpg',c:'Singapur · panorámica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806868/IMG_2488.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806897/IMG_2511.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806898/IMG_2540.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806899/IMG_2559.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806902/IMG_2628.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806905/IMG_2641.jpg',c:'Marina Bay'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806905/IMG_2662.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806949/IMG_2663.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806950/IMG_2691.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806952/IMG_2697.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806953/IMG_2699.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806954/IMG_2701.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806955/IMG_2719.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806956/IMG_2734.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806958/IMG_2782.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806959/IMG_2783.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806960/IMG_2790.jpg',c:'Gardens by the Bay'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806961/IMG_2796.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806964/IMG_2806.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806965/IMG_2814.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806966/IMG_2825.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806967/IMG_2830.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806969/IMG_2853.jpg',c:'Marina Bay Sands'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806970/IMG_2865.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806971/IMG_2870.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806973/IMG_2946.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806974/IMG_2952.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806976/IMG_2962.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806977/IMG_2970.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806978/IMG_2976.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806980/IMG_3008.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806981/IMG_3010.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806983/IMG_3030.jpg',c:'Singapur'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791806986/IMG_3045.jpg',c:'Singapur'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
