@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bali · Agosto 2017</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #1a6a3a; --accent-light: #e6f4ec;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  .hero { min-height: 70vh; background: #040e08; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; left: 48px; text-align: left; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); font-size: 0.6em; }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; left: 48px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #d8e8dc; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #90c8a0; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* ZONAS */
+  .zona-block { margin-bottom: 36px; }
+  .zona-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+  .zona-icon { font-size: 20px; }
+  .zona-name { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; }
+  .zona-sub { font-size: 13px; color: var(--muted); font-style: italic; margin-left: auto; }
+  .zona-notes { font-size: 13px; color: var(--muted); margin: 6px 0 10px; }
+  .zona-notes span { display: inline-block; margin-right: 14px; }
+  .zona-notes span::before { content: '· '; }
+
+  /* CUADRÍCULA 5 COL */
+  .grid-5 { display: grid; grid-template-columns: repeat(5,1fr); gap: 5px; margin: 8px 0; }
+  .grid-5 .g { aspect-ratio: 1; border-radius: 6px; overflow: hidden; cursor: zoom-in; background: #b8d0c0; position: relative; }
+  .grid-5 .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .grid-5 .g:hover img { transform: scale(1.07); }
+  .grid-5 .g .cap { position:absolute; inset:0; background:rgba(0,0,0,0); display:flex; align-items:flex-end; padding:8px; opacity:0; transition: all 0.2s; }
+  .grid-5 .g:hover .cap { background:rgba(0,0,0,0.38); opacity:1; }
+  .grid-5 .g .cap span { color:#fff; font-size:9px; }
+
+  /* CUADRÍCULA VARIADA MEDIANA */
+  .mosaic { display: grid; grid-template-columns: repeat(5,1fr); grid-auto-rows: 130px; gap: 6px; margin: 8px 0; }
+  .mosaic .m { border-radius: 8px; overflow: hidden; cursor: zoom-in; background: #b8d0c0; position: relative; }
+  .mosaic .m.w2 { grid-column: span 2; }
+  .mosaic .m.w3 { grid-column: span 3; }
+  .mosaic .m.h2 { grid-row: span 2; }
+  .mosaic .m img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .mosaic .m:hover img { transform: scale(1.05); }
+  .mosaic .m .cap { position:absolute; bottom:0; left:0; right:0; padding:20px 8px 6px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
+  .mosaic .m:hover .cap { opacity:1; }
+
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d8e8dc; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:170px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#d0e8d8; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(2,8,4,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c0d8c8; }
+  footer a { color:var(--accent); text-decoration:none; font-weight:500; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; left:24px; }
+    .hero-bottom { bottom:24px; left:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .grid-5, .mosaic { grid-template-columns: repeat(3,1fr); }
+    .mosaic { grid-auto-rows: 100px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822899/IMG_4066.jpg" alt="Bali">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Bali<br><em>Good for you, good for me</em></h1>
+    <div class="tag">Agosto 2017 · Fin del sudeste asiático</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🏄 Surf lamentable en Uluwatu</span>
+      <span>🐒 Monos ladrones en Ubud</span>
+      <span>🍄 Gili Trawangan · magic mushrooms</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+  <a href="../camboya/">← Camboya</a>
+</nav>
+
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>El final perfecto del sudeste asiático</h2>
+    <p>Bali cerraba el triángulo Singapur-Camboya-Bali. Por entonces todavía no estaba invadida de nómadas digitales con MacBook y matcha latte. Nioman, nuestro querido guía, nos llevó por toda la isla con una sabiduría que tardamos en reconocer — nunca nos fiábamos de sus decisiones, y siempre tenía razón.</p>
+    <p>Uluwatu y Padang Padang, el desastre del Monkey Forest de Ubud, la mariscada de Jimbaran, el infierno de Kuta y el paraíso de Gili Trawangan. El sudeste asiático no podía acabar mejor.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">quilla rota surfeando</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">gecko en el baño de Javito</div></div>
+      <div class="stat"><div class="stat-value">1,5€</div><div class="stat-label">los mejores noodles del viaje</div></div>
+      <div class="stat"><div class="stat-value">🍄</div><div class="stat-label">Gili Trawangan</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Bali zona a zona</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:20px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <!-- UBUD / INTERIOR -->
+    <div class="zona-block">
+      <div class="zona-header">
+        <div class="zona-icon">🐒</div>
+        <span class="zona-name">Ubud · interior de la isla</span>
+        <span class="zona-sub">Monos ladrones · gecko en el baño · Nioman</span>
+      </div>
+      <p class="zona-notes">
+        <span>Monkey Forest — monos que roban todo lo que puedan</span>
+        <span>Cambio de hotel por el gecko gigante en el baño de Javito</span>
+        <span>Nioman siempre tenía razón</span>
+      </p>
+      <div class="grid-5">
+        <div class="g" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3815.jpg" alt="Ubud"><div class="cap"><span>Ubud</span></div></div>
+        <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3821.jpg" alt="Ubud"><div class="cap"><span>Ubud</span></div></div>
+        <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3823.jpg" alt="Ubud"><div class="cap"><span>Ubud</span></div></div>
+        <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3833.jpg" alt="Monkey Forest"><div class="cap"><span>Monkey Forest</span></div></div>
+        <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3867.jpg" alt="Ubud"><div class="cap"><span>Ubud</span></div></div>
+      </div>
+    </div>
+
+    <!-- SUR: ULUWATU / PADANG / JIMBARAN -->
+    <div class="zona-block">
+      <div class="zona-header">
+        <div class="zona-icon">🏄</div>
+        <span class="zona-name">Sur · Uluwatu · Padang Padang · Jimbaran</span>
+        <span class="zona-sub">Surf lamentable · revolcada de Clara · mariscada</span>
+      </div>
+      <p class="zona-notes">
+        <span>Surf en Uluwatu — quilla rota incluida</span>
+        <span>Noodles por 1,5€ en Uluwatu (los mejores del viaje)</span>
+        <span>Clara revolcada por el mar en Padang Padang</span>
+        <span>Mariscada nocturna en la playa de Jimbaran</span>
+      </p>
+      <div class="mosaic">
+        <div class="m w2 h2" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3882.jpg" alt="Uluwatu"><div class="cap">Uluwatu</div></div>
+        <div class="m w3" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822894/IMG_3853.jpg" alt="Uluwatu"><div class="cap">Uluwatu</div></div>
+        <div class="m" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822894/IMG_3900.jpg" alt="Bali"><div class="cap">Bali</div></div>
+        <div class="m w2" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822894/IMG_3906.jpg" alt="Padang Padang"><div class="cap">Padang Padang</div></div>
+        <div class="m w2" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822894/IMG_3929.jpg" alt="Bali"><div class="cap">Bali</div></div>
+        <div class="m" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822895/IMG_3940.jpg" alt="Bali"><div class="cap">Bali</div></div>
+        <div class="m w2" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822896/IMG_3946.jpg" alt="Jimbaran"><div class="cap">Jimbaran</div></div>
+        <div class="m h2" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822896/IMG_3950.jpg" alt="Jimbaran"><div class="cap">Jimbaran</div></div>
+        <div class="m w2" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822897/IMG_3974.jpg" alt="Bali"><div class="cap">Bali</div></div>
+        <div class="m w2" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822897/IMG_3979.jpg" alt="Bali"><div class="cap">Bali</div></div>
+      </div>
+    </div>
+
+    <!-- GILI TRAWANGAN -->
+    <div class="zona-block">
+      <div class="zona-header">
+        <div class="zona-icon">🏝️</div>
+        <span class="zona-name">Gili Trawangan</span>
+        <span class="zona-sub">Playas de postal · bicicletas · australianos borrachos</span>
+      </div>
+      <p class="zona-notes">
+        <span>Sin coches — solo bicicletas y caballos</span>
+        <span>Magic mushrooms</span>
+        <span>Australianos borrachos en todos los bares</span>
+        <span>Playas de postal</span>
+      </p>
+      <div class="mosaic">
+        <div class="m w3 h2" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822897/IMG_3986.jpg" alt="Gili Trawangan"><div class="cap">Gili Trawangan</div></div>
+        <div class="m w2" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822898/IMG_3996.jpg" alt="Gili Trawangan"><div class="cap">Gili Trawangan</div></div>
+        <div class="m w2" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822900/IMG_4108.jpg" alt="Gili Trawangan"><div class="cap">Gili Trawangan</div></div>
+        <div class="m w2" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822901/IMG_4135.jpg" alt="Gili Trawangan"><div class="cap">Gili Trawangan</div></div>
+        <div class="m" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822901/IMG_4162.jpg" alt="Gili Trawangan"><div class="cap">Gili Trawangan</div></div>
+        <div class="m w2" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822902/IMG_4205.jpg" alt="Gili Trawangan"><div class="cap">Gili Trawangan</div></div>
+        <div class="m w3" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822901/IMG_4180.jpg" alt="Gili Trawangan"><div class="cap">Gili Trawangan</div></div>
+        <div class="m w2" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822902/IMG_4210.jpg" alt="Gili Trawangan"><div class="cap">Gili Trawangan</div></div>
+        <div class="m w3" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1791822903/IMG_4243.jpg" alt="Gili Trawangan"><div class="cap">Gili Trawangan</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🗺️</div>
+        <div>
+          <div class="moment-title">Nioman · nuestro querido guía</div>
+          <p class="moment-desc">Nioman nos llevó por toda la isla. Nunca nos fiábamos de sus decisiones — demasiado desviadas del plan, demasiado inesperadas. Y siempre tenía razón. Siempre.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🌊</div>
+        <div>
+          <div class="moment-title">Clara revolcada por el mar en Padang Padang</div>
+          <p class="moment-desc">La playa de Padang Padang tiene olas con criterio propio. Clara descubrió que el mar manda. El registro en vídeo quedó para la posteridad.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏄</div>
+        <div>
+          <div class="moment-title">El surf lamentable de Uluwatu · quilla rota</div>
+          <p class="moment-desc">La sesión de surf en Uluwatu fue más postureo que otra cosa. Resultado: quilla rota y nada más que contar. Compensación inmediata: los mejores noodles del viaje por 1,5€ en el chiringuito de arriba.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🦎</div>
+        <div>
+          <div class="moment-title">El gecko de Javito · cambio de hotel</div>
+          <p class="moment-desc">Javito encontró un gecko de tamaño considerable en el baño de su cabaña. La decisión fue inmediata e inapelable: cambio de hotel. Los geckos son inofensivos. Javito no lo sabía.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🦀</div>
+        <div>
+          <div class="moment-title">Mariscada nocturna en la playa de Jimbaran</div>
+          <p class="moment-desc">Jimbaran de noche es otra cosa. Mesas en la arena, antorchas, marisco recién hecho y el océano delante. Una de esas cenas que justifican el viaje.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏝️</div>
+        <div>
+          <div class="moment-title">Gili Trawangan · el paraíso tenía truco</div>
+          <p class="moment-desc">Sin coches, solo bicicletas, agua turquesa y arena blanca. Y australianos borrachos en cada bar, magic mushrooms en el menú y una atmósfera que oscila entre el paraíso y el caos organizado.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">😬</div>
+        <div>
+          <div class="moment-title">Kuta · el Benidorm indonesio · para olvidar</div>
+          <p class="moment-desc">Kuta es lo que pasa cuando el turismo masivo llega sin frenos. Ruidosa, sucia, llena de bares con música a tope y turistas buscando exactamente lo que habría en casa. Se visitó. Se olvidó.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Gili Trawangan</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">Jimbaran de noche</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">Nioman como guía</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">El surf en Uluwatu</span><div class="rating-bar"><div class="rating-fill" style="width:20%"></div></div><span class="rating-score">2</span></div>
+      <div class="rating-row"><span class="rating-label">Los noodles de Uluwatu</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+      <div class="rating-row"><span class="rating-label">Kuta</span><div class="rating-bar"><div class="rating-fill" style="width:15%"></div></div><span class="rating-score">1.5</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Nioman — siempre tenía razón</li>
+          <li>Gili Trawangan — postal hecha realidad</li>
+          <li>Mariscada en Jimbaran</li>
+          <li>Noodles de Uluwatu por 1,5€</li>
+          <li>Padang Padang (y la revolcada de Clara)</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>Kuta — directamente</li>
+          <li>El surf sin saber surfear</li>
+          <li>Cabaña con gecko sin saberlo (Javito)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"Good for you, good for me. Bali antes de que todo el mundo lo descubriera. Éramos los de siempre, en el sitio correcto, en el momento exacto."</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Bali · Agosto 2017 &nbsp;·&nbsp; <a href="../camboya/">← Camboya</a></p>
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  // UBUD 0-4
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3815.jpg',c:'Ubud'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3821.jpg',c:'Ubud'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3823.jpg',c:'Ubud'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3833.jpg',c:'Monkey Forest · Ubud'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3867.jpg',c:'Ubud'},
+  // SUR 5-14
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822893/IMG_3882.jpg',c:'Uluwatu'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822894/IMG_3853.jpg',c:'Uluwatu'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822894/IMG_3900.jpg',c:'Bali'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822894/IMG_3906.jpg',c:'Padang Padang'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822894/IMG_3929.jpg',c:'Bali'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822895/IMG_3940.jpg',c:'Bali'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822896/IMG_3946.jpg',c:'Jimbaran'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822896/IMG_3950.jpg',c:'Jimbaran · mariscada'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822897/IMG_3974.jpg',c:'Bali'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822897/IMG_3979.jpg',c:'Bali'},
+  // GILI 15-23
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822897/IMG_3986.jpg',c:'Gili Trawangan'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822898/IMG_3996.jpg',c:'Gili Trawangan'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822900/IMG_4108.jpg',c:'Gili Trawangan'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822901/IMG_4135.jpg',c:'Gili Trawangan'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822901/IMG_4162.jpg',c:'Gili Trawangan'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822902/IMG_4205.jpg',c:'Gili Trawangan'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822901/IMG_4180.jpg',c:'Gili Trawangan'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822902/IMG_4210.jpg',c:'Gili Trawangan'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1791822903/IMG_4243.jpg',c:'Gili Trawangan'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
