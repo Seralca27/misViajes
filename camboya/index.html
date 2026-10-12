@@ -11,7 +11,7 @@
   :root {
     --ink: #1a1a1a; --muted: #6b6b6b;
     --accent: #8b4a1a; --accent-light: #fdf3ea;
-    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px; 
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
   }
   body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
 
@@ -24,8 +24,8 @@
   .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
   .hero-top h1 em { font-style: italic; color: var(--warm); }
   .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
-  .hero-bottom { display: none; }
-  .hero-meta { display: none; }
+  .hero-bottom { position: absolute; bottom: 140px; left: 48px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; color: rgba(255,255,255,0.6); font-size: 13px; }
 
   /* NAV */
   nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e8ddd0; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
@@ -135,7 +135,7 @@
 
 <div class="hero">
   <div class="hero-photos">
-    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1791820687/IMG_3259.jpg" alt="Camboya">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1791820687/IMG_3270.jpg" alt="Camboya">
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-top">
