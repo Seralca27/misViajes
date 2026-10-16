@@ -1,1 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dublin · Septiembre 2017</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #1a5c1a; --accent-light: #e8f5e8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
 
+  .hero { min-height: 70vh; background: #040e04; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #d8e8d8; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #90c090; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* BANANA CARD */
+  .banana-card {
+    background: #1a1a1a;
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 20px 0;
+    border-left: 4px solid #f5c518;
+  }
+  .banana-card .bc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .banana-card .bc-icon { font-size: 28px; }
+  .banana-card .bc-title { font-family: 'Instrument Serif', serif; font-size: 20px; color: #f5c518; font-weight: 400; }
+  .banana-card p { color: rgba(255,255,255,0.75); font-size: 14px; margin: 0; max-width: none; }
+
+  /* GRID UNIFORME */
+  .grid-uniform { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 20px 0; }
+  .grid-uniform .g { aspect-ratio: 1; border-radius: 8px; overflow: hidden; cursor: zoom-in; background: #b8ccb8; position: relative; }
+  .grid-uniform .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .grid-uniform .g:hover img { transform: scale(1.06); }
+  .grid-uniform .g .cap { position:absolute; inset:0; background:rgba(0,0,0,0); display:flex; align-items:flex-end; padding:8px; opacity:0; transition: all 0.2s; }
+  .grid-uniform .g:hover .cap { background:rgba(0,0,0,0.38); opacity:1; }
+  .grid-uniform .g .cap span { color:#fff; font-size:10px; }
+
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d8e8d8; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:160px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#d0e8d0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(2,6,2,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c0d8c0; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .grid-uniform { grid-template-columns: repeat(3,1fr); }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150766/IMG_3671.jpg" alt="Dublin">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Dublin<br><em>reencuentro Erasmus</em></h1>
+    <div class="tag">Septiembre 2017 · El cumple de Balta</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🍌 Balta disfrazado de plátano</span>
+      <span>🍺 Guinness · Temple Bar · Dicey's</span>
+      <span>👫 Calentada de las buenas</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+</nav>
+
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Todos los del Erasmus · un finde · el cumple de Balta</h2>
+    <p>Balta vive en Dublin. Cumplia años. Nos fuimos todos los amigos del Erasmus, cada uno desde una parte de España, a celebrarlo. Calentada de las buenas. Parecía la despedida de soltero de un recién casado.</p>
+    <p>Poco turismo — la fábrica de Guinness porque es de cerveza, Temple Bar y Dicey's Garden a full. Era mejor no documentarlo demasiado.</p>
+
+    <div class="banana-card">
+      <div class="bc-header">
+        <div class="bc-icon">🍌</div>
+        <div class="bc-title">What's happening on Thursday? Bananaaaa</div>
+      </div>
+      <p>Durante el Erasmus en Maribor, Balta se hizo amigo de los dueños del Banana's Bar y lo ponía cada jueves en el grupo. La tradición obligó: Balta tuvo que pasar el día disfrazado de plátano. No había otra opción.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">🍌</div><div class="stat-label">disfraz de Balta</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">fábrica Guinness visitada</div></div>
+      <div class="stat"><div class="stat-value">🇮🇪</div><div class="stat-label">varios españoles convergiendo</div></div>
+      <div class="stat"><div class="stat-value">0</div><div class="stat-label">fotos que se pueden mostrar</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Las que se pueden mostrar</div>
+    <h2>Fotos · no hay muchas, era mejor no documentarlo</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <div class="grid-uniform">
+      <div class="g" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150765/IMG_3640.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+      <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150765/IMG_3669.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+      <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150766/IMG_3674.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+      <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150767/IMG_3680.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+      <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150766/IMG_3662.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+      <div class="g" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150766/IMG_3652.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+      <div class="g" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150768/IMG_3694.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+      <div class="g" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150769/IMG_3705.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+      <div class="g" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150770/IMG_3708.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+      <div class="g" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150770/IMG_3718.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+      <div class="g" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150771/IMG_3719.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+      <div class="g" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792150772/IMG_3725.jpg" alt="Dublin"><div class="cap"><span>Dublin</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🍌</div>
+        <div>
+          <div class="moment-title">Balta disfrazado de plátano todo el día</div>
+          <p class="moment-desc">La tradición del Banana's Bar de Maribor viajando hasta Dublin. Balta con el disfraz de plátano desde la mañana. Sin posibilidad de negociación. El grupo había decidido.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍺</div>
+        <div>
+          <div class="moment-title">La fábrica de Guinness · el único turismo del finde</div>
+          <p class="moment-desc">La Guinness Storehouse fue la única concesión turística del fin de semana. Y fue por razones obvias: al final del recorrido te ponen una Guinness gratis con vistas a la ciudad.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎶</div>
+        <div>
+          <div class="moment-title">Temple Bar y Dicey's Garden a full</div>
+          <p class="moment-desc">El barrio de Temple Bar es el epicentro de la vida nocturna de Dublin. Dicey's Garden, el sitio de referencia. La calentada, a la altura de las circunstancias.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🤝</div>
+        <div>
+          <div class="moment-title">Todos los del Erasmus convergiendo en Dublin</div>
+          <p class="moment-desc">Cada uno volando desde una ciudad diferente de España. Todos con el mismo destino: el cumpleaños de Balta. El reencuentro Erasmus en formato fin de semana intensivo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">📵</div>
+        <div>
+          <div class="moment-title">Era mejor no documentarlo</div>
+          <p class="moment-desc">Hay viajes que se documentan. Y hay viajes que se viven. Este fue de los segundos. Las pocas fotos que sobrevivieron son las que ves aquí.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">La calentada</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+      <div class="rating-row"><span class="rating-label">El disfraz de Balta</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">La Guinness Storehouse</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+      <div class="rating-row"><span class="rating-label">El turismo</span><div class="rating-bar"><div class="rating-fill" style="width:20%"></div></div><span class="rating-score">2</span></div>
+      <div class="rating-row"><span class="rating-label">La documentación fotográfica</span><div class="rating-bar"><div class="rating-fill" style="width:10%"></div></div><span class="rating-score">1</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:90%"></div></div><span class="rating-score">9</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Balta de plátano todo el día</li>
+          <li>El reencuentro Erasmus completo</li>
+          <li>La Guinness al final del tour</li>
+          <li>Temple Bar y Dicey's de noche</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>No hacer más fotos (o sí, era lo correcto)</li>
+          <li>El turismo fue casi inexistente</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"Hay fines de semana que no se explican. Solo se viven. Dublin fue uno de esos."</p>
+    </div>
+  </div>
+</section>
+
+<footer><p>Dublin · Septiembre 2017 · El cumple de Balta</p></footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150765/IMG_3640.jpg',c:'Dublin'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150765/IMG_3669.jpg',c:'Dublin'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150766/IMG_3674.jpg',c:'Dublin'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150767/IMG_3680.jpg',c:'Dublin'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150766/IMG_3662.jpg',c:'Dublin'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150766/IMG_3652.jpg',c:'Dublin'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150768/IMG_3694.jpg',c:'Dublin'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150769/IMG_3705.jpg',c:'Dublin'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150770/IMG_3708.jpg',c:'Dublin'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150770/IMG_3718.jpg',c:'Dublin'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150771/IMG_3719.jpg',c:'Dublin'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792150772/IMG_3725.jpg',c:'Dublin'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
