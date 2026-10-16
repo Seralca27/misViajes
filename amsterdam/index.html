@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amsterdam 路 Mayo 2017</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #1a4a6a; --accent-light: #e6f0f8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  .hero { min-height: 70vh; background: #04080e; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #d8e4ec; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #a0b8cc; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* PANOR脕MICA */
+  .panorama { position: relative; border-radius: var(--radius); overflow: hidden; height: 200px; margin: 20px 0; cursor: zoom-in; }
+  .panorama img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.4s; }
+  .panorama:hover img { transform: scale(1.03); }
+
+  /* MOSAIC MEDIANO */
+  .mosaic { display: grid; grid-template-columns: repeat(5, 1fr); grid-auto-rows: 140px; gap: 6px; margin: 20px 0; }
+  .mosaic .m { border-radius: 8px; overflow: hidden; cursor: zoom-in; background: #c0ccd8; position: relative; }
+  .mosaic .m.w2 { grid-column: span 2; }
+  .mosaic .m.w3 { grid-column: span 3; }
+  .mosaic .m.h2 { grid-row: span 2; }
+  .mosaic .m img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .mosaic .m:hover img { transform: scale(1.04); }
+  .mosaic .m .cap { position:absolute; bottom:0; left:0; right:0; padding:20px 10px 8px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:11px; opacity:0; transition:opacity 0.2s; }
+  .mosaic .m:hover .cap { opacity:1; }
+
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d8e4ec; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:160px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#d0dce8; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'路'; position:absolute; left:4px; color:var(--muted); }
+
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(2,4,8,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c0d0dc; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .mosaic { grid-template-columns: repeat(3,1fr); grid-auto-rows: 110px; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144987/IMG_0404.jpg" alt="Amsterdam">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Amsterdam<br><em>reencuentro Erasmus</em></h1>
+    <div class="tag">Mayo 2017 路 Con Pietro</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>馃毑 M谩s bicis que personas</span>
+      <span>馃尶 Huele demasiado a planta</span>
+      <span>馃浂 Canales 路 barrio rojo 路 free tour</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoraci贸n</a>
+</nav>
+
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Viaje express con Pietro 路 todav铆a no tenemos claro c贸mo acabamos all铆</h2>
+    <p>Reencuentro Erasmus con Pietro en Amsterdam. Viaje express, sin plan muy definido y con la ciudad haciendo lo suyo. M谩s bicis que personas, un olor muy particular en casi cada esquina, canales interminables y el free tour de rigor. Siempre hay tiempo para un free tour.</p>
+
+    <div class="panorama" onclick="lb(0)">
+      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1792145065/IMG_0499.jpg" alt="Amsterdam panor谩mica">
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">2</div><div class="stat-label">erasmus reunidos</div></div>
+      <div class="stat"><div class="stat-value">鈭?/div><div class="stat-label">bicis por todas partes</div></div>
+      <div class="stat"><div class="stat-value">馃尶</div><div class="stat-label">el olor caracter铆stico</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">free tour, como siempre</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galer铆a</div>
+    <h2>Amsterdam en im谩genes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+
+    <div class="mosaic">
+      <div class="m w2 h2" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144987/IMG_0377.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m w3" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144988/IMG_0431.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144988/IMG_0460.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m w2" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792145014/IMG_0490.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m w2" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792145033/IMG_0493.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792145064/IMG_0508.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m w2 h2" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144987/IMG_0408.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144987/IMG_0372.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m w2" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144986/IMG_0371.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792145064/IMG_0521.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m w2" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144988/IMG_0469.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m w3" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144905/IMG_0362.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m w2" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144887/IMG_0356.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144879/IMG_0351.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m w2" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144878/IMG_0345.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144878/IMG_0346.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+      <div class="m w2" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792144878/IMG_0344.jpg" alt="Amsterdam"><div class="cap">Amsterdam</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">馃し</div>
+        <div>
+          <div class="moment-title">Todav铆a no tenemos claro c贸mo ni por qu茅 acabamos all铆</div>
+          <p class="moment-desc">El plan surgi贸 de la nada. Pietro, el Erasmus, Amsterdam. Los detalles de c贸mo se concret贸 siguen siendo un misterio colectivo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">馃毑</div>
+        <div>
+          <div class="moment-title">M谩s bicis que personas</div>
+          <p class="moment-desc">Amsterdam tiene m谩s bicicletas que habitantes. Cruzar la calle requiere mirar en cuatro direcciones y rezar un poco. Las bicis no frenan, tienen preferencia moral y legal sobre todo lo dem谩s.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">馃尶</div>
+        <div>
+          <div class="moment-title">Huele demasiado a planta 路 hay mucho vicio aqu铆</div>
+          <p class="moment-desc">El olor caracter铆stico de Amsterdam te recibe en el aeropuerto y no te suelta hasta que vuelves a subirte al avi贸n. Omnipresente, inconfundible y parte integral de la experiencia.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">馃浂</div>
+        <div>
+          <div class="moment-title">Pase铆to por los canales y el barrio rojo</div>
+          <p class="moment-desc">Los canales de Amsterdam son el coraz贸n de la ciudad. El barrio rojo, la visita obligatoria y peculiar. Ambos forman parte del mismo Amsterdam sin contradicci贸n aparente.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">馃椇锔?/div>
+        <div>
+          <div class="moment-title">Siempre hay tiempo para un free tour</div>
+          <p class="moment-desc">Sin importar el destino, sin importar el tiempo disponible, siempre se encuentra el hueco para el free tour. Es una ley no escrita del viaje.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>驴C贸mo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Los canales</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">El reencuentro con Pietro</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">El free tour</span><div class="rating-bar"><div class="rating-fill" style="width:85%"></div></div><span class="rating-score">8.5</span></div>
+      <div class="rating-row"><span class="rating-label">El olor a planta</span><div class="rating-bar"><div class="rating-fill" style="width:50%"></div></div><span class="rating-score">5</span></div>
+      <div class="rating-row"><span class="rating-label">Las bicis</span><div class="rating-bar"><div class="rating-fill" style="width:40%"></div></div><span class="rating-score">4</span></div>
+      <div class="rating-row"><span class="rating-label">Volver铆a</span><div class="rating-bar"><div class="rating-fill" style="width:80%"></div></div><span class="rating-score">8</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Reencuentro Erasmus con Pietro</li>
+          <li>Los canales 鈥?preciosos</li>
+          <li>La ciudad es 煤nica</li>
+          <li>El free tour de rigor</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetir铆a</div>
+        <ul class="verdict-list">
+          <li>Cruzar la calle sin mirar las bicis</li>
+          <li>El olor permanente (o s铆, es parte del paquete)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"Amsterdam es una ciudad que no necesita explicaci贸n. Te la encuentras, la hueles, la pedaleas y ya est谩."</p>
+    </div>
+  </div>
+</section>
+
+<footer><p>Amsterdam 路 Mayo 2017 路 Reencuentro Erasmus</p></footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">鉁?/button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">鈥?/button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">鈥?/button>
+</div>
+
+<script>
+const photos = [
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792145065/IMG_0499.jpg',c:'Amsterdam 路 panor谩mica'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144987/IMG_0377.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144988/IMG_0431.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144988/IMG_0460.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792145014/IMG_0490.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792145033/IMG_0493.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792145064/IMG_0508.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144987/IMG_0408.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144987/IMG_0372.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144986/IMG_0371.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792145064/IMG_0521.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144988/IMG_0469.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144905/IMG_0362.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144887/IMG_0356.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144879/IMG_0351.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144878/IMG_0345.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144878/IMG_0346.jpg',c:'Amsterdam'},
+  {s:'https://res.cloudinary.com/il7cecht/image/upload/v1792144878/IMG_0344.jpg',c:'Amsterdam'},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
