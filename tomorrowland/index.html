@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tomorrowland · Julio 2019</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #7c3aed; --accent2: #f59e0b;
+    --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+    --warm: #c9a96e;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: #0a0010; }
+
+  /* HERO */
+  .hero { min-height: 75vh; background: #0a0010; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.55; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,0,16,0.95) 0%, rgba(10,0,16,0.3) 50%, transparent 100%); }
+  .hero-glow { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 80%, rgba(124,58,237,0.25) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,64px); font-weight: 400; color: #fff; line-height: 1.0; }
+  .hero-top h1 em { font-style: italic; color: #f59e0b; }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.15em; color: rgba(245,158,11,0.8); text-transform: uppercase; margin-top: 10px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.5); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: rgba(10,0,16,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(124,58,237,0.3); padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: #fff; border-color: #f59e0b; }
+
+  /* SECTIONS */
+  .section-dark { padding: 48px 32px; background: #0a0010; }
+  .section-mid { padding: 48px 32px; background: #100020; }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; color: #f59e0b; text-transform: uppercase; margin-bottom: 10px; opacity: 0.8; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,40px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; color: #fff; }
+  p { color: rgba(255,255,255,0.65); margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: rgba(124,58,237,0.4); border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: rgba(20,0,40,0.9); padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 30px; color: #f59e0b; line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: rgba(255,255,255,0.45); }
+
+  /* PANORÁMICA */
+  .panorama { position: relative; border-radius: var(--radius); overflow: hidden; height: 220px; margin: 20px 0; cursor: zoom-in; border: 1px solid rgba(124,58,237,0.3); }
+  .panorama img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.4s; }
+  .panorama:hover img { transform: scale(1.03); }
+
+  /* VIDEO */
+  .video-pill { display: flex; gap: 10px; align-items: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(124,58,237,0.4); border-radius: var(--radius); padding: 14px 16px; margin: 20px 0; }
+  .vp-icon { font-size: 20px; flex-shrink: 0; }
+  .vp-info { flex: 1; min-width: 0; }
+  .vp-title { font-size: 13px; font-weight: 500; color: #f59e0b; margin-bottom: 6px; }
+  .vp-video { border-radius: 8px; overflow: hidden; background: #000; }
+  .vp-video video { width: 100%; max-height: 240px; display: block; }
+
+  /* ESCENARIOS */
+  .escenarios { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 20px 0; }
+  .escenario { background: rgba(255,255,255,0.04); border: 1px solid rgba(124,58,237,0.25); border-radius: 10px; padding: 14px 16px; }
+  .esc-icon { font-size: 20px; margin-bottom: 6px; }
+  .esc-name { font-size: 13px; font-weight: 500; color: #fff; margin-bottom: 2px; }
+  .esc-desc { font-size: 12px; color: rgba(255,255,255,0.45); margin: 0; }
+
+  /* CUADRÍCULA PEQUEÑA */
+  .grid-sm { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin: 20px 0; }
+  .grid-sm .g { aspect-ratio: 1; border-radius: 5px; overflow: hidden; cursor: zoom-in; background: #1a0030; position: relative; }
+  .grid-sm .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s, filter 0.3s; filter: saturate(1.1); }
+  .grid-sm .g:hover img { transform: scale(1.08); filter: saturate(1.5) brightness(1.1); }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid rgba(124,58,237,0.2); align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:rgba(124,58,237,0.15); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; color:#fff; }
+  .moment-desc { font-size:13px; color:rgba(255,255,255,0.5); margin:0; }
+
+  /* RATINGS */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:170px; color:rgba(255,255,255,0.5); }
+  .rating-bar { flex:1; height:4px; background:rgba(255,255,255,0.1); border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background: linear-gradient(to right, #7c3aed, #f59e0b); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; color:#f59e0b; }
+
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:rgba(124,58,237,0.12); border:1px solid rgba(124,58,237,0.3); }
+  .verdict-box.bad { background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#a78bfa; }
+  .verdict-box.bad .verdict-title { color:#f87171; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:rgba(255,255,255,0.65); padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:rgba(255,255,255,0.3); }
+
+  .quote-block { border-left:3px solid #f59e0b; padding:16px 24px; margin:20px 0; background:rgba(245,158,11,0.06); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:20px; font-style:italic; line-height:1.5; max-width:none; margin:0; color:#fff; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(6,0,12,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.5); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.1); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.5); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:4px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.25); border:none; cursor:pointer; }
+  .lb-dot.on { background:#f59e0b; }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:rgba(255,255,255,0.25); background:#0a0010; border-top:1px solid rgba(124,58,237,0.2); }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    .section-dark, .section-mid { padding:36px 20px; }
+    .grid-sm { grid-template-columns: repeat(5,1fr); }
+    .escenarios { grid-template-columns: 1fr 1fr; }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396493/IMG_8328.jpg" alt="Tomorrowland">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-top">
+    <h1>Tomorrowland<br><em>Boom, Bélgica</em></h1>
+    <div class="tag">Julio 2019 · Global Journey</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🎵 16 escenarios · 3 días</span>
+      <span>🧃 Cubanistos a mochilada</span>
+      <span>⚡ Tienda inundada el domingo</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#escenarios">Escenarios</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+  <a href="#valoracion">Valoración</a>
+</nav>
+
+<div class="section-dark" id="resumen">
+  <div class="inner">
+    <div class="section-label">El festival</div>
+    <h2>El festival EDM más grande de Europa · pulsera Global Journey</h2>
+    <p>Tomorrowland no es un festival. Es una ciudad temporal en Boom que dura tres días y tiene 16 escenarios, tiendas de todo tipo (comida, peluquería, tatuajes, correos para enviar una postal...) y cientos de miles de personas de todo el mundo bailando música electrónica.</p>
+    <p>La pulsera Global Journey lo organizaba todo: vuelo con música, transporte a Boom, tienda de campaña preparada, champán de bienvenida y baños limpios todo el tiempo. Una organización de 10.</p>
+
+    <div class="panorama" onclick="lb_pano()">
+      <img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396460/18895868-858e-4848-b222-2af5c13b0a40.jpg" alt="Tomorrowland panorámica">
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">16</div><div class="stat-label">escenarios</div></div>
+      <div class="stat"><div class="stat-value">3</div><div class="stat-label">días</div></div>
+      <div class="stat"><div class="stat-value">50€</div><div class="stat-label">invertidos en cubanistos</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">tienda inundada</div></div>
+    </div>
+
+    <div class="video-pill">
+      <div class="vp-icon">🎤</div>
+      <div class="vp-info">
+        <div class="vp-title">Eeeeeeeeee — Oooooooooo</div>
+        <div class="vp-video">
+          <video controls preload="none">
+            <source src="https://res.cloudinary.com/il7cecht/video/upload/v1792396509/IMG_8378.mov" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-mid" id="escenarios">
+  <div class="inner">
+    <div class="section-label">La lineup</div>
+    <h2>16 escenarios · todos los géneros</h2>
+    <p>Desde el EDM más comercial del main stage hasta el hardstyle que machaca los oídos. Pasando por lugares donde nadie esperaba encontrarse.</p>
+    <div class="escenarios">
+      <div class="escenario">
+        <div class="esc-icon">🏟️</div>
+        <div class="esc-name">Main Stage</div>
+        <p class="esc-desc">EDM a tope. El escenario más grande del mundo. Imposible no quedarse boquiabierto.</p>
+      </div>
+      <div class="escenario">
+        <div class="esc-icon">🔨</div>
+        <div class="esc-name">Hardstyle</div>
+        <p class="esc-desc">1 hora de martillazos. Suficiente. Experiencia completada.</p>
+      </div>
+      <div class="escenario">
+        <div class="esc-icon">🎻</div>
+        <div class="esc-name">Orquesta sinfónica</div>
+        <p class="esc-desc">Tocando temazos electrónicos en directo. La mejor sorpresa del festival.</p>
+      </div>
+      <div class="escenario">
+        <div class="esc-icon">🇨🇴</div>
+        <div class="esc-name">J Balvin</div>
+        <p class="esc-desc">Se coló ese año. Reggaetón en Tomorrowland. Algo es algo.</p>
+      </div>
+      <div class="escenario">
+        <div class="esc-icon">🏀</div>
+        <div class="esc-name">DJ Diesel</div>
+        <p class="esc-desc">Shaquille O'Neal pinchando. En serio. Shaq.</p>
+      </div>
+      <div class="escenario">
+        <div class="esc-icon">🌃</div>
+        <div class="esc-name">Ambient / otros</div>
+        <p class="esc-desc">12 escenarios más de todo tipo. Siempre hay algo nuevo al doblar la esquina.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-dark" id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Tomorrowland en imágenes</h2>
+    <p style="font-size:13px; color:rgba(255,255,255,0.4); margin-bottom:8px;">Haz clic en cualquier foto para verla en grande.</p>
+    <div class="grid-sm">
+      <div class="g" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396465/IMG_7828.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396466/IMG_7831.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396466/IMG_7835.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396467/IMG_7849.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396468/IMG_7850.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396469/IMG_7858.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396470/IMG_7862.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396470/IMG_7867.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396471/IMG_7878.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396471/IMG_7891.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396473/IMG_7898.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396475/IMG_8033.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396476/IMG_8035.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396461/99732467-0742-4129-a5bf-8ca66544fc7a.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396459/0e58e270-ffbd-4a0e-9e31-c8d8aa10de18.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396460/19A02DF6-1443-4382-B10A-6AB6D87E5126.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396460/1d665e35-3255-48ed-b6ea-a40ca4b20cd2.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396460/7112adcd-6480-483a-916e-daa53bb46197.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396460/69905467-3303-4815-a42c-5913078bde86.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396460/4cec0565-28e6-45cc-84d1-64156fac4b2f.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396460/219ac55e-8cfe-4e88-84a7-a8b926c93d3d.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396474/IMG_8025.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396463/A446382A-23BA-4023-BDF5-F5805A5BE1E4.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396473/IMG_7950.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396493/IMG_8308.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396477/IMG_8057.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396478/IMG_8079.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396479/IMG_8085.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396480/IMG_8094.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396480/IMG_8096.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396482/IMG_8113.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396482/IMG_8115.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396482/IMG_8131.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396482/IMG_8144.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396483/IMG_8163.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396483/IMG_8179.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396484/IMG_8215.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396486/IMG_8216.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396486/IMG_8237.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396487/IMG_8238.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396488/IMG_8252.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396489/IMG_8262.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396490/IMG_8264.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396492/IMG_8300.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(44)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396494/IMG_8339.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(45)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396494/IMG_8359.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(46)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396497/IMG_8388.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(47)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396497/IMG_8404.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(48)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396498/IMG_8440.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(49)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396499/IMG_8441.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(50)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396502/IMG_8619.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(51)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396498/IMG_8412.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(52)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396499/IMG_8476.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(53)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396500/IMG_8483.jpg" loading="lazy" alt="Tomorrowland"></div>
+      <div class="g" onclick="lb(54)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792396501/IMG_8489.jpg" loading="lazy" alt="Tomorrowland"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-mid" id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🧃</div>
+        <div>
+          <div class="moment-title">El camarero español y los 50€ de cubanistos</div>
+          <p class="moment-desc">Encontramos a un camarero español en una de las barras. Le dimos 50€ y nos llenaba la mochila de cubanistos cada vez que lo necesitábamos. El sistema más eficiente descubierto en un festival.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">☔</div>
+        <div>
+          <div class="moment-title">Del calor extremo a la tienda inundada</div>
+          <p class="moment-desc">37 grados y ola de calor el viernes. Tormenta brutal el domingo. La tienda de campaña inundada con los enchufes colgando. El contraste más extremo en 72 horas.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏀</div>
+        <div>
+          <div class="moment-title">Shaquille O'Neal pinchando</div>
+          <p class="moment-desc">DJ Diesel. Shaq. Pinchando de verdad en Tomorrowland. Una de esas cosas que no se pueden explicar hasta que las ves con tus propios ojos.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🎻</div>
+        <div>
+          <div class="moment-title">La orquesta sinfónica tocando electrónica</div>
+          <p class="moment-desc">El momento más inesperado del festival. Una orquesta completa interpretando los grandes temazos del EDM. Brutal de principio a fin.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🦵</div>
+        <div>
+          <div class="moment-title">Las agujetas · abandonar antes del último dj</div>
+          <p class="moment-desc">El domingo, después de dos días bailando, el cuerpo dijo que no. Agujetas en músculos que ni sabía que tenía. Tuve que irme antes del último dj. El precio de la diversión.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🧳</div>
+        <div>
+          <div class="moment-title">La organización Global Journey · un 10</div>
+          <p class="moment-desc">Vuelo con música, transporte, tienda lista, champán de bienvenida y baños limpios. En un festival de estas dimensiones, la logística era perfecta. Vale cada euro.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-dark" id="valoracion">
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">El main stage</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">La organización Global Journey</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">La orquesta sinfónica</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+      <div class="rating-row"><span class="rating-label">Los cubanistos</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">El hardstyle</span><div class="rating-bar"><div class="rating-fill" style="width:40%"></div></div><span class="rating-score">4</span></div>
+      <div class="rating-row"><span class="rating-label">La tienda inundada</span><div class="rating-bar"><div class="rating-fill" style="width:5%"></div></div><span class="rating-score">0.5</span></div>
+      <div class="rating-row"><span class="rating-label">Las agujetas</span><div class="rating-bar"><div class="rating-fill" style="width:5%"></div></div><span class="rating-score">0.5</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>El main stage — espectáculo único</li>
+          <li>La orquesta sinfónica</li>
+          <li>Shaq pinchando</li>
+          <li>50€ de cubanistos infinitos</li>
+          <li>La pulsera Global Journey</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>El hardstyle (30 minutos, no 1 hora)</li>
+          <li>No llevar impermeables</li>
+          <li>Bailar sin descanso hasta las agujetas</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"Tomorrowland no es un festival. Es una experiencia que no se puede explicar hasta que la vives."</p>
+    </div>
+  </div>
+</div>
+
+<footer><p>Tomorrowland · Boom, Bélgica · Julio 2019</p></footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396460/18895868-858e-4848-b222-2af5c13b0a40.jpg",c:"Tomorrowland · panorámica"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396465/IMG_7828.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396466/IMG_7831.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396466/IMG_7835.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396467/IMG_7849.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396468/IMG_7850.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396469/IMG_7858.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396470/IMG_7862.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396470/IMG_7867.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396471/IMG_7878.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396471/IMG_7891.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396473/IMG_7898.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396475/IMG_8033.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396476/IMG_8035.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396461/99732467-0742-4129-a5bf-8ca66544fc7a.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396459/0e58e270-ffbd-4a0e-9e31-c8d8aa10de18.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396460/19A02DF6-1443-4382-B10A-6AB6D87E5126.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396460/1d665e35-3255-48ed-b6ea-a40ca4b20cd2.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396460/7112adcd-6480-483a-916e-daa53bb46197.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396460/69905467-3303-4815-a42c-5913078bde86.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396460/4cec0565-28e6-45cc-84d1-64156fac4b2f.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396460/219ac55e-8cfe-4e88-84a7-a8b926c93d3d.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396474/IMG_8025.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396463/A446382A-23BA-4023-BDF5-F5805A5BE1E4.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396473/IMG_7950.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396493/IMG_8308.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396477/IMG_8057.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396478/IMG_8079.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396479/IMG_8085.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396480/IMG_8094.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396480/IMG_8096.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396482/IMG_8113.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396482/IMG_8115.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396482/IMG_8131.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396482/IMG_8144.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396483/IMG_8163.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396483/IMG_8179.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396484/IMG_8215.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396486/IMG_8216.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396486/IMG_8237.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396487/IMG_8238.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396488/IMG_8252.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396489/IMG_8262.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396490/IMG_8264.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396492/IMG_8300.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396494/IMG_8339.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396494/IMG_8359.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396497/IMG_8388.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396497/IMG_8404.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396498/IMG_8440.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396499/IMG_8441.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396502/IMG_8619.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396498/IMG_8412.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396499/IMG_8476.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396500/IMG_8483.jpg",c:"Tomorrowland 2019"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792396501/IMG_8489.jpg",c:"Tomorrowland 2019"},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function lb_pano(){ lb(0); }
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
