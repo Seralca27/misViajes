@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Egipto · Mayo 2016</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #b5630a; --accent-light: #fdf3e6;
+    --warm: #c9a96e; --sand: #e8d5a0; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  /* HERO */
+  .hero { min-height: 70vh; background: #100800; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; object-position: center 40%; opacity:0.75; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,62px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--sand); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--sand); text-transform: uppercase; margin-top: 8px; opacity:0.85; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e8d8c0; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #c8a870; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 30px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* PANORÁMICA */
+  .panorama { position: relative; border-radius: var(--radius); overflow: hidden; height: 200px; margin: 20px 0; cursor: zoom-in; }
+  .panorama img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.4s; }
+  .panorama:hover img { transform: scale(1.03); }
+
+  /* CARRUSEL */
+  .carousel { position: relative; margin: 10px 0; }
+  .carousel-track { display: flex; gap: 5px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 6px; cursor: grab; scrollbar-width: none; }
+  .carousel-track:active { cursor: grabbing; }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track .thumb { flex: 0 0 auto; scroll-snap-align: start; width: 160px; height: 160px; border-radius: 8px; overflow: hidden; cursor: zoom-in; background: #d8c8a0; position: relative; }
+  .carousel-track .thumb:first-child { width: 210px; }
+  .carousel-track .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .carousel-track .thumb:hover img { transform: scale(1.05); }
+  .carousel-track .thumb .cap { position:absolute; bottom:0; left:0; right:0; padding:16px 8px 6px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
+  .carousel-track .thumb:hover .cap { opacity:1; }
+  .carousel-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .carousel-btn { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #c8a870; background: #fff; color: var(--ink); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
+  .carousel-btn:hover { border-color: var(--accent); }
+  .carousel-hint { font-size: 11px; color: var(--muted); margin-left: 4px; }
+
+  /* CUADRÍCULA */
+  .grid-g { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin: 12px 0; }
+  .grid-g .g { aspect-ratio:1; border-radius:7px; overflow:hidden; cursor:zoom-in; background:#d8c8a0; position:relative; }
+  .grid-g .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .grid-g .g:hover img { transform: scale(1.06); }
+
+  /* VÍDEO PILL */
+  .video-pill { display:flex; gap:10px; align-items:flex-start; background:var(--ink); color:#fff; border-radius:var(--radius); padding:14px 16px; margin:14px 0; }
+  .vp-icon { font-size:20px; flex-shrink:0; }
+  .vp-info { flex:1; min-width:0; }
+  .vp-title { font-size:13px; font-weight:500; color:var(--sand); margin-bottom:6px; }
+  .vp-video { border-radius:8px; overflow:hidden; background:#000; }
+  .vp-video video { width:100%; max-height:220px; display:block; }
+
+  /* TREN SECTION */
+  .tren-section { background: #1a1008; padding: 48px 32px; }
+  .tren-section .section-label { color: var(--sand); }
+  .tren-section h2 { color: #fff; }
+  .tren-section p { color: rgba(255,255,255,0.6); }
+  .tren-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:6px; margin:12px 0; }
+  .tren-grid .g { aspect-ratio:4/3; border-radius:8px; overflow:hidden; cursor:zoom-in; background:#2a1808; }
+  .tren-grid .g img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.3s; }
+  .tren-grid .g:hover img { transform:scale(1.04); }
+
+  /* JEROGLÍFICOS MOSAICO */
+  .jero-grid { display:grid; grid-template-columns:repeat(9,1fr); gap:3px; margin:12px 0; }
+  .jero-grid .jg { aspect-ratio:1; border-radius:4px; overflow:hidden; cursor:zoom-in; background:#d8c8a0; }
+  .jero-grid .jg img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.3s, filter 0.3s; filter:saturate(0.9); }
+  .jero-grid .jg:hover img { transform:scale(1.08); filter:saturate(1.3); }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e8d8c0; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  /* RATINGS */
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:170px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#e8d8c0; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  /* LIGHTBOX */
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(12,6,0,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d8c8a0; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section, .tren-section { padding:36px 20px; }
+    .grid-g { grid-template-columns:repeat(3,1fr); }
+    .jero-grid { grid-template-columns:repeat(5,1fr); }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429294/IMG_0808.jpg" alt="Egipto">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Egipto<br><em>un museo al aire libre</em></h1>
+    <div class="tag">Mayo 2016 · Los inforborrachos</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🛺 El Cairo · Luxor · Karnak</span>
+      <span>🚢 Puesta de sol en el Nilo</span>
+      <span>🏛️ Valle de los Reyes · Tutankamon</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#cairo">El Cairo</a>
+  <a href="#nilo">El Nilo</a>
+  <a href="#valle">Valle de los Reyes</a>
+  <a href="#luxor">Luxor</a>
+  <a href="#tren">Tren nocturno</a>
+  <a href="#jeroglificos">Jeróglificos</a>
+  <a href="#momentos">Momentos</a>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>350€ de vuelo y ocho inforborrachos en el Nilo</h2>
+    <p>La calentada fue en la cena de Navidad. Sergi y Cris se iban a Egipto. Nosotros teníamos dudas. Con cuatro cervezas se resolvieron. 350€ el vuelo. Acabamos yendo ocho, y primera vez que se unía al equipo el Mingo — que no le bastaron los días y fue un día antes y se quedó un día más.</p>
+    <p>Solo cinco días: El Cairo con vistas a las pirámides, tren nocturno a Luxor para no perder tiempo durmiendo, templos de Karnak y Luxor, el Valle de los Reyes con la tumba de Tutankamon, y una puesta de sol en el Nilo que lo justificó todo. Nos faltó Abu Simbel. Habrá que volver.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">8</div><div class="stat-label">inforborrachos</div></div>
+      <div class="stat"><div class="stat-value">350€</div><div class="stat-label">el vuelo</div></div>
+      <div class="stat"><div class="stat-value">5</div><div class="stat-label">días</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">Mingo extra (antes y después)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EL CAIRO -->
+<section id="cairo">
+  <div class="inner">
+    <div class="section-label">El Cairo</div>
+    <h2>Pirámides, acoso de taxistas y vistas desde el hotel</h2>
+    <p>El recibimiento en el aeropuerto parecía de famosos — en realidad era el acoso de todos los taxistas por llevarte al hotel. El alojamiento en El Cairo tenía vistas directas a las pirámides. El Mingo disfruó desde allí del espectáculo de luces nocturno.</p>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Arrastra · clic para ampliar.</p>
+
+    <div class="carousel">
+      <div class="carousel-track" id="c-cairo">
+          <div class="thumb" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429263/IMG_0652.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429284/IMG_0787.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429287/IMG_0791.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429035/175c7f01-fba5-41b7-b8ac-27a9b1032910.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429039/5934b435-16b9-4030-b6e6-196c50415b62.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429291/IMG_0798.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429400/IMG_20180512_093700.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429215/70971bab-a0b0-4a5e-9b5e-19342d48d0fa.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429274/IMG_0702.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429298/IMG_0839.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429301/IMG_0851.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429276/IMG_0714.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429283/IMG_0778.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429244/20180512_155222.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429246/20180512_160009.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429332/IMG_0867.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429281/IMG_0772.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429289/IMG_0796.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429247/20180512_182436.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429340/IMG_0878.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429344/IMG_0886.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429345/IMG_0890.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429304/IMG_0860.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429286/IMG_0788.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429256/79272172-0321-4347-974c-3a15b7c41c8e.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429357/IMG_1002.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429279/IMG_0757.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+          <div class="thumb" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429405/IMG_20180515_195644_HHT.jpg" loading="lazy" alt="El Cairo"><div class="cap">El Cairo</div></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="scrollC('c-cairo',-1)">‹</button>
+        <button class="carousel-btn" onclick="scrollC('c-cairo',1)">›</button>
+        <span class="carousel-hint">arrastra · clic para ampliar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EL NILO -->
+<section id="nilo">
+  <div class="inner">
+    <div class="section-label">El Nilo</div>
+    <h2>Paseo en barco · puesta de sol sobre el Nilo</h2>
+    <p>Qué bonito. El Nilo al atardecer es una de esas imágenes que no se olvidan.</p>
+
+    <div class="video-pill">
+      <div class="vp-icon">🚢</div>
+      <div class="vp-info">
+        <div class="vp-title">Puesta de sol sobre el Nilo</div>
+        <div class="vp-video">
+          <video controls preload="none">
+            <source src="https://res.cloudinary.com/il7cecht/video/upload/v1792429349/IMG_0921.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-g">
+      <div class="g" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429251/20180513_165905.jpg" loading="lazy" alt="El Nilo"></div>
+      <div class="g" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429354/IMG_0959.jpg" loading="lazy" alt="El Nilo"></div>
+      <div class="g" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429355/IMG_0983.jpg" loading="lazy" alt="El Nilo"></div>
+    </div>
+  </div>
+</section>
+
+<!-- VALLE DE LOS REYES -->
+<section id="valle">
+  <div class="inner">
+    <div class="section-label">Valle de los Reyes</div>
+    <h2>Templo de Hatshepsut · tumba de Tutankamon · qué calor</h2>
+    <p>El Valle de los Reyes a pleno sol de mediodía. El templo de Hatshepsut impresionante. Y la tumba de Tutankamon, uno de los dioses egipcios que con suerte pudimos ver.</p>
+
+    <div class="grid-g">
+      <div class="g" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429037/966a684f-0e8e-40be-927c-f6c9a0ac8650.jpg" loading="lazy" alt="Valle de los Reyes"></div>
+      <div class="g" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429030/8b8e71c3-b558-4f84-91cd-8a0e5befc970.jpg" loading="lazy" alt="Valle de los Reyes"></div>
+      <div class="g" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429249/20180513_105852.jpg" loading="lazy" alt="Valle de los Reyes"></div>
+      <div class="g" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429350/IMG_0945.jpg" loading="lazy" alt="Valle de los Reyes"></div>
+      <div class="g" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429352/IMG_0947.jpg" loading="lazy" alt="Valle de los Reyes"></div>
+      <div class="g" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429390/IMG_7157.jpg" loading="lazy" alt="Valle de los Reyes"></div>
+      <div class="g" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429392/IMG_7168.jpg" loading="lazy" alt="Valle de los Reyes"></div>
+    </div>
+  </div>
+</section>
+
+<!-- LUXOR -->
+<section id="luxor">
+  <div class="inner">
+    <div class="section-label">Luxor · Karnak</div>
+    <h2>Templos espectaculares · Karnak mi favorito</h2>
+    <p>Los templos de Luxor y Karnak son de otro nivel. Karnak especialmente — la escala es imposible de entender hasta que estás dentro. Un mundo aparte.</p>
+
+    <div class="video-pill">
+      <div class="vp-icon">🏛️</div>
+      <div class="vp-info">
+        <div class="vp-title">Templos de Luxor</div>
+        <div class="vp-video">
+          <video controls preload="none">
+            <source src="https://res.cloudinary.com/il7cecht/video/upload/v1792429362/IMG_1028.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel">
+      <div class="carousel-track" id="c-luxor">
+          <div class="thumb" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429040/38327A4A-F24A-4238-AACD-656D272A3233.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429033/56bc24ff-e14a-4e34-8c02-55d26914d727.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429030/0b2d5cf7-308a-405b-92b9-2153f7d1cc07.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429358/IMG_1020.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429334/IMG_0869.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(44)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429294/IMG_0823.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(45)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429261/e88829a7-5b7d-4785-a9c0-b3ac2682e20c.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(46)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429329/IMG_0861.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(47)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429347/IMG_0911.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(48)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429253/20180514_213259.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(49)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429367/IMG_1060.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(50)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429339/IMG_0877.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(51)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429384/IMG_1260.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(52)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429370/IMG_1077.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(53)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429372/IMG_1080.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(54)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429373/IMG_1094.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(55)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429377/IMG_1098.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(56)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429395/IMG_7264.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+          <div class="thumb" onclick="lb(57)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429407/Snapseed.jpg" loading="lazy" alt="Luxor · Karnak"><div class="cap">Luxor · Karnak</div></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="scrollC('c-luxor',-1)">‹</button>
+        <button class="carousel-btn" onclick="scrollC('c-luxor',1)">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TREN NOCTURNO -->
+<div class="tren-section" id="tren">
+  <div class="inner">
+    <div class="section-label">Tren nocturno</div>
+    <h2>El Cairo → Luxor · no podíamos perder tiempo durmiendo</h2>
+    <p>Con solo cinco días, el tren nocturno era la solución lógica: viajas de noche y ganas el día. Una bonita experiencia. Menú vegano incluido para algun@s.</p>
+
+    <div class="video-pill" style="background:rgba(255,255,255,0.06); border:1px solid rgba(200,168,112,0.3);">
+      <div class="vp-icon">🚆</div>
+      <div class="vp-info">
+        <div class="vp-title">Tren nocturno al Cairo</div>
+        <div class="vp-video">
+          <video controls preload="none">
+            <source src="https://res.cloudinary.com/il7cecht/video/upload/v1792429255/20180514_213352.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="tren-grid">
+      <div class="g" onclick="lb(58)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429385/IMG_7115.jpg" loading="lazy" alt="Tren nocturno"></div>
+      <div class="g" onclick="lb(59)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429253/20180514_213259.jpg" loading="lazy" alt="Tren nocturno"></div>
+    </div>
+  </div>
+</div>
+
+<!-- JEROGLÍFICOS -->
+<section id="jeroglificos">
+  <div class="inner">
+    <div class="section-label">Jeróglificos</div>
+    <h2>Las paredes hablan</h2>
+    <p>Cada pared, cada columna, cada techo — cubierto de jeróglificos pintados hace miles de años. Un lenguaje que lleva siglos sin hablarse pero que sigue ahí, perfectamente conservado.</p>
+
+    <div class="jero-grid">
+      <div class="jg" onclick="lb(60)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429259/b150ed03-8513-483b-b3ea-6fffc0a53793.jpg" loading="lazy" alt="Jeróglfico"></div>
+      <div class="jg" onclick="lb(61)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429299/IMG_0840.jpg" loading="lazy" alt="Jeróglfico"></div>
+      <div class="jg" onclick="lb(62)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429330/IMG_0866.jpg" loading="lazy" alt="Jeróglfico"></div>
+      <div class="jg" onclick="lb(63)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429335/IMG_0870_1.jpg" loading="lazy" alt="Jeróglfico"></div>
+      <div class="jg" onclick="lb(64)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429337/IMG_0873.jpg" loading="lazy" alt="Jeróglfico"></div>
+      <div class="jg" onclick="lb(65)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429365/IMG_1049.jpg" loading="lazy" alt="Jeróglfico"></div>
+      <div class="jg" onclick="lb(66)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429387/IMG_7148.jpg" loading="lazy" alt="Jeróglfico"></div>
+      <div class="jg" onclick="lb(67)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429389/IMG_7150.jpg" loading="lazy" alt="Jeróglfico"></div>
+      <div class="jg" onclick="lb(68)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792429393/IMG_7177.jpg" loading="lazy" alt="Jeróglfico"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🍺</div>
+        <div>
+          <div class="moment-title">La calentada en la cena de Navidad · 4 cervezas y a Egipto</div>
+          <p class="moment-desc">Sergi y Cris se iban. Nosotros teníamos dudas. Cuatro cervezas más tarde, las dudas habían desaparecido y éramos ocho reservando vuelos a 350€.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🧑‍🤝‍🧑</div>
+        <div>
+          <div class="moment-title">Primera vez del Mingo · Mingazo69 · un día antes y uno después</div>
+          <p class="moment-desc">El Mingo se unió al equipo en este viaje. Y como no le bastaban los días, fue un día antes y se quedó un día más. Un clásico que se repetiría.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏛️</div>
+        <div>
+          <div class="moment-title">Karnak · el mejor templo</div>
+          <p class="moment-desc">De todos los monumentos del viaje, Karnak es el que más impresionó. La escala es imposible de describir. Cuando estás dentro entiendes por qué la gente venía de todo el mundo a verlo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚢</div>
+        <div>
+          <div class="moment-title">Puesta de sol en el Nilo</div>
+          <p class="moment-desc">El barco, el Nilo, el sol bajando. Uno de esos momentos en los que nadie habla porque no hay nada que añadir.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏨</div>
+        <div>
+          <div class="moment-title">Vistas a las pirámides desde el hotel</div>
+          <p class="moment-desc">El hotel en El Cairo tenía vistas directas a las pirámides. El Mingo, que llegó antes, disfutó desde allí del espectáculo de luces nocturno — nosotros lo vimos al día siguiente.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚆</div>
+        <div>
+          <div class="moment-title">El tren nocturno · menú vegano</div>
+          <p class="moment-desc">Tren nocturno de El Cairo a Luxor para no perder tiempo. El menú vegano sorprendió a más de uno. La experiencia, única. Llegar a Luxor amaneciendo, directos a los templos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORACIÓN -->
+<section>
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">Karnak</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">La puesta de sol en el Nilo</span><div class="rating-bar"><div class="rating-fill" style="width:100%"></div></div><span class="rating-score">10</span></div>
+      <div class="rating-row"><span class="rating-label">Las pirámides</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+      <div class="rating-row"><span class="rating-label">Valle de los Reyes</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">El tren nocturno</span><div class="rating-bar"><div class="rating-fill" style="width:88%"></div></div><span class="rating-score">8.8</span></div>
+      <div class="rating-row"><span class="rating-label">El calor en el Valle</span><div class="rating-bar"><div class="rating-fill" style="width:10%"></div></div><span class="rating-score">1</span></div>
+      <div class="rating-row"><span class="rating-label">Los taxistas del aeropuerto</span><div class="rating-bar"><div class="rating-fill" style="width:5%"></div></div><span class="rating-score">0.5</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería (a Abu Simbel)</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>Karnak — el mejor templo del viaje</li>
+          <li>La puesta de sol en el Nilo</li>
+          <li>Las vistas a las pirámides desde el hotel</li>
+          <li>La tumba de Tutankamon</li>
+          <li>El tren nocturno</li>
+          <li>Que el Mingo se uniera al equipo</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>El Valle de los Reyes a mediodía con ese calor</li>
+          <li>No llegar a Abu Simbel</li>
+          <li>Los taxistas del aeropuerto</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"Egipto es un museo al aire libre. Cada piedra tiene 3.000 años y te mira como si tú fueras el intruso."</p>
+    </div>
+  </div>
+</section>
+
+<footer><p>Egipto · Mayo 2016 · Los inforborrachos</p></footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429294/IMG_0808.jpg",c:"El Cairo · panorámica"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429263/IMG_0652.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429284/IMG_0787.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429287/IMG_0791.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429035/175c7f01-fba5-41b7-b8ac-27a9b1032910.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429039/5934b435-16b9-4030-b6e6-196c50415b62.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429291/IMG_0798.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429400/IMG_20180512_093700.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429215/70971bab-a0b0-4a5e-9b5e-19342d48d0fa.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429274/IMG_0702.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429298/IMG_0839.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429301/IMG_0851.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429276/IMG_0714.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429283/IMG_0778.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429244/20180512_155222.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429246/20180512_160009.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429332/IMG_0867.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429281/IMG_0772.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429289/IMG_0796.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429247/20180512_182436.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429340/IMG_0878.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429344/IMG_0886.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429345/IMG_0890.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429304/IMG_0860.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429286/IMG_0788.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429256/79272172-0321-4347-974c-3a15b7c41c8e.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429357/IMG_1002.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429279/IMG_0757.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429405/IMG_20180515_195644_HHT.jpg",c:"El Cairo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429251/20180513_165905.jpg",c:"El Nilo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429354/IMG_0959.jpg",c:"El Nilo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429355/IMG_0983.jpg",c:"El Nilo"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429037/966a684f-0e8e-40be-927c-f6c9a0ac8650.jpg",c:"Valle de los Reyes"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429030/8b8e71c3-b558-4f84-91cd-8a0e5befc970.jpg",c:"Valle de los Reyes"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429249/20180513_105852.jpg",c:"Valle de los Reyes"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429350/IMG_0945.jpg",c:"Valle de los Reyes"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429352/IMG_0947.jpg",c:"Valle de los Reyes"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429390/IMG_7157.jpg",c:"Valle de los Reyes"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429392/IMG_7168.jpg",c:"Valle de los Reyes"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429040/38327A4A-F24A-4238-AACD-656D272A3233.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429033/56bc24ff-e14a-4e34-8c02-55d26914d727.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429030/0b2d5cf7-308a-405b-92b9-2153f7d1cc07.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429358/IMG_1020.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429334/IMG_0869.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429294/IMG_0823.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429261/e88829a7-5b7d-4785-a9c0-b3ac2682e20c.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429329/IMG_0861.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429347/IMG_0911.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429253/20180514_213259.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429367/IMG_1060.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429339/IMG_0877.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429384/IMG_1260.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429370/IMG_1077.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429372/IMG_1080.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429373/IMG_1094.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429377/IMG_1098.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429395/IMG_7264.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429407/Snapseed.jpg",c:"Luxor · Karnak"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429385/IMG_7115.jpg",c:"Tren nocturno"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429253/20180514_213259.jpg",c:"Tren nocturno"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429259/b150ed03-8513-483b-b3ea-6fffc0a53793.jpg",c:"Jeróglificos"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429299/IMG_0840.jpg",c:"Jeróglificos"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429330/IMG_0866.jpg",c:"Jeróglificos"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429335/IMG_0870_1.jpg",c:"Jeróglificos"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429337/IMG_0873.jpg",c:"Jeróglificos"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429365/IMG_1049.jpg",c:"Jeróglificos"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429387/IMG_7148.jpg",c:"Jeróglificos"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429389/IMG_7150.jpg",c:"Jeróglificos"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792429393/IMG_7177.jpg",c:"Jeróglificos"},
+];
+
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+function scrollC(id,dir){document.getElementById(id).scrollBy({left:dir*180,behavior:'smooth'});}
+
+document.querySelectorAll('.carousel-track').forEach(track=>{
+  let down=false,sx,sl;
+  track.addEventListener('mousedown',e=>{down=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;});
+  track.addEventListener('mouseleave',()=>down=false);
+  track.addEventListener('mouseup',()=>down=false);
+  track.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx);});
+});
+
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
