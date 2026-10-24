@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tallin · Marzo 2011</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #2a5a8a; --accent-light: #e8f0f8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  .hero { min-height: 70vh; background: #040810; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #d8e4ec; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #90a8c0; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 30px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  .grid-med { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin: 20px 0; }
+  .grid-med .g { aspect-ratio: 1; border-radius: 9px; overflow: hidden; cursor: zoom-in; background: #c0ccd8; position: relative; }
+  .grid-med .g img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .grid-med .g:hover img { transform: scale(1.06); }
+
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d8e4ec; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(2,4,10,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c0d0dc; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .grid-med { grid-template-columns:repeat(3,1fr); }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857157/SL385687.jpg" alt="Tallin">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Tallin<br><em>la ciudad de cuento</em></h1>
+    <div class="tag">Marzo 2011 · Excursión desde Helsinki</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>⛴️ Ferry sobre hielo</span>
+      <span>🧊 Ciudad medieval congelada</span>
+      <span>🦌 Sopa de reno</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+</nav>
+
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Un día en Estonia · había que aprovechar</h2>
+    <p>Fúbamos a ver a la prima en Helsinki. Desde allí, un ferry atravesando el Báltico helado hasta Tallin era demasiado buena idea para no hacerla. Una excursión de un día que resultó ser de las mejores del viaje.</p>
+    <p>Tallin en invierno es una ciudad de cuento: murallas medievales, calles empedradas cubiertas de nieve, torres rojizas y muy poca gente. Y la sopa de reno para entrar en calor.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">día</div></div>
+      <div class="stat"><div class="stat-value">❄️</div><div class="stat-label">Báltico helado</div></div>
+      <div class="stat"><div class="stat-value">🦌</div><div class="stat-label">sopa de reno</div></div>
+      <div class="stat"><div class="stat-value">XIII</div><div class="stat-label">siglo · casco antiguo</div></div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Tallin en invierno parece una ciudad que alguien construyó para un cuento y luego olvidó deconstruir."</p>
+    </div>
+  </div>
+</section>
+
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Tallin en imágenes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+    <div class="grid-med">
+      <div class="g" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857150/PHOT0336.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857156/SL385682.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857159/SL385699.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857157/SL385686.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857158/SL385688.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857159/SL385698.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857152/SL385669.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857156/SL385683.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857160/SL385702.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857154/SL385673.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857154/SL385676.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857155/SL385678.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857150/SL385656.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857151/SL385655.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857150/SL385644.jpg" loading="lazy" alt="Tallin"></div>
+      <div class="g" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857151/SL385663.jpg" loading="lazy" alt="Tallin"></div>
+    </div>
+  </div>
+</section>
+
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los tres momentos</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">⛴️</div>
+        <div>
+          <div class="moment-title">Ferry sobre hielo · Helsinki → Tallin</div>
+          <p class="moment-desc">El Báltico en marzo está parcialmente helado. El ferry abriéndose paso entre el hielo es una imagen que no se olvida fácilmente.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏰</div>
+        <div>
+          <div class="moment-title">Ciudad medieval bajo la nieve</div>
+          <p class="moment-desc">El casco antiguo de Tallin es uno de los mejor conservados de Europa. En invierno, con nieve y sin turistas, parece sacado directamente de la Edad Media.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🦌</div>
+        <div>
+          <div class="moment-title">Sopa de reno</div>
+          <p class="moment-desc">Con el frío que hacía, la sopa de reno en un restaurante del casco antiguo fue la mejor decisión del día. Caliente, contundente y completamente fuera de lo habitual.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><p>Tallin · Marzo 2011 · Excursión desde Helsinki</p></footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857150/PHOT0336.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857156/SL385682.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857159/SL385699.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857157/SL385686.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857158/SL385688.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857159/SL385698.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857152/SL385669.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857156/SL385683.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857160/SL385702.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857154/SL385673.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857154/SL385676.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857155/SL385678.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857150/SL385656.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857151/SL385655.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857150/SL385644.jpg",c:"Tallin"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857151/SL385663.jpg",c:"Tallin"},
+];
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
