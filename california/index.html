@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>California · Marzo 2012</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #1a5c9a; --accent-light: #e6f0fa;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  .hero { min-height: 70vh; background: #04080e; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; left: 48px; text-align: left; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,62px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); font-size: 0.65em; }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #d8e4ec; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(24px,4vw,36px); font-weight: 400; line-height: 1.2; margin-bottom: 12px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #90b0cc; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 30px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  .vegas-section { background: #08040e; padding: 48px 32px; }
+  .vegas-section .section-label { color: #f59e0b; }
+  .vegas-section h2 { color: #fff; }
+  .vegas-section p { color: rgba(255,255,255,0.6); }
+  .vegas-section .carousel-btn { background: rgba(255,255,255,0.08); border-color: rgba(245,158,11,0.4); color: #fff; }
+  .vegas-section .carousel-hint { color: rgba(255,255,255,0.35); }
+
+  .carousel { position: relative; margin: 10px 0; }
+  .carousel-track { display: flex; gap: 5px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 6px; cursor: grab; scrollbar-width: none; }
+  .carousel-track:active { cursor: grabbing; }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track .thumb { flex: 0 0 auto; scroll-snap-align: start; width: 150px; height: 150px; border-radius: 7px; overflow: hidden; cursor: zoom-in; background: #c8d8e8; position: relative; }
+  .carousel-track .thumb:first-child { width: 200px; }
+  .carousel-track .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.3s; }
+  .carousel-track .thumb:hover img { transform: scale(1.05); }
+  .carousel-track .thumb .cap { position:absolute; bottom:0; left:0; right:0; padding:16px 8px 6px; background:linear-gradient(transparent,rgba(0,0,0,0.45)); color:#fff; font-size:10px; opacity:0; transition:opacity 0.2s; }
+  .carousel-track .thumb:hover .cap { opacity:1; }
+  .carousel-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .carousel-btn { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #b0c8dc; background: #fff; color: var(--ink); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .carousel-btn:hover { border-color: var(--accent); }
+  .carousel-hint { font-size: 11px; color: var(--muted); margin-left: 4px; }
+
+  .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin:10px 0; }
+  .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin:10px 0; }
+  .grid-4 .g, .grid-3 .g { aspect-ratio:1; border-radius:7px; overflow:hidden; cursor:zoom-in; background:#c8d8e8; }
+  .grid-4 .g img, .grid-3 .g img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.3s; }
+  .grid-4 .g:hover img, .grid-3 .g:hover img { transform:scale(1.06); }
+
+  .tip-card { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 16px 20px; margin: 16px 0; display: flex; gap: 12px; align-items: flex-start; }
+  .tip-icon { font-size: 20px; flex-shrink: 0; }
+  .tip-card p { color: rgba(255,255,255,0.8); margin: 0; max-width: none; font-size: 14px; }
+  .tip-card strong { color: var(--warm); }
+
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d8e4ec; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  .ratings { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .rating-row { display:flex; align-items:center; gap:14px; }
+  .rating-label { font-size:13px; min-width:180px; color:var(--muted); }
+  .rating-bar { flex:1; height:5px; background:#d0dce8; border-radius:3px; overflow:hidden; }
+  .rating-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .rating-score { font-family:'Instrument Serif',serif; font-size:17px; min-width:32px; text-align:right; }
+
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .verdict-box { padding:20px; border-radius:var(--radius); }
+  .verdict-box.good { background:#edf6ed; }
+  .verdict-box.bad { background:#fce8e8; }
+  .verdict-title { font-weight:500; font-size:12px; margin-bottom:10px; }
+  .verdict-box.good .verdict-title { color:#2d6a4f; }
+  .verdict-box.bad .verdict-title { color:#b03030; }
+  .verdict-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .verdict-list li { font-size:13px; color:#3d3d3d; padding-left:14px; position:relative; margin:0; }
+  .verdict-list li::before { content:'·'; position:absolute; left:4px; color:var(--muted); }
+
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(2,4,8,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:4px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c0d0dc; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; left:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section, .vegas-section { padding:36px 20px; }
+    .grid-4 { grid-template-columns:repeat(3,1fr); }
+    .verdict { grid-template-columns:1fr; }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854240/IMG_2455.jpg" alt="California">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>California<br><em>San Diego · LA · SF · Las Vegas</em></h1>
+    <div class="tag">Marzo 2012 · Costa Oeste EEUU</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🌉 Golden Gate · Alcatraz</span>
+      <span>🎰 Las Vegas · 6 en habitación doble</span>
+      <span>🚗 Antonio en San Diego</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#sandiego">San Diego</a>
+  <a href="#la">Los Ángeles</a>
+  <a href="#solvang">Solvang</a>
+  <a href="#sf">San Francisco</a>
+  <a href="#vegas">Las Vegas</a>
+  <a href="#momentos">Momentos</a>
+</nav>
+
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>Antonio en San Diego · la excusa perfecta para la Costa Oeste</h2>
+    <p>Antonio estaba en San Diego haciendo el proyecto fin de carrera. Había que aprovechar. Recorrimos la costa de sur a norte — San Diego, Los Ángeles, Solvang, el circuito del sacacorcho y San Francisco — con una desviación obligatoria a Las Vegas que se convirtió en tres noches de leyenda.</p>
+    <div class="stats">
+      <div class="stat"><div class="stat-value">4</div><div class="stat-label">ciudades</div></div>
+      <div class="stat"><div class="stat-value">8h</div><div class="stat-label">tirón hasta Las Vegas</div></div>
+      <div class="stat"><div class="stat-value">6</div><div class="stat-label">tíos en habitación doble</div></div>
+      <div class="stat"><div class="stat-value">100$</div><div class="stat-label">perdidos en casinos</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="sandiego">
+  <div class="inner">
+    <div class="section-label">San Diego</div>
+    <h2>La menos famosa · posiblemente la mejor para vivir</h2>
+    <p>San Diego no tiene el glamour de LA ni la fama de SF, pero tiene algo que las otras no: es la ciudad donde uno querría vivir. Tranquila, soleada, con playas y con Antonio como guía local.</p>
+    <div class="carousel">
+      <div class="carousel-track" id="c-sd">
+          <div class="thumb" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854357/IMG_2537.jpg" loading="lazy" alt="San Diego"><div class="cap">San Diego</div></div>
+          <div class="thumb" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854357/IMG_2536.jpg" loading="lazy" alt="San Diego"><div class="cap">San Diego</div></div>
+          <div class="thumb" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854354/IMG_2530.jpg" loading="lazy" alt="San Diego"><div class="cap">San Diego</div></div>
+          <div class="thumb" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854357/IMG_2538.jpg" loading="lazy" alt="San Diego"><div class="cap">San Diego</div></div>
+          <div class="thumb" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854358/IMG_2539.jpg" loading="lazy" alt="San Diego"><div class="cap">San Diego</div></div>
+          <div class="thumb" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854354/IMG_2529.jpg" loading="lazy" alt="San Diego"><div class="cap">San Diego</div></div>
+          <div class="thumb" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854356/IMG_2535.jpg" loading="lazy" alt="San Diego"><div class="cap">San Diego</div></div>
+          <div class="thumb" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854356/IMG_2534.jpg" loading="lazy" alt="San Diego"><div class="cap">San Diego</div></div>
+          <div class="thumb" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854353/IMG_2527.jpg" loading="lazy" alt="San Diego"><div class="cap">San Diego</div></div>
+          <div class="thumb" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854354/IMG_2528.jpg" loading="lazy" alt="San Diego"><div class="cap">San Diego</div></div>
+          <div class="thumb" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854352/IMG_2526.jpg" loading="lazy" alt="San Diego"><div class="cap">San Diego</div></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="scrollC('c-sd',-1)">‹</button>
+        <button class="carousel-btn" onclick="scrollC('c-sd',1)">›</button>
+        <span class="carousel-hint">arrastra · clic para ampliar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="la">
+  <div class="inner">
+    <div class="section-label">Los Ángeles</div>
+    <h2>Un poco decección · Santa Mónica y Venice sí merecen</h2>
+    <p>El paseo de las estrellas no es para tanto. El cartel de Hollywood tampoco. Rodeo Drive, Beverly Hills y el downtown — nada amigable para el peatón. Donde sí: Santa Mónica y Venice Beach.</p>
+    <div class="tip-card">
+      <div class="tip-icon">🌟</div>
+      <p><strong>Lo que sí vale la pena en LA:</strong> Santa Mónica y Venice Beach. El resto es fotogenia sobrevalorada.</p>
+    </div>
+    <div class="carousel">
+      <div class="carousel-track" id="c-la">
+          <div class="thumb" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854351/IMG_2522.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854351/IMG_2523.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854356/IMG_2533.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854350/IMG_2521.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854350/IMG_2520.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854355/IMG_2532.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854355/IMG_2531.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854349/IMG_2519.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854349/IMG_2518.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854349/IMG_2517.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854244/IMG_2465.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854242/IMG_2463.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854242/IMG_2464.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854241/IMG_2461.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854241/IMG_2459.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854242/IMG_2462.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854241/IMG_2458.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+          <div class="thumb" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854241/IMG_2460.jpg" loading="lazy" alt="Los Ángeles"><div class="cap">Los Ángeles</div></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="scrollC('c-la',-1)">‹</button>
+        <button class="carousel-btn" onclick="scrollC('c-la',1)">›</button>
+        <span class="carousel-hint">arrastra · clic para ampliar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="solvang">
+  <div class="inner">
+    <div class="section-label">De camino a San Francisco</div>
+    <h2>Solvang · el pueblo danés · y el circuito del sacacorcho</h2>
+    <p>Solvang es un pueblo en mitad de California con arquitectura completamente danesa. Y el circuito de motos del sacacorcho, una carretera en espiral que parece sacada de un videojuego.</p>
+    <div class="carousel">
+      <div class="carousel-track" id="c-sol">
+          <div class="thumb" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854346/IMG_2513.jpg" loading="lazy" alt="Solvang · Sacacorcho"><div class="cap">Solvang · Sacacorcho</div></div>
+          <div class="thumb" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854347/IMG_2514.jpg" loading="lazy" alt="Solvang · Sacacorcho"><div class="cap">Solvang · Sacacorcho</div></div>
+          <div class="thumb" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854346/IMG_2511.jpg" loading="lazy" alt="Solvang · Sacacorcho"><div class="cap">Solvang · Sacacorcho</div></div>
+          <div class="thumb" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854346/IMG_2512.jpg" loading="lazy" alt="Solvang · Sacacorcho"><div class="cap">Solvang · Sacacorcho</div></div>
+          <div class="thumb" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854345/IMG_2509.jpg" loading="lazy" alt="Solvang · Sacacorcho"><div class="cap">Solvang · Sacacorcho</div></div>
+          <div class="thumb" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854345/IMG_2510.jpg" loading="lazy" alt="Solvang · Sacacorcho"><div class="cap">Solvang · Sacacorcho</div></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="scrollC('c-sol',-1)">‹</button>
+        <button class="carousel-btn" onclick="scrollC('c-sol',1)">›</button>
+        <span class="carousel-hint">arrastra · clic para ampliar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sf">
+  <div class="inner">
+    <div class="section-label">San Francisco</div>
+    <h2>Golden Gate · Alcatraz · Lombard Street · NBA</h2>
+    <p>El Golden Gate bajo las nubes, como manda la tradición. El Pier 41 con los leones marinos. A lo loco con el coche por Lombard Street. Visita a Alcatraz. Y un partido de los Golden State Warriors — aún no jugaba Curry.</p>
+    <div class="carousel">
+      <div class="carousel-track" id="c-sf">
+          <div class="thumb" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854343/IMG_2507.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854344/IMG_2508.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854343/IMG_2506.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854343/IMG_2505.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854342/IMG_2504.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854341/IMG_2503.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854341/IMG_2502.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854340/IMG_2501.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854338/IMG_2495.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(44)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854337/IMG_2494.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(45)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854337/IMG_2493.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(46)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854336/IMG_2492.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+          <div class="thumb" onclick="lb(47)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854335/IMG_2491.jpg" loading="lazy" alt="San Francisco"><div class="cap">San Francisco</div></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="scrollC('c-sf',-1)">‹</button>
+        <button class="carousel-btn" onclick="scrollC('c-sf',1)">›</button>
+        <span class="carousel-hint">arrastra · clic para ampliar</span>
+      </div>
+    </div>
+    <p style="font-weight:500; font-size:14px; margin:20px 0 8px; color:var(--accent);">🗼 Alcatraz</p>
+    <div class="grid-4">
+      <div class="g" onclick="lb(48)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854340/IMG_2499.jpg" loading="lazy" alt="Alcatraz"></div>
+      <div class="g" onclick="lb(49)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854340/IMG_2500.jpg" loading="lazy" alt="Alcatraz"></div>
+      <div class="g" onclick="lb(50)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854339/IMG_2498.jpg" loading="lazy" alt="Alcatraz"></div>
+      <div class="g" onclick="lb(51)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854339/IMG_2497.jpg" loading="lazy" alt="Alcatraz"></div>
+    </div>
+    <p style="font-weight:500; font-size:14px; margin:20px 0 8px; color:var(--accent);">🌳 Lo poco que vimos de Yosemite</p>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Las carreteras estaban cortadas. Vimos lo que se pudo desde el coche.</p>
+    <div class="grid-3">
+      <div class="g" onclick="lb(52)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854335/IMG_2490.jpg" loading="lazy" alt="Yosemite"></div>
+      <div class="g" onclick="lb(53)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854335/IMG_2489.jpg" loading="lazy" alt="Yosemite"></div>
+      <div class="g" onclick="lb(54)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854334/IMG_2488.jpg" loading="lazy" alt="Yosemite"></div>
+    </div>
+  </div>
+</section>
+
+<div class="vegas-section" id="vegas">
+  <div class="inner">
+    <div class="section-label">Las Vegas</div>
+    <h2>6 tíos · habitación doble · colchones inflables</h2>
+    <p>La idea era hacer noche en Yosemite. Las carreteras cortadas lo impidieron. Nos calentamos y fuimos del tirón: 8 horas, algún susto y primera noche en el Stratosphere. Las dos siguientes en el Paris: 6 tíos, habitación doble, colchones inflables. Había que economizar.</p>
+    <p>Recorrimos cada casino — Venetian, Caesar's, MGM — perdiendo dinero en cada uno. Unos 100$ en total. Noche en la discoteca Encore XS.</p>
+    <div class="carousel">
+      <div class="carousel-track" id="c-veg">
+          <div class="thumb" onclick="lb(55)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854334/IMG_2487.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(56)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854333/IMG_2485.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(57)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854334/IMG_2486.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(58)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854333/IMG_2483.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(59)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854332/IMG_2482.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(60)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854332/IMG_2481.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(61)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854331/IMG_2479.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(62)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854331/IMG_2478.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(63)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854330/IMG_2477.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(64)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854331/IMG_2480.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(65)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854330/IMG_2476.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(66)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854241/IMG_2456.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(67)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854329/IMG_2475.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(68)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854329/IMG_2474.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(69)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854329/IMG_2473.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(70)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854327/IMG_2471.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(71)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854327/IMG_2472.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(72)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854326/IMG_2468.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(73)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854327/IMG_2470.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(74)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854327/IMG_2469.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(75)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854326/IMG_2467.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+          <div class="thumb" onclick="lb(76)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792854240/IMG_2454.jpg" loading="lazy" alt="Las Vegas"><div class="cap">Las Vegas</div></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="scrollC('c-veg',-1)">‹</button>
+        <button class="carousel-btn" onclick="scrollC('c-veg',1)">›</button>
+        <span class="carousel-hint">arrastra · clic para ampliar</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🚗</div>
+        <div>
+          <div class="moment-title">8 horas del tirón hasta Las Vegas</div>
+          <p class="moment-desc">Yosemite cerrado. Nos calentamos y fuimos directos. 8 horas de carretera, algún susto y llegar de noche con el Strip brillando.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🛏️</div>
+        <div>
+          <div class="moment-title">6 tíos en habitación doble · colchones inflables</div>
+          <p class="moment-desc">Dos noches en el hotel Paris de Las Vegas. Seis personas. Habitación doble. Colchones inflables. El resultado fue glorioso.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏀</div>
+        <div>
+          <div class="moment-title">NBA · Golden State Warriors · aún sin Curry</div>
+          <p class="moment-desc">Un partido de la NBA en San Francisco. Los Warriors un año antes de que Curry lo cambiara todo.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🌉</div>
+        <div>
+          <div class="moment-title">El Golden Gate bajo las nubes</div>
+          <p class="moment-desc">Como siempre. El Golden Gate y la niebla son inseparables. San Francisco siendo San Francisco.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚢</div>
+        <div>
+          <div class="moment-title">Alcatraz</div>
+          <p class="moment-desc">La isla-prisón en la bahía. El audioguía narrado por presos y guardias. Uno de los mejores museos del viaje.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🛣️</div>
+        <div>
+          <div class="moment-title">Lombard Street a lo loco</div>
+          <p class="moment-desc">La calle más sinuosa del mundo. Bajamos en coche por las 8 curvas. Turistas mirándonos desde los lados.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="inner">
+    <div class="section-label">Balance</div>
+    <h2>¿Cómo fue?</h2>
+    <div class="ratings">
+      <div class="rating-row"><span class="rating-label">San Francisco</span><div class="rating-bar"><div class="rating-fill" style="width:97%"></div></div><span class="rating-score">9.7</span></div>
+      <div class="rating-row"><span class="rating-label">San Diego</span><div class="rating-bar"><div class="rating-fill" style="width:95%"></div></div><span class="rating-score">9.5</span></div>
+      <div class="rating-row"><span class="rating-label">Las Vegas</span><div class="rating-bar"><div class="rating-fill" style="width:92%"></div></div><span class="rating-score">9.2</span></div>
+      <div class="rating-row"><span class="rating-label">Alcatraz</span><div class="rating-bar"><div class="rating-fill" style="width:93%"></div></div><span class="rating-score">9.3</span></div>
+      <div class="rating-row"><span class="rating-label">Los Ángeles</span><div class="rating-bar"><div class="rating-fill" style="width:65%"></div></div><span class="rating-score">6.5</span></div>
+      <div class="rating-row"><span class="rating-label">El paseo de las estrellas</span><div class="rating-bar"><div class="rating-fill" style="width:30%"></div></div><span class="rating-score">3</span></div>
+      <div class="rating-row"><span class="rating-label">Volvería</span><div class="rating-bar"><div class="rating-fill" style="width:98%"></div></div><span class="rating-score">9.8</span></div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-box good">
+        <div class="verdict-title">Lo mejor</div>
+        <ul class="verdict-list">
+          <li>San Francisco — la ciudad más completa</li>
+          <li>6 en habitación doble en Las Vegas</li>
+          <li>Alcatraz y Lombard Street</li>
+          <li>Santa Mónica y Venice Beach</li>
+          <li>Solvang y el sacacorcho</li>
+        </ul>
+      </div>
+      <div class="verdict-box bad">
+        <div class="verdict-title">Lo que no repetiría</div>
+        <ul class="verdict-list">
+          <li>El paseo de las estrellas — sobrevalorado</li>
+          <li>No llegar a Yosemite de verdad</li>
+          <li>No ver el Gran Cañón ni las secuoyas</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>"La Costa Oeste americana no decepciona. Excepto el paseo de las estrellas. Ese sí."</p>
+    </div>
+  </div>
+</section>
+
+<footer><p>California · Marzo 2012 · Costa Oeste EEUU</p></footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854357/IMG_2537.jpg",c:"San Diego"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854357/IMG_2536.jpg",c:"San Diego"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854354/IMG_2530.jpg",c:"San Diego"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854357/IMG_2538.jpg",c:"San Diego"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854358/IMG_2539.jpg",c:"San Diego"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854354/IMG_2529.jpg",c:"San Diego"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854356/IMG_2535.jpg",c:"San Diego"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854356/IMG_2534.jpg",c:"San Diego"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854353/IMG_2527.jpg",c:"San Diego"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854354/IMG_2528.jpg",c:"San Diego"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854352/IMG_2526.jpg",c:"San Diego"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854351/IMG_2522.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854351/IMG_2523.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854356/IMG_2533.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854350/IMG_2521.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854350/IMG_2520.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854355/IMG_2532.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854355/IMG_2531.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854349/IMG_2519.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854349/IMG_2518.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854349/IMG_2517.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854244/IMG_2465.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854242/IMG_2463.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854242/IMG_2464.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854241/IMG_2461.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854241/IMG_2459.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854242/IMG_2462.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854241/IMG_2458.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854241/IMG_2460.jpg",c:"Los Ángeles"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854346/IMG_2513.jpg",c:"Solvang · Sacacorcho"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854347/IMG_2514.jpg",c:"Solvang · Sacacorcho"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854346/IMG_2511.jpg",c:"Solvang · Sacacorcho"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854346/IMG_2512.jpg",c:"Solvang · Sacacorcho"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854345/IMG_2509.jpg",c:"Solvang · Sacacorcho"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854345/IMG_2510.jpg",c:"Solvang · Sacacorcho"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854343/IMG_2507.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854344/IMG_2508.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854343/IMG_2506.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854343/IMG_2505.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854342/IMG_2504.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854341/IMG_2503.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854341/IMG_2502.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854340/IMG_2501.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854338/IMG_2495.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854337/IMG_2494.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854337/IMG_2493.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854336/IMG_2492.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854335/IMG_2491.jpg",c:"San Francisco"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854340/IMG_2499.jpg",c:"Alcatraz"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854340/IMG_2500.jpg",c:"Alcatraz"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854339/IMG_2498.jpg",c:"Alcatraz"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854339/IMG_2497.jpg",c:"Alcatraz"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854335/IMG_2490.jpg",c:"Yosemite"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854335/IMG_2489.jpg",c:"Yosemite"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854334/IMG_2488.jpg",c:"Yosemite"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854334/IMG_2487.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854333/IMG_2485.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854334/IMG_2486.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854333/IMG_2483.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854332/IMG_2482.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854332/IMG_2481.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854331/IMG_2479.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854331/IMG_2478.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854330/IMG_2477.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854331/IMG_2480.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854330/IMG_2476.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854241/IMG_2456.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854329/IMG_2475.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854329/IMG_2474.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854329/IMG_2473.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854327/IMG_2471.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854327/IMG_2472.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854326/IMG_2468.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854327/IMG_2470.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854327/IMG_2469.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854326/IMG_2467.jpg",c:"Las Vegas"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792854240/IMG_2454.jpg",c:"Las Vegas"},
+];
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+function scrollC(id,dir){document.getElementById(id).scrollBy({left:dir*170,behavior:'smooth'});}
+document.querySelectorAll('.carousel-track').forEach(track=>{
+  let down=false,sx,sl;
+  track.addEventListener('mousedown',e=>{down=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;});
+  track.addEventListener('mouseleave',()=>down=false);
+  track.addEventListener('mouseup',()=>down=false);
+  track.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx);});
+});
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
