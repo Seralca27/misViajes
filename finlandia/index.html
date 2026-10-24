@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finlandia · Marzo 2011</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #2a5a8a; --accent-light: #e8f0f8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  .hero { min-height: 70vh; background: #040810; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #d8e4ec; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #90a8c0; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 30px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  /* CUADRÍCULA NORMAL */
+  .grid-sm { display: grid; grid-template-columns: repeat(6,1fr); gap: 5px; margin: 20px 0; }
+  .grid-sm .g { aspect-ratio:1; border-radius:6px; overflow:hidden; cursor:zoom-in; background:#c0ccd8; }
+  .grid-sm .g img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.3s; }
+  .grid-sm .g:hover img { transform:scale(1.07); }
+
+  /* CUADRÍCULA MEME muy pequeña */
+  .grid-meme { display: grid; grid-template-columns: repeat(9,1fr); gap: 3px; margin: 16px 0; }
+  .grid-meme .mg { aspect-ratio:1; border-radius:4px; overflow:hidden; cursor:zoom-in; background:#c0ccd8; position:relative; }
+  .grid-meme .mg img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.3s, filter 0.3s; }
+  .grid-meme .mg:hover img { transform:scale(1.1); filter:brightness(1.1); }
+
+  /* MOMENTOS */
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #d8e4ec; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(2,4,10,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:4px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #c0d0dc; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .grid-sm { grid-template-columns:repeat(4,1fr); }
+    .grid-meme { grid-template-columns:repeat(6,1fr); }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857795/SL385455.jpg" alt="Finlandia">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Finlandia<br><em>turbodesparrame</em></h1>
+    <div class="tag">Marzo 2011 · Jyväskylä · Helsinki</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>❄️ -10º y a full</span>
+      <span>🍕 Pizzería Maria · kebabs de medio metro</span>
+      <span>🛣️ Rotonda por encima · rueda reventada</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#memes">Momentos gráficos</a>
+  <a href="#momentos">Momentos</a>
+</nav>
+
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>La prima Isa de Erasmus en Jyväskylä · allí que nos plantamos</h2>
+    <p>Justo, Pitu, Mingo, Clara (la recogida en Londres) y Maripi. Blanca se quedó en casa pegada a la taza del váter. Paquetón de nieve nada más llegar, pero daba igual — Isa y sus amigos vinieron a buscarnos a Tampere y a fuego por la carretera. Menos mal que las ruedas estaban preparadas.</p>
+    <p>Primer día de fiesta a -10º, vuelta en coche y rotonda por encima. Rueda del coche de alquiler reventada y a cambiarla al día siguiente con medio metro de nieve. Pizzería Maria, kebabs de medio metro, blackjack en discotecas y Helsinki a base de bar libre en Tigre robando copas. 8 personas en habitación de 2 en el hotel Omena.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">6</div><div class="stat-label">del equipo (Blanca no)</div></div>
+      <div class="stat"><div class="stat-value">-10º</div><div class="stat-label">temperatura de fiesta</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">rotonda por encima</div></div>
+      <div class="stat"><div class="stat-value">8</div><div class="stat-label">en habitación de 2</div></div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Finlandia en marzo: nieve, oscuridad, -10º y una prima de Erasmus. La combinación perfecta para el desparrame total."</p>
+    </div>
+  </div>
+</section>
+
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Finlandia en imágenes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+    <div class="grid-sm">
+      <div class="g" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857736/PHOT0034.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857739/PHOT0062.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857741/PHOT0075.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857742/PHOT0082.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857791/SL385444.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857792/SL385450.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857793/SL385452.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857744/PHOT0099.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857797/SL385460.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857799/SL385463.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857800/SL385464.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857801/SL385468.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857802/SL385470.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857803/SL385473.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857812/SL385526.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857746/PHOT0106.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857748/PHOT0107.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857751/PHOT0145.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857820/SL385602.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857821/SL385604.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857822/SL385610.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857823/SL385612.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857825/SL385633.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857757/PHOT0168.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857759/PHOT0177.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857760/PHOT0180.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857761/PHOT0186.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857763/PHOT0194.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857764/PHOT0204.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857765/PHOT0207.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857766/PHOT0209.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857769/PHOT0225.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857772/PHOT0242.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(33)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857774/PHOT0244.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(34)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857782/PHOT0289.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(35)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857784/PHOT0348.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(36)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857788/PHOT0389.jpg" loading="lazy" alt="Finlandia"></div>
+      <div class="g" onclick="lb(37)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857830/SL385711.jpg" loading="lazy" alt="Finlandia"></div>
+    </div>
+  </div>
+</section>
+
+<section id="memes">
+  <div class="inner">
+    <div class="section-label">Archivo gráfico</div>
+    <h2>Momentos para recordar 🤪</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Las que no necesitan explicación. Clic para ampliar.</p>
+    <div class="grid-meme">
+      <div class="mg" onclick="lb(38)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857735/PHOT0026.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(39)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857735/PHOT0028.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(40)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857735/PHOT0031.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(41)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857736/PHOT0044.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(42)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857738/PHOT0056.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(43)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857745/PHOT0101.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(44)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857749/PHOT0114.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(45)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857750/PHOT0121.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(46)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857754/PHOT0152.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(47)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857805/SL385476.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(48)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857807/SL385508.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(49)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857808/SL385510.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(50)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857809/SL385516.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(51)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857753/PHOT0150.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(52)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857755/PHOT0157.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(53)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857815/SL385565.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(54)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857758/PHOT0170.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(55)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857768/PHOT0224.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(56)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857770/PHOT0227.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(57)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857771/PHOT0230.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(58)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857775/PHOT0245.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(59)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857776/PHOT0249.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(60)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857778/PHOT0256.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(61)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857779/PHOT0257.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(62)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857780/PHOT0259.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(63)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857781/PHOT0260.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(64)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857787/PHOT0380.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(65)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857804/SL385475.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(66)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857811/SL385521.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(67)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857813/SL385545.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(68)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857814/SL385562.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(69)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857816/SL385569.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(70)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857818/SL385586.jpg" loading="lazy" alt="Meme"></div>
+      <div class="mg" onclick="lb(71)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1792857827/SL385650.jpg" loading="lazy" alt="Meme"></div>
+    </div>
+  </div>
+</section>
+
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🛣️</div>
+        <div>
+          <div class="moment-title">Rotonda por encima · rueda reventada</div>
+          <p class="moment-desc">Vuelta de la primera fiesta, -10º, carretera helada. El coche de alquiler pasó por encima de una rotonda. Al día siguiente, rueda reventada y a cambiarla con medio metro de nieve.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍕</div>
+        <div>
+          <div class="moment-title">Pizzería Maria · kebabs de medio metro · gorrinos</div>
+          <p class="moment-desc">La dieta del viaje: pizzas gigantes de la Pizzería Maria y kebabs de medio metro. Estaban gordos como gorrinos. Nadie se quejó.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🃏</div>
+        <div>
+          <div class="moment-title">Blackjack en la discoteca</div>
+          <p class="moment-desc">Las discotecas finlandesas tenían mesas de blackjack. No se sabe por qué. No se preguntó. Se jugó.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏘️</div>
+        <div>
+          <div class="moment-title">Fiesta Ángeles y Demonios en el M-Building</div>
+          <p class="moment-desc">La fiesta del mes de los Erasmus. Disfraz de ángel o demonio, álcool finlés y una temperatura bajo cero que no paraba a nadie.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍺</div>
+        <div>
+          <div class="moment-title">Helsinki · barra libre en Tigre · 8 en habitación de 2</div>
+          <p class="moment-desc">Barra libre en el Tiger Helsinki con copas robadas incluidas. Y hotel Omena: habitación doble, 8 personas, colchones improvisados. La economía de escala en su máxima expresión.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🤪</div>
+        <div>
+          <div class="moment-title">Maripi · sus guerras con Justo y sus venadas</div>
+          <p class="moment-desc">"Que pasa chacho." Maripi y sus episodios merecen una sección propia. Las imágenes lo dicen todo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><p>Finlandia · Marzo 2011 · Turbodesparrame</p></footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857736/PHOT0034.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857739/PHOT0062.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857741/PHOT0075.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857742/PHOT0082.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857791/SL385444.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857792/SL385450.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857793/SL385452.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857744/PHOT0099.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857797/SL385460.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857799/SL385463.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857800/SL385464.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857801/SL385468.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857802/SL385470.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857803/SL385473.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857812/SL385526.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857746/PHOT0106.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857748/PHOT0107.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857751/PHOT0145.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857820/SL385602.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857821/SL385604.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857822/SL385610.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857823/SL385612.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857825/SL385633.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857757/PHOT0168.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857759/PHOT0177.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857760/PHOT0180.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857761/PHOT0186.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857763/PHOT0194.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857764/PHOT0204.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857765/PHOT0207.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857766/PHOT0209.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857769/PHOT0225.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857772/PHOT0242.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857774/PHOT0244.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857782/PHOT0289.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857784/PHOT0348.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857788/PHOT0389.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857830/SL385711.jpg",c:"Finlandia"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857735/PHOT0026.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857735/PHOT0028.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857735/PHOT0031.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857736/PHOT0044.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857738/PHOT0056.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857745/PHOT0101.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857749/PHOT0114.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857750/PHOT0121.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857754/PHOT0152.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857805/SL385476.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857807/SL385508.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857808/SL385510.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857809/SL385516.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857753/PHOT0150.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857755/PHOT0157.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857815/SL385565.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857758/PHOT0170.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857768/PHOT0224.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857770/PHOT0227.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857771/PHOT0230.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857775/PHOT0245.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857776/PHOT0249.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857778/PHOT0256.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857779/PHOT0257.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857780/PHOT0259.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857781/PHOT0260.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857787/PHOT0380.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857804/SL385475.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857811/SL385521.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857813/SL385545.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857814/SL385562.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857816/SL385569.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857818/SL385586.jpg",c:"Turbodesparrame 🤪"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1792857827/SL385650.jpg",c:"Turbodesparrame 🤪"},
+];
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
