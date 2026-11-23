@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bulgaria · Febrero 2019</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --muted: #6b6b6b;
+    --accent: #5a2a7a; --accent-light: #f0e8f8;
+    --warm: #c9a96e; --bg-a: #eef2f7; --bg-b: #f7f4ef; --radius: 12px;
+  }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--ink); line-height: 1.7; font-size: 16px; background: var(--bg-a); }
+
+  .hero { min-height: 70vh; background: #0a0410; position: relative; overflow: hidden; }
+  .hero-photos { position: absolute; inset: 0; }
+  .hero-photos img { width:100%; height:100%; object-fit:cover; opacity:0.72; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%); }
+  .hero-top { position: absolute; top: 40px; right: 48px; text-align: right; }
+  .hero-top h1 { font-family: 'Instrument Serif', serif; font-size: clamp(32px,5vw,60px); font-weight: 400; color: #fff; line-height: 1.1; }
+  .hero-top h1 em { font-style: italic; color: var(--warm); }
+  .hero-top .tag { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; color: var(--warm); text-transform: uppercase; margin-top: 8px; }
+  .hero-bottom { position: absolute; bottom: 40px; right: 48px; text-align: right; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-end; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+  nav { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e0d8ec; padding: 0 48px; display: flex; z-index: 100; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  section { padding: 48px 32px; }
+  section:nth-of-type(odd) { background: var(--bg-a); }
+  section:nth-of-type(even) { background: var(--bg-b); }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--warm); text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(26px,4vw,38px); font-weight: 400; line-height: 1.2; margin-bottom: 16px; }
+  p { color: #3d3d3d; margin-bottom: 14px; max-width: 640px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 1px; background: #b090cc; border-radius: var(--radius); overflow: hidden; margin: 20px 0; }
+  .stat { background: #fff; padding: 20px; text-align: center; }
+  .stat-value { font-family: 'Instrument Serif', serif; font-size: 30px; color: var(--accent); line-height: 1; margin-bottom: 2px; }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  .tip-card { background: var(--ink); border-radius: var(--radius); padding: 16px 20px; margin: 16px 0; display: flex; gap: 12px; align-items: flex-start; }
+  .tip-icon { font-size: 20px; flex-shrink: 0; }
+  .tip-card p { color: rgba(255,255,255,0.8); margin: 0; max-width: none; font-size: 14px; }
+  .tip-card strong { color: var(--warm); }
+
+  .grid-sm { display: grid; grid-template-columns: repeat(6,1fr); gap: 5px; margin: 20px 0; }
+  .grid-sm .g { aspect-ratio:1; border-radius:6px; overflow:hidden; cursor:zoom-in; background:#c8c0d8; }
+  .grid-sm .g img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.3s; }
+  .grid-sm .g:hover img { transform:scale(1.07); }
+
+  .moments { display:flex; flex-direction:column; margin:20px 0; }
+  .moment { display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid #e0d8ec; align-items:start; }
+  .moment:last-child { border-bottom:none; }
+  .moment-emoji { width:44px; height:44px; background:var(--accent-light); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .moment-title { font-weight:500; font-size:14px; margin-bottom:2px; }
+  .moment-desc { font-size:13px; color:var(--muted); margin:0; }
+
+  .quote-block { border-left:3px solid var(--warm); padding:16px 24px; margin:20px 0; background:rgba(201,169,110,0.08); border-radius:0 var(--radius) var(--radius) 0; }
+  .quote-block p { font-family:'Instrument Serif',serif; font-size:19px; font-style:italic; line-height:1.5; max-width:none; margin:0; }
+
+  .lightbox { display:none; position:fixed; inset:0; z-index:999; background:rgba(4,2,8,0.97); align-items:center; justify-content:center; flex-direction:column; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:82vh; object-fit:contain; border-radius:6px; }
+  .lb-caption { color:rgba(255,255,255,0.6); font-size:13px; margin-top:14px; }
+  .lb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lb-prev { left:20px; } .lb-next { right:20px; }
+  .lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:28px; cursor:pointer; }
+  .lb-dots { display:flex; gap:5px; margin-top:12px; flex-wrap:wrap; justify-content:center; max-width:400px; }
+  .lb-dot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.3); border:none; cursor:pointer; }
+  .lb-dot.on { background:rgba(255,255,255,0.9); }
+
+  footer { text-align:center; padding:40px 32px; font-size:12px; color:var(--muted); background:var(--bg-a); border-top:1px solid #d0c8e0; }
+
+  @media (max-width:640px) {
+    .hero-top { top:24px; right:24px; }
+    .hero-bottom { bottom:24px; right:24px; }
+    nav { padding:0 16px; }
+    section { padding:36px 20px; }
+    .grid-sm { grid-template-columns:repeat(4,1fr); }
+    .lb-nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photos">
+    <img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454905/IMG_1495.jpg" alt="Bulgaria">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-top">
+    <h1>Bulgaria<br><em>FCC on tour</em></h1>
+    <div class="tag">Febrero 2019 · Sofía · Plovdiv</div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-meta">
+      <span>🍺 Calentada en una cerveza · vuelo reservado</span>
+      <span>🚿 Váter debajo de la ducha</span>
+      <span>🧤 Hamburguesas con guantes</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#resumen">Resumen</a>
+  <a href="#fotos">Fotos</a>
+  <a href="#momentos">Momentos</a>
+</nav>
+
+<section id="resumen">
+  <div class="inner">
+    <div class="section-label">El viaje</div>
+    <h2>A veces la única forma de quedar es reservando un vuelo</h2>
+    <p>Tomando una cerveza, calentada, destino barato, vuelo reservado. Así de sencillo. Los compañeros de FCC en Sofía y Plovdiv: dos ciudades, un alojamiento para recordar y una gastronomia peculiar.</p>
+
+    <div class="tip-card">
+      <div class="tip-icon">🚿</div>
+      <p><strong>El alojamiento:</strong> viga cruzada que te podías abrir la cabeza, y la taza del váter debajo de la ducha. Dos por uno. Un cuadro.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🍔</div>
+      <p><strong>La gastronomía:</strong> hamburguesas con guantes y cóctel de violetas. Marranada las dos, pero experiencia completa.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">2</div><div class="stat-label">ciudades</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">viga casi letal</div></div>
+      <div class="stat"><div class="stat-value">🧤</div><div class="stat-label">hamburguesas con guantes</div></div>
+      <div class="stat"><div class="stat-value">🌸</div><div class="stat-label">cóctel de violetas</div></div>
+    </div>
+
+    <div class="quote-block">
+      <p>"A veces la única forma de quedar y volver a verse es reservar un vuelo. Y así funciona."</p>
+    </div>
+  </div>
+</section>
+
+<section id="fotos">
+  <div class="inner">
+    <div class="section-label">Galería</div>
+    <h2>Sofía y Plovdiv en imágenes</h2>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Haz clic en cualquier foto para verla en grande.</p>
+    <div class="grid-sm">
+      <div class="g" onclick="lb(0)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454900/e48c1ef6-6b9c-402a-9090-cb58b428b136.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(1)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454900/IMG_1369.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(2)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454900/ffa79714-fcc9-4e97-985d-ebd1d8998d15.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(3)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454900/IMG_1374.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(4)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1367.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(5)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1383.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(6)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1384.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(7)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1393.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(8)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1398.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(9)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1388.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(10)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1389.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(11)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454902/IMG_1403.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(12)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454904/IMG_1444.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(13)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454904/IMG_1455.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(14)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454904/IMG_1462.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(15)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454904/IMG_1471.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(16)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454905/IMG_1480.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(17)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454907/IMG_1496.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(18)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454908/IMG_1502.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(19)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454908/IMG_1513.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(20)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454909/IMG_1530.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(21)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454909/IMG_1532.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(22)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454913/IMG_1605.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(23)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454912/IMG_1568.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(24)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454913/IMG_1613.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(25)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454914/IMG_1657.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(26)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454913/IMG_1632.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(27)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454914/IMG_1641.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(28)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454982/6224316b-358a-4acd-8c7f-54b47a1c00c0.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(29)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454982/IMG_1679.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(30)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454982/81bc2250-17b0-47e4-b76f-e5a033749775.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(31)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454983/IMG_1661.jpg" loading="lazy" alt="Bulgaria"></div>
+      <div class="g" onclick="lb(32)"><img src="https://res.cloudinary.com/il7cecht/image/upload/v1795454983/IMG_1658.jpg" loading="lazy" alt="Bulgaria"></div>
+    </div>
+  </div>
+</section>
+
+<section id="momentos">
+  <div class="inner">
+    <div class="section-label">Memoria</div>
+    <h2>Los momentos que quedan</h2>
+    <div class="moments">
+      <div class="moment">
+        <div class="moment-emoji">🍺</div>
+        <div>
+          <div class="moment-title">Calentada en una cerveza · vuelo reservado antes de terminarla</div>
+          <p class="moment-desc">La fórmula perfecta para ver a los de FCC: destino barato, vuelo barato, reservar antes de que nadie se eche atrás. Bulgaria ganó.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🚿</div>
+        <div>
+          <div class="moment-title">El alojamiento · viga + váter bajo la ducha</div>
+          <p class="moment-desc">Viga cruzada a la altura de la cabeza y la taza del váter literalmente bajo el plato de la ducha. Innovación arquitectónica búlgara. Se sobrevivió.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🍔</div>
+        <div>
+          <div class="moment-title">Hamburguesas con guantes · cóctel de violetas</div>
+          <p class="moment-desc">La hamburguesería que servía guantes de látex con el pedido. Y el cóctel de violetas que quería ser elegante. Marranada las dos, pero con carácter.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="moment-emoji">🏙️</div>
+        <div>
+          <div class="moment-title">Plovdiv · la sorpresa del viaje</div>
+          <p class="moment-desc">Plovdiv es una de las ciudades más antiguas de Europa y la mayoría de la gente no sabe que existe. Casco antiguo precioso, casi sin turistas. La joya oculta del viaje.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><p>Bulgaria · Febrero 2019 · FCC on tour</p></footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLbOutside(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();shiftLb(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-cap"></div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();shiftLb(1)">›</button>
+</div>
+
+<script>
+const photos = [
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454900/e48c1ef6-6b9c-402a-9090-cb58b428b136.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454900/IMG_1369.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454900/ffa79714-fcc9-4e97-985d-ebd1d8998d15.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454900/IMG_1374.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1367.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1383.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1384.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1393.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1398.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1388.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454901/IMG_1389.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454902/IMG_1403.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454904/IMG_1444.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454904/IMG_1455.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454904/IMG_1462.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454904/IMG_1471.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454905/IMG_1480.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454907/IMG_1496.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454908/IMG_1502.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454908/IMG_1513.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454909/IMG_1530.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454909/IMG_1532.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454913/IMG_1605.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454912/IMG_1568.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454913/IMG_1613.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454914/IMG_1657.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454913/IMG_1632.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454914/IMG_1641.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454982/6224316b-358a-4acd-8c7f-54b47a1c00c0.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454982/IMG_1679.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454982/81bc2250-17b0-47e4-b76f-e5a033749775.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454983/IMG_1661.jpg",c:"Bulgaria"},
+  {s:"https://res.cloudinary.com/il7cecht/image/upload/v1795454983/IMG_1658.jpg",c:"Bulgaria"},
+];
+let cur=0;
+const lbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lb-img');
+const lbCap=document.getElementById('lb-cap');
+const lbDots=document.getElementById('lb-dots');
+photos.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='lb-dot'+(i===0?' on':'');
+  d.onclick=e=>{e.stopPropagation();lb(i);};
+  lbDots.appendChild(d);
+});
+function lb(i){
+  cur=i;lbImg.src=photos[i].s;lbCap.textContent=photos[i].c;
+  document.querySelectorAll('.lb-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  lbox.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeLb(){lbox.classList.remove('open');document.body.style.overflow='';}
+function closeLbOutside(e){if(e.target===lbox)closeLb();}
+function shiftLb(d){lb((cur+d+photos.length)%photos.length);}
+document.addEventListener('keydown',e=>{
+  if(!lbox.classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLb(1);
+  if(e.key==='ArrowLeft')shiftLb(-1);
+  if(e.key==='Escape')closeLb();
+});
+let touchStartX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const diff=touchStartX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)diff>0?shiftLb(1):shiftLb(-1);
+});
+</script>
+</body>
+</html>
